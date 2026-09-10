@@ -1,0 +1,140 @@
+/* ============ NEZWORKS ANIMATIONS — keyframes, reveals, reduced-motion ============ */
+
+/* ---- ambient float (chips, misc) ---- */
+@keyframes float-y{
+  0%,100%{transform:translate3d(0,calc(var(--famp) * -1),0) rotate(var(--fr))}
+  50%{transform:translate3d(0,var(--famp),0) rotate(calc(var(--fr) * -1))}
+}
+@keyframes drift-x{
+  0%,100%{transform:translate3d(calc(var(--famp) * -.4),0,0)}
+  50%{transform:translate3d(calc(var(--famp) * .4),0,0)}
+}
+
+/* ---- orbital rings ---- */
+@keyframes orbit-rotate{to{transform:rotate(360deg)}}
+@keyframes orbit-rotate-rev{to{transform:rotate(-360deg)}}
+
+/* ---- satellite travel ---- */
+@keyframes satellite-travel{
+  from{transform:rotate(0deg) translateX(var(--r,235px))}
+  to{transform:rotate(360deg) translateX(var(--r,235px))}
+}
+@keyframes satellite-travel-rev{
+  from{transform:rotate(360deg) translateX(var(--r,235px))}
+  to{transform:rotate(0deg) translateX(var(--r,235px))}
+}
+
+/* ---- glow breathing ---- */
+@keyframes breathe{
+  0%,100%{opacity:.35;transform:scale(1)}
+  50%{opacity:.7;transform:scale(1.07)}
+}
+@keyframes core-breathe{
+  0%,100%{box-shadow:0 0 40px 4px rgba(139,124,246,.22),inset 0 0 24px rgba(139,124,246,.12)}
+  50%{box-shadow:0 0 64px 10px rgba(92,139,255,.34),inset 0 0 32px rgba(92,139,255,.18)}
+}
+
+/* ---- pulse dot ---- */
+@keyframes pulse-dot{
+  0%,100%{box-shadow:0 0 0 0 rgba(139,124,246,.55)}
+  70%{box-shadow:0 0 0 7px rgba(139,124,246,0)}
+}
+.pulse-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--accent);
+  display:inline-block;margin-right:10px;vertical-align:1px;
+  animation:pulse-dot 2.6s var(--ease-soft) infinite;
+}
+
+/* ---- glass reflection sweep (use sparingly) ---- */
+@keyframes glass-reflect{
+  0%{transform:translateX(-130%) skewX(-18deg)}
+  55%,100%{transform:translateX(240%) skewX(-18deg)}
+}
+
+/* ---- service card idle gradient ---- */
+@keyframes card-gradient-drift{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* ---- icon micro-anims ---- */
+@keyframes icon-orbit-spin{to{transform:rotate(360deg)}}
+@keyframes icon-orbit-spin-rev{to{transform:rotate(-360deg)}}
+@keyframes play-ping{
+  0%,100%{opacity:.25}
+  50%{opacity:.7}
+}
+@keyframes node-glow{
+  0%,100%{opacity:.5}
+  50%{opacity:1}
+}
+
+/* ---- status / notify ---- */
+@keyframes notify-in{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ---- text reveal (hero + section heads) ---- */
+.reveal-el{
+  opacity:0;transform:translateY(22px);
+  transition:opacity .9s var(--ease-out),transform .9s var(--ease-out);
+  transition-delay:var(--rd,0s);
+}
+.reveal-el.in{opacity:1;transform:translateY(0)}
+.d1{--rd:.12s}.d2{--rd:.32s}.d3{--rd:.5s}.d4{--rd:.68s}.d5{--rd:.9s}
+
+/* generic scroll reveal */
+.sr{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out)}
+.sr.in{opacity:1;transform:none}
+.sr-d1{transition-delay:.1s}.sr-d2{transition-delay:.2s}.sr-d3{transition-delay:.3s}
+
+/* ---- image reveal (clip) ---- */
+.work-media img{
+  clip-path:inset(6% 6% 6% 6% round 14px);
+  transform:scale(1.06);
+  transition:clip-path 1s var(--ease-out),transform 1.2s var(--ease-out);
+}
+.work-card.in .work-media img,
+.work-card:hover .work-media img{clip-path:inset(0 0 0 0 round 14px);transform:scale(1)}
+
+/* ---- scroll hint ---- */
+@keyframes scroll-hint{
+  0%{transform:scaleY(0);transform-origin:top}
+  45%{transform:scaleY(1);transform-origin:top}
+  55%{transform:scaleY(1);transform-origin:bottom}
+  100%{transform:scaleY(0);transform-origin:bottom}
+}
+.hero-scroll{
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  font-size:.6rem;letter-spacing:.4em;color:var(--ink-3);margin-top:64px;
+}
+.hero-scroll span{
+  width:1px;height:44px;background:linear-gradient(180deg,var(--accent),transparent);
+  animation:scroll-hint 2.4s var(--ease-soft) infinite;
+}
+
+/* ---- nebula cursor follow handled in JS; nebula keyframes in base ---- */
+
+/* ============ REDUCED MOTION ============ */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001s !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.15s !important;
+    scroll-behavior:auto !important;
+  }
+  .reveal-el,.sr{opacity:1 !important;transform:none !important;transition:none !important}
+  .work-media img{clip-path:none;transform:none}
+  .float-chip{transform:none !important}
+  .nebula-light{animation:none !important}
+  .orbit-satellite,.how-traveller span,.cta-sat,.success-sat{display:none !important}
+  .cursor{display:none !important}
+  #cosmos,#heroCanvas{display:none !important}
+  .orbit-ring{animation:none !important}
+  .dash-chip{animation:none !important}
+  .hero-parallax{transform:none !important}
+  .glass-reflect::after{display:none !important}
+  .icon-orbit-spin,.oi-sat,.pi-play{animation:none !important}
+}

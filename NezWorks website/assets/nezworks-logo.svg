@@ -1,0 +1,131 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="110" y1="120" x2="400" y2="405" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#E8F2FF"/>
+      <stop offset="0.22" stop-color="#78A7FF"/>
+      <stop offset="0.48" stop-color="#A78BFA"/>
+      <stop offset="0.72" stop-color="#D69BFF"/>
+      <stop offset="0.9" stop-color="#FFB4A7"/>
+      <stop offset="1" stop-color="#FFF1D8"/>
+    </linearGradient>
+
+    <linearGradient id="edgeGlow" x1="115" y1="100" x2="390" y2="410" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#DDF0FF"/>
+      <stop offset="0.45" stop-color="#A78BFA"/>
+      <stop offset="0.8" stop-color="#FFB4A7"/>
+      <stop offset="1" stop-color="#FFFFFF"/>
+    </linearGradient>
+
+    <radialGradient id="starGlow">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="0.35" stop-color="#F4E9FF"/>
+      <stop offset="1" stop-color="#A78BFA" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="softGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="tinyGlow" x="-300%" y="-300%" width="700%" height="700%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Orbital rings -->
+  <g transform="rotate(-20 256 256)">
+    <ellipse cx="256" cy="256" rx="190" ry="88"
+             stroke="url(#edgeGlow)" stroke-width="1.5" opacity="0.8"/>
+    <ellipse cx="256" cy="256" rx="205" ry="104"
+             stroke="#8B7CFF" stroke-width="1" opacity="0.28"/>
+  </g>
+
+  <!-- Main N/W ribbon mark -->
+  <g filter="url(#softGlow)">
+    <!-- Left vertical stroke / N -->
+    <path d="M126 314
+             C126 328 137 339 151 339
+             C165 339 176 328 176 314
+             L176 171
+             C176 157 165 146 151 146
+             C137 146 126 157 126 171
+             Z"
+          fill="url(#logoGradient)"/>
+
+    <!-- Diagonal N stroke -->
+    <path d="M151 146
+             C163 146 173 152 180 163
+             L266 299
+             C274 312 271 329 258 337
+             C245 345 228 341 220 328
+             L135 192
+             C127 179 130 162 143 153
+             C146 151 148 149 151 146
+             Z"
+          fill="url(#logoGradient)"/>
+
+    <!-- Central / W stroke -->
+    <path d="M242 225
+             C248 212 263 207 276 213
+             L301 226
+             C312 232 316 246 310 257
+             L280 314
+             C273 327 257 333 244 326
+             C231 319 226 303 233 290
+             Z"
+          fill="url(#logoGradient)"/>
+
+    <!-- Right diagonal W stroke -->
+    <path d="M276 213
+             C286 207 298 211 305 221
+             L378 325
+             C386 337 383 354 371 362
+             C359 370 342 367 334 355
+             L261 251
+             C253 239 256 222 268 215
+             Z"
+          fill="url(#logoGradient)"/>
+
+    <!-- Right descending stroke -->
+    <path d="M378 325
+             C386 337 383 354 371 362
+             C359 370 342 367 334 355
+             L305 313
+             C297 301 300 285 312 277
+             C324 269 341 272 349 284
+             Z"
+          fill="url(#logoGradient)"/>
+  </g>
+
+  <!-- Subtle internal highlight -->
+  <path d="M145 151 C158 147 169 153 176 164 L263 300"
+        stroke="#FFFFFF" stroke-opacity="0.42" stroke-width="2" stroke-linecap="round"/>
+  <path d="M269 216 C282 210 295 215 302 226 L373 326"
+        stroke="#FFFFFF" stroke-opacity="0.3" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Four-point star -->
+  <g filter="url(#tinyGlow)">
+    <circle cx="337" cy="132" r="35" fill="url(#starGlow)" opacity="0.65"/>
+    <path d="M337 91
+             C341 111 345 122 365 132
+             C345 142 341 153 337 173
+             C333 153 329 142 309 132
+             C329 122 333 111 337 91 Z"
+          fill="#FFFFFF"/>
+  </g>
+
+  <!-- Orbiting star / node -->
+  <g filter="url(#tinyGlow)">
+    <circle cx="101" cy="335" r="20" fill="url(#starGlow)" opacity="0.45"/>
+    <path d="M101 319 C103 329 107 333 117 335 C107 337 103 341 101 351
+             C99 341 95 337 85 335 C95 333 99 329 101 319 Z"
+          fill="#FFFFFF"/>
+  </g>
+</svg>
