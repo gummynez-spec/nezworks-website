@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NezWorks — How we work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+<div class="scroll-progress" aria-hidden="true"><span></span></div>
+<div class="nebula" aria-hidden="true">
+  <div class="nebula-light nebula-purple"></div>
+  <div class="nebula-light nebula-blue"></div>
+  <div class="nebula-light nebula-peach"></div>
+</div>
+<canvas id="cosmos" aria-hidden="true"></canvas>
+<div class="cursor" id="cursor" aria-hidden="true">
+  <div class="cursor-dot"></div>
+  <div class="cursor-label"></div>
+</div>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <img class="logo-mark" src="assets/nezworks-logo.svg" alt="NezWorks logo">
+      <span class="logo-word">NEZWORKS</span>
+    </a>
+    <nav class="nav-links">
+      <a href="services.html" data-cursor="link">Services</a>
+      <a href="how.html" data-cursor="link">How we work</a>
+      <a href="career.html" data-cursor="link">Career</a>
+      <a href="relax.html" data-cursor="link">Relax</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="project.html" class="btn btn-primary btn-sm" data-cursor="hover">Start a Project <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="sub-hero">
+  <div class="container sub-hero-grid">
+    <div>
+      <nav class="sub-breadcrumb sr"><a href="index.html">HOME</a><span class="sep">/</span><span>HOW WE WORK</span></nav>
+      <p class="sub-kicker sr">HOW WE WORK</p>
+      <h1 class="sub-title sr">From first message<br><span class="accent">to final delivery.</span></h1>
+      <p class="sub-lead sr">One clear trajectory: you tell us what you need, pick the work you love, and our team produces and delivers — payment handled safely at the end. No guesswork anywhere.</p>
+      <div class="sub-cta-row sr">
+        <a href="project.html" class="btn btn-primary btn-lg" data-cursor="hover">Start a Project <span class="btn-arrow">→</span></a>
+        <a href="#flow" class="btn btn-ghost btn-lg" data-cursor="hover">See the steps</a>
+      </div>
+    </div>
+    <div class="sub-orbit sr" aria-hidden="true">
+      <span class="sub-orbit-ring"></span>
+      <span class="sub-orbit-ring r2"></span>
+      <div class="sub-orbit-core"><img src="assets/nezworks-logo.svg" alt=""></div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="sub-stats sr">
+      <div class="sub-stat"><b>5</b><span>Clear steps</span></div>
+      <div class="sub-stat"><b>24h</b><span>First reply</span></div>
+      <div class="sub-stat"><b>96%</b><span>On-time delivery</span></div>
+      <div class="sub-stat"><b>1</b><span>Point of contact</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sub-section" id="flow">
+  <div class="container">
+    <div class="sub-head">
+      <p class="sub-kicker sr">THE TRAJECTORY</p>
+      <h2 class="sub-h2 sr">Five steps. Zero blind spots.</h2>
+    </div>
+
+    <div class="how-timeline" id="howTimeline">
+      <svg class="how-path" viewBox="0 0 1000 4" preserveAspectRatio="none" aria-hidden="true">
+        <line class="how-path-base" x1="0" y1="2" x2="1000" y2="2"/>
+        <line class="how-path-fill" x1="0" y1="2" x2="1000" y2="2"/>
+      </svg>
+      <div class="how-traveller"><span></span></div>
+
+      <div class="how-nodes how-nodes-5">
+        <div class="how-node" data-step="1">
+          <div class="how-orbit"><span class="how-core">01</span><span class="how-glow"></span></div>
+          <h3>Tell us what you need</h3>
+          <p>The client messages NezWorks: "I want a logo," "I need video edits" — whatever the goal, the journey starts with your brief.</p>
+        </div>
+        <div class="how-node" data-step="2">
+          <div class="how-orbit"><span class="how-core">02</span><span class="how-glow"></span></div>
+          <h3>Pick the work you love</h3>
+          <p>Browse talent portfolios and click the pieces that match your taste. Starting prices shown up front — no waiting for quotes.</p>
+        </div>
+        <div class="how-node" data-step="3">
+          <div class="how-orbit"><span class="how-core">03</span><span class="how-glow"></span></div>
+          <h3>Our team produces</h3>
+          <p>The matched talent gets to work — managed by NezWorks with milestones and review gates. You watch progress in real time.</p>
+        </div>
+        <div class="how-node" data-step="4">
+          <div class="how-orbit"><span class="how-core">04</span><span class="how-glow"></span></div>
+          <h3>Delivery to your orbit</h3>
+          <p>Finished work lands in your dashboard — full files, source assets and launch support. Review everything before release.</p>
+        </div>
+        <div class="how-node" data-step="5">
+          <div class="how-orbit"><span class="how-core">05</span><span class="how-glow"></span></div>
+          <h3>Safe, simple payment</h3>
+          <p>Pay through the platform when you're happy. Talent gets paid instantly after delivery — everyone protected, everyone paid.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sub-section sub-section-alt">
+  <div class="container">
+    <div class="sub-head">
+      <p class="sub-kicker sr">WHY IT WORKS</p>
+      <h2 class="sub-h2 sr">Built for both<br><span class="accent">sides of the orbit.</span></h2>
+    </div>
+    <div class="combo-grid">
+      <div class="combo-card sr">
+        <span class="combo-tag">FOR CLIENTS</span>
+        <h3>See before you buy</h3>
+        <p>Every project starts from real portfolios with real starting prices. You know what you're getting — and roughly what it costs — before committing.</p>
+      </div>
+      <div class="combo-card sr sr-d1">
+        <span class="combo-tag">FOR TALENT</span>
+        <h3>Just create</h3>
+        <p>Talent focuses on the craft. We handle matching, milestones, client communication and payment protection. Your work speaks; we handle the rest.</p>
+      </div>
+      <div class="combo-card sr sr-d2">
+        <span class="combo-tag">FOR EVERYONE</span>
+        <h3>One managed system</h3>
+        <p>Both sides get a dashboard: progress tracking, reviews, files and messages. One system, total transparency, zero chaos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sub-section">
+  <div class="container">
+    <div class="cta-panel glass-reflect sr">
+      <div class="cta-orbits" aria-hidden="true">
+        <span class="cta-ring"></span>
+        <span class="cta-ring cta-ring-2"></span>
+        <span class="cta-sat"></span>
+      </div>
+      <p class="section-eyebrow">STEP 01 IS THE EASIEST</p>
+      <h2 class="cta-title">Tell us what you need.</h2>
+      <p class="cta-sub">One message starts the whole trajectory. We reply within 24 hours.</p>
+      <a href="project.html" class="btn btn-primary btn-lg" data-cursor="hover">Start a Project <span class="btn-arrow">→</span></a>
+      <p class="cta-note">No commitment · Reply within 24h</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <img class="footer-logo" src="assets/nezworks-logo.svg" alt="NezWorks logo">
+      <p>The creative orbital system.<br>Connecting businesses with the talent they need.</p>
+    </div>
+    <div class="footer-col">
+      <h5>SYSTEM</h5>
+      <a href="services.html">Services</a>
+      <a href="how.html">How we work</a>
+      <a href="career.html">Career</a>
+    </div>
+    <div class="footer-col">
+      <h5>EXPLORE</h5>
+      <a href="project.html">Start a project</a>
+      <a href="index.html#work">Work</a>
+      <a href="relax.html">Relax</a>
+    </div>
+    <div class="footer-col">
+      <h5>CONNECT</h5>
+      <a href="#">hello@nezworks.com</a>
+      <a href="#">Instagram</a>
+      <a href="#">LinkedIn</a>
+    </div>
+  </div>
+  <div class="container footer-base">
+    <span>© 2026 NezWorks. All rights reserved.</span>
+    <span class="footer-orbit"><i></i></span>
+    <span>Made with precision, delivered in orbit.</span>
+  </div>
+</footer>
+
+<script src="js/utils.js"></script>
+<script src="js/cosmos.js"></script>
+<script src="js/cursor.js"></script>
+<script src="js/scroll-nav.js"></script>
+<script src="js/how-flow.js"></script>
+</body>
+</html>

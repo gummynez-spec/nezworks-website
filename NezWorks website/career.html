@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NezWorks — Career (Freelancer)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/pages.css">
+<link rel="stylesheet" href="css/career.css">
+</head>
+<body>
+
+<div class="scroll-progress" aria-hidden="true"><span></span></div>
+<div class="nebula" aria-hidden="true">
+  <div class="nebula-light nebula-purple"></div>
+  <div class="nebula-light nebula-blue"></div>
+  <div class="nebula-light nebula-peach"></div>
+</div>
+<canvas id="cosmos" aria-hidden="true"></canvas>
+<div class="cursor" id="cursor" aria-hidden="true">
+  <div class="cursor-dot"></div>
+  <div class="cursor-label"></div>
+</div>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <img class="logo-mark" src="assets/nezworks-logo.svg" alt="NezWorks logo">
+      <span class="logo-word">NEZWORKS</span>
+    </a>
+    <nav class="nav-links">
+      <a href="services.html" data-cursor="link">Services</a>
+      <a href="how.html" data-cursor="link">How we work</a>
+      <a href="career.html" data-cursor="link">Career</a>
+      <a href="relax.html" data-cursor="link">Relax</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="project.html" class="btn btn-primary btn-sm" data-cursor="hover">Start a Project <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="sub-hero">
+  <div class="container sub-hero-grid">
+    <div>
+      <nav class="sub-breadcrumb sr"><a href="index.html">HOME</a><span class="sep">/</span><span>CAREER</span></nav>
+      <p class="sub-kicker sr">CAREER — FREELANCER</p>
+      <h1 class="sub-title sr">เข้าร่วมวงโคจร<br><span class="accent">ของ NezWorks</span></h1>
+      <p class="sub-lead sr">สมัครเป็นคนรับงานบน NezWorks — เราหางานให้ จัดการโปรเจกต์ให้ ดูแลการเงินให้ คุณโฟกัสแค่การสร้างสรรค์ผลงาน</p>
+      <div class="sub-cta-row sr">
+        <a href="#apply" class="btn btn-primary btn-lg" data-cursor="hover">สมัครเลย <span class="btn-arrow">→</span></a>
+        <a href="#terms" class="btn btn-ghost btn-lg" data-cursor="hover">อ่านข้อตกลงก่อน</a>
+      </div>
+    </div>
+    <div class="sub-orbit sr" aria-hidden="true">
+      <span class="sub-orbit-ring"></span>
+      <span class="sub-orbit-ring r2"></span>
+      <div class="sub-orbit-core"><img src="assets/nezworks-logo.svg" alt=""></div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="sub-stats sr">
+      <div class="sub-stat"><b>120K+</b><span>คนรับงาน</span></div>
+      <div class="sub-stat"><b>8.4K+</b><span>โปรเจกต์/เดือน</span></div>
+      <div class="sub-stat"><b>24h</b><span>เงินเข้าหลังส่งงาน</span></div>
+      <div class="sub-stat"><b>0฿</b><span>ค่าสมัคร</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEE TRANSPARENCY ============ -->
+<section class="sub-section sub-section-alt" id="fees">
+  <div class="container">
+    <div class="sub-head">
+      <p class="sub-kicker sr">ค่าธรรมเนียมโปร่งใส</p>
+      <h2 class="sub-h2 sr">ยิ่งทำมาก<br><span class="accent">ยิ่งเหลือมาก</span></h2>
+    </div>
+
+    <div class="fee-table sr" role="table" aria-label="อัตราค่าธรรมเนียมตามยอดขายสะสม">
+      <div class="fee-row fee-head" role="row">
+        <span role="columnheader">ยอดขายสะสม</span>
+        <span role="columnheader">ค่าธรรมเนียม</span>
+        <span role="columnheader">คุณได้รับ</span>
+      </div>
+      <div class="fee-row" role="row"><span>0 – 20,000 ฿</span><b>8%</b><i>92%</i></div>
+      <div class="fee-row" role="row"><span>20,001 – 100,000 ฿</span><b>7%</b><i>93%</i></div>
+      <div class="fee-row" role="row"><span>100,001 – 300,000 ฿</span><b>6%</b><i>94%</i></div>
+      <div class="fee-row fee-best" role="row"><span>300,001 ฿ ขึ้นไป</span><b>5%</b><i>95%</i></div>
+    </div>
+    <p class="fee-note sr">ไม่มีค่าธรรมเนียมสำหรับการสมัครหรือการลงบริการ — คิดค่าธรรมเนียมเฉพาะงานที่สำเร็จเท่านั้น</p>
+  </div>
+</section>
+
+<!-- ============ TERMS ============ -->
+<section class="sub-section" id="terms">
+  <div class="container">
+    <div class="sub-head">
+      <p class="sub-kicker sr">ข้อตกลงสำหรับคนรับงาน</p>
+      <h2 class="sub-h2 sr">NezWorks Terms<br><span class="accent">สำหรับ Freelancer</span></h2>
+      <p class="sub-lead sr" style="margin-top:16px">เพื่อให้การทำงานบน NezWorks เป็นไปอย่างราบรื่นและเป็นธรรมสำหรับทั้งคนรับงานและลูกค้า เราขอให้คนรับงานรับทราบข้อตกลงพื้นฐานดังต่อไปนี้</p>
+    </div>
+
+    <div class="terms-grid" id="termsGrid">
+
+      <details class="term-item sr" open>
+        <summary><span class="term-num">01</span>ค่าธรรมเนียม <i class="term-chevron">→</i></summary>
+        <div class="term-body">
+          <p>NezWorks มีค่าธรรมเนียมจากงานที่สำเร็จ โดยคิดตามระดับยอดขายสะสมของคนรับงาน</p>
+          <ul>
+            <li>0–20,000 บาท → <b>8%</b></li>
+            <li>20,001–100,000 บาท → <b>7%</b></li>
+            <li>100,001–300,000 บาท → <b>6%</b></li>
+            <li>300,001 บาทขึ้นไป → <b>5%</b></li>
+          </ul>
+          <p>ไม่มีค่าธรรมเนียมสำหรับการสมัครหรือการลงบริการ เว้นแต่มีการแจ้งเงื่อนไขเพิ่มเติมอย่างชัดเจน</p>
+        </div>
+      </details>
+
+      <details class="term-item sr">
+        <summary><span class="term-num">02</span>การชำระเงิน <i class="term-chevron">→</i></summary>
+        <div class="term-body">
+          <p>เพื่อความปลอดภัยของทั้งสองฝ่าย การชำระเงินสำหรับงานที่เกิดขึ้นผ่าน NezWorks จะดำเนินการผ่านระบบของแพลตฟอร์ม โดย NezWorks จะหักค่าธรรมเนียมตามอัตราที่กำหนดก่อนโอนเงินให้คนรับงาน</p>
+        </div>
+      </details>
+
+      <details class="term-item sr">
+        <summary><span class="term-num">03</span>การทำงานและการส่งมอบ <i class="term-chevron">→</i></summary>
+        <div class="term-body">
+          <p>คนรับงานควรดำเนินงานตามรายละเอียด ราคา และระยะเวลาที่ตกลงกับลูกค้า หากมีการเปลี่ยนแปลงรายละเอียดงาน ควรพูดคุยและตกลงกันผ่านระบบ NezWorks เพื่อให้มีข้อมูลอ้างอิงที่ชัดเจน</p>
+        </div>
+      </details>
+
+      <details class="term-item sr">
+        <summary><span class="term-num">04</span>การยกเลิกและปัญหาจากงาน <i class="term-chevron">→</i></summary>
+        <div class="term-body">
+          <p>หากเกิดเหตุที่ทำให้ไม่สามารถดำเนินงานต่อได้ สามารถพูดคุยกับลูกค้าและแจ้ง NezWorks เพื่อหาทางออกที่เหมาะสม</p>
+          <p>หากเกิดข้อพิพาท NezWorks อาจขอข้อมูลหรือหลักฐานจากทั้งสองฝ่ายเพื่อช่วยพิจารณาอย่างเป็นธรรม</p>
+        </div>
+      </details>
+
+      <details class="term-item sr">
+        <summary><span class="term-num">05</span>ผลงานและสิทธิ์ของผู้อื่น <i class="term-chevron">→</i></summary>
+        <div class="term-body">
+          <p>คนรับงานควรส่งมอบผลงานที่ตนเองมีสิทธิ์ใช้งานหรือสร้างขึ้นเอง และไม่ละเมิดลิขสิทธิ์หรือสิทธิของบุคคลอื่น</p>
+        </div>
+      </details>
+
+      <details class="term-item sr">
+        <summary><span class="term-num">06</span>การรีวิว <i class="term-chevron">→</i></summary>
+        <div class="term-body">
+          <p>หลังจบงาน ลูกค้าและคนรับงานสามารถให้คะแนนหรือรีวิวประสบการณ์การทำงานได้อย่างตรงไปตรงมา โดยไม่ควรสร้างรีวิวปลอมหรือพยายามบิดเบือนคะแนน</p>
+        </div>
+      </details>
+
+      <details class="term-item sr">
+        <summary><span class="term-num">07</span>การใช้งานอย่างสุจริต <i class="term-chevron">→</i></summary>
+        <div class="term-body">
+          <p>NezWorks ขอให้ผู้ใช้งานใช้แพลตฟอร์มเพื่อการทำงานอย่างสุจริต ไม่หลอกลวง ไม่ใช้ข้อมูลเท็จ และไม่พยายามหลีกเลี่ยงระบบหรือค่าธรรมเนียมของแพลตฟอร์ม</p>
+          <p>ในกรณีที่พบพฤติกรรมที่อาจส่งผลต่อความปลอดภัยหรือความน่าเชื่อถือของระบบ NezWorks อาจติดต่อเพื่อขอข้อมูลเพิ่มเติม หรือระงับการใช้งานเป็นการชั่วคราวตามความเหมาะสม</p>
+        </div>
+      </details>
+
+      <details class="term-item sr">
+        <summary><span class="term-num">08</span>ข้อมูลส่วนบุคคล <i class="term-chevron">→</i></summary>
+        <div class="term-body">
+          <p>NezWorks จะเก็บและใช้ข้อมูลส่วนบุคคลเท่าที่จำเป็นต่อการให้บริการ การยืนยันตัวตน การชำระเงิน และการดูแลความปลอดภัยของแพลตฟอร์ม โดยเป็นไปตามนโยบายความเป็นส่วนตัวของ NezWorks</p>
+        </div>
+      </details>
+
+    </div>
+
+    <p class="terms-accept sr">การสมัครเป็นคนรับงานบน NezWorks ถือว่าคุณรับทราบและยอมรับข้อตกลงพื้นฐานข้างต้น</p>
+  </div>
+</section>
+
+<!-- ============ APPLICATION FORM ============ -->
+<section class="sub-section sub-section-alt" id="apply">
+  <div class="container">
+    <div class="sub-head">
+      <p class="sub-kicker sr">สมัครเป็น FREELANCER</p>
+      <h2 class="sub-h2 sr">กรอกครบในครั้งเดียว<br><span class="accent">เริ่มรับงานได้เลย</span></h2>
+    </div>
+
+    <form class="apply-form sr" id="applyForm" novalidate>
+
+      <!-- progress -->
+      <div class="af-progress">
+        <div class="af-steps">
+          <span class="af-step-dot active" data-step="1">1</span><i></i>
+          <span class="af-step-dot" data-step="2">2</span><i></i>
+          <span class="af-step-dot" data-step="3">3</span><i></i>
+          <span class="af-step-dot" data-step="4">4</span><i></i>
+          <span class="af-step-dot" data-step="5">5</span>
+        </div>
+        <div class="af-bar"><span id="afBar"></span></div>
+        <p class="af-step-label" id="afLabel">ข้อมูลบัญชี</p>
+      </div>
+
+      <!-- STEP 1: ACCOUNT -->
+      <fieldset class="af-step active" data-step="1">
+        <legend>ข้อมูลบัญชี</legend>
+        <div class="af-grid">
+          <label class="af-field"><span>ชื่อ-นามสกุล *</span><input type="text" name="fullname" required placeholder="สมหญิง ใจดี"></label>
+          <label class="af-field"><span>ชื่อที่แสดงบนโปรไฟล์ *</span><input type="text" name="displayName" required placeholder="somying.creates"></label>
+          <label class="af-field"><span>Email *</span><input type="email" name="email" required placeholder="you@email.com"></label>
+          <label class="af-field"><span>เบอร์โทรศัพท์ * (ยืนยันด้วย OTP)</span>
+            <span class="otp-row">
+              <input type="tel" name="phone" required placeholder="08X-XXX-XXXX" pattern="[0-9\- ]{9,13}">
+              <button type="button" class="btn btn-ghost btn-sm" id="otpBtn" data-cursor="hover">ส่ง OTP</button>
+            </span>
+          </label>
+          <label class="af-field"><span>รหัสผ่าน *</span><input type="password" name="password" required minlength="8" placeholder="อย่างน้อย 8 ตัวอักษร"></label>
+        </div>
+      </fieldset>
+
+      <!-- STEP 2: FREELANCER PROFILE -->
+      <fieldset class="af-step" data-step="2">
+        <legend>ข้อมูล Freelancer</legend>
+        <div class="af-grid">
+          <div class="af-field">
+            <span>รูปโปรไฟล์ *</span>
+            <label class="af-upload" id="avatarUpload">
+              <input type="file" accept="image/*" hidden>
+              <span class="au-icon">＋</span>
+              <b>อัปโหลดรูปโปรไฟล์</b>
+              <small>PNG หรือ JPG · สูงสุด 5MB</small>
+            </label>
+          </div>
+          <label class="af-field"><span>ระดับประสบการณ์ *</span>
+            <select name="experience" required>
+              <option value="">— เลือกระดับ —</option>
+              <option>Newbie (น้อยกว่า 1 ปี)</option>
+              <option>Intermediate (1–3 ปี)</option>
+              <option>Professional (3–5 ปี)</option>
+              <option>Expert (5 ปีขึ้นไป)</option>
+            </select>
+          </label>
+          <label class="af-field af-span2"><span>แนะนำตัวสั้น ๆ *</span><textarea name="bio" rows="3" required placeholder="เล่าถึงสไตล์ ความเชี่ยวชาญ และสิ่งที่ทำได้ดีที่สุด"></textarea></label>
+          <div class="af-field af-span2">
+            <span>Portfolio / ตัวอย่างผลงาน *</span>
+            <label class="af-upload" id="portfolioUpload">
+              <input type="file" accept="image/*,application/pdf" multiple hidden>
+              <span class="au-icon">＋</span>
+              <b>อัปโหลดผลงาน</b>
+              <small>รูปภาพ หรือ PDF · ได้หลายไฟล์ · หรือวางลิงก์ Behance/Instagram ด้านล่าง</small>
+            </label>
+            <input type="url" name="portfolioUrl" placeholder="https://behance.net/... (ถ้ามี)" style="margin-top:10px">
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- STEP 3: BANKING -->
+      <fieldset class="af-step" data-step="3">
+        <legend>ข้อมูลสำหรับรับเงิน</legend>
+        <div class="af-grid">
+          <label class="af-field"><span>ชื่อผู้ใช้บัญชีธนาคาร *</span><input type="text" name="bankName" required placeholder="ต้องตรงกับสมุดบัญชี"></label>
+          <label class="af-field"><span>ธนาคาร *</span>
+            <select name="bank" required>
+              <option value="">— เลือกธนาคาร —</option>
+              <option>กสิกรไทย (KBANK)</option>
+              <option>ไทยพาณิชย์ (SCB)</option>
+              <option>กรุงเทพ (BBL)</option>
+              <option>กรุงไทย (KTB)</option>
+              <option>ทหารไทย (TTB)</option>
+              <option>กรุงศรี (BAAC)</option>
+              <option>ออมสิน (GSB)</option>
+              <option>อื่น ๆ</option>
+            </select>
+          </label>
+          <label class="af-field af-span2"><span>เลขบัญชีธนาคาร *</span><input type="text" name="bankNumber" required placeholder="X-XXX-XXXXX-X" pattern="[0-9\- ]{8,16}"></label>
+        </div>
+      </fieldset>
+
+      <!-- STEP 4: KYC -->
+      <fieldset class="af-step" data-step="4">
+        <legend>การยืนยันตัวตน</legend>
+        <div class="af-grid">
+          <label class="af-field af-span2"><span>เลขบัตรประชาชน *</span><input type="text" name="citizenId" required placeholder="X XXXX XXXX XXX" pattern="[0-9\- ]{13,17}"></label>
+          <div class="af-field">
+            <span>รูปบัตรประชาชน *</span>
+            <label class="af-upload">
+              <input type="file" accept="image/*" hidden>
+              <span class="au-icon">🪪</span>
+              <b>อัปโหลดรูปบัตร</b>
+              <small>หน้าบัตรที่ชัดเจน · ไม่มีการปิดบังข้อมูล</small>
+            </label>
+          </div>
+          <div class="af-field">
+            <span>รูปถ่าย Selfie ยืนยันตัวตน *</span>
+            <label class="af-upload">
+              <input type="file" accept="image/*" hidden>
+              <span class="au-icon">🤳</span>
+              <b>อัปโหลดรูป Selfie</b>
+              <small>ถือบัตรคู่กับใบหน้า · แสงสว่างพอ</small>
+            </label>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- STEP 5: CONSENT -->
+      <fieldset class="af-step" data-step="5">
+        <legend>การยอมรับข้อตกลง</legend>
+        <div class="af-consents">
+          <label class="af-check"><input type="checkbox" required><i></i><span>ฉันยอมรับ <a href="#terms">Terms &amp; Conditions</a> ของ NezWorks</span></label>
+          <label class="af-check"><input type="checkbox" required><i></i><span>ฉันยอมรับ <a href="#">Privacy Policy</a> ของ NezWorks</span></label>
+          <label class="af-check"><input type="checkbox" required><i></i><span>ฉันยืนยันว่าข้อมูลที่ให้เป็นความจริง</span></label>
+        </div>
+        <div class="af-launch-box">
+          <div class="launch-orbit small" aria-hidden="true">
+            <span></span><span class="lo-2"></span>
+            <img src="assets/nezworks-logo.svg" alt="">
+          </div>
+          <div>
+            <h3>พร้อมเริ่มรับงานแล้วหรือยัง?</h3>
+            <p>กรอกครบทุกช่อง แล้วกดเริ่ม — โปรไฟล์ของคุณจะเข้าสู่วงโคจรทันที</p>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- NAV -->
+      <div class="af-nav">
+        <button type="button" class="btn btn-ghost" id="afBack" hidden data-cursor="hover">← ย้อนกลับ</button>
+        <button type="button" class="btn btn-primary" id="afNext" data-cursor="hover">ถัดไป <span class="btn-arrow">→</span></button>
+        <button type="submit" class="btn btn-primary btn-lg" id="afSubmit" hidden data-cursor="hover">เริ่มรับงานได้เลย <span class="btn-arrow">→</span></button>
+      </div>
+    </form>
+
+    <!-- SUCCESS -->
+    <div class="af-success" id="afSuccess" hidden>
+      <div class="success-stage" aria-hidden="true">
+        <img class="success-logo" src="assets/nezworks-logo.svg" alt="">
+        <div class="success-orbit"><span class="success-sat"></span><span class="success-sat-final"></span></div>
+      </div>
+      <h3>คุณเข้าสู่วงโคจรแล้ว</h3>
+      <p>ทีมงานจะตรวจสอบข้อมูลและเปิดใช้งานโปรไฟล์ของคุณภายใน 24 ชั่วโมง</p>
+      <a href="index.html" class="btn btn-ghost" data-cursor="hover">กลับหน้าหลัก</a>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <img class="footer-logo" src="assets/nezworks-logo.svg" alt="NezWorks logo">
+      <p>The creative orbital system.<br>Connecting businesses with the talent they need.</p>
+    </div>
+    <div class="footer-col">
+      <h5>SYSTEM</h5>
+      <a href="services.html">Services</a>
+      <a href="how.html">How we work</a>
+      <a href="career.html">Career</a>
+    </div>
+    <div class="footer-col">
+      <h5>EXPLORE</h5>
+      <a href="project.html">Start a project</a>
+      <a href="index.html#work">Work</a>
+      <a href="relax.html">Relax</a>
+    </div>
+    <div class="footer-col">
+      <h5>CONNECT</h5>
+      <a href="#">hello@nezworks.com</a>
+      <a href="#">Instagram</a>
+      <a href="#">LinkedIn</a>
+    </div>
+  </div>
+  <div class="container footer-base">
+    <span>© 2026 NezWorks. All rights reserved.</span>
+    <span class="footer-orbit"><i></i></span>
+    <span>Made with precision, delivered in orbit.</span>
+  </div>
+</footer>
+
+<script src="js/utils.js"></script>
+<script src="js/cosmos.js"></script>
+<script src="js/cursor.js"></script>
+<script src="js/scroll-nav.js"></script>
+<script src="js/career-form.js"></script>
+</body>
+</html>

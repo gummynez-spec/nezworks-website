@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NezWorks — Relax</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/pages.css">
+<link rel="stylesheet" href="css/relax.css">
+</head>
+<body>
+
+<div class="scroll-progress" aria-hidden="true"><span></span></div>
+<canvas id="relaxStars" aria-hidden="true"></canvas>
+
+<div class="cursor" id="cursor" aria-hidden="true">
+  <div class="cursor-dot"></div>
+  <div class="cursor-label"></div>
+</div>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <img class="logo-mark" src="assets/nezworks-logo.svg" alt="NezWorks logo">
+      <span class="logo-word">NEZWORKS</span>
+    </a>
+    <nav class="nav-links">
+      <a href="services.html" data-cursor="link">Services</a>
+      <a href="how.html" data-cursor="link">How we work</a>
+      <a href="career.html" data-cursor="link">Career</a>
+      <a href="relax.html" data-cursor="link">Relax</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="project.html" class="btn btn-primary btn-sm" data-cursor="hover">Start a Project <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+</header>
+
+<main class="relax-main" id="top">
+
+  <!-- SCENE STAGE -->
+  <section class="relax-stage" id="relaxStage">
+    <div class="scene scene-active" data-scene="night" aria-hidden="true">
+      <div class="scene-sky"></div>
+      <div class="scene-moon"></div>
+      <div class="scene-stars"></div>
+      <div class="scene-hills"></div>
+      <div class="scene-glow"></div>
+    </div>
+    <div class="scene" data-scene="forest" aria-hidden="true">
+      <div class="scene-sky"></div>
+      <div class="scene-sun"></div>
+      <div class="scene-trees"></div>
+      <div class="scene-glow"></div>
+    </div>
+    <div class="scene" data-scene="rain" aria-hidden="true">
+      <div class="scene-sky"></div>
+      <div class="scene-cloud"></div>
+      <div class="scene-rain"></div>
+      <div class="scene-window"></div>
+    </div>
+    <div class="scene" data-scene="flowers" aria-hidden="true">
+      <div class="scene-sky"></div>
+      <div class="scene-field"></div>
+      <div class="scene-petals"></div>
+      <div class="scene-glow"></div>
+    </div>
+    <div class="scene" data-scene="ocean" aria-hidden="true">
+      <div class="scene-sky"></div>
+      <div class="scene-waves"></div>
+      <div class="scene-glow"></div>
+    </div>
+    <div class="scene" data-scene="aurora" aria-hidden="true">
+      <div class="scene-sky"></div>
+      <div class="scene-aurora"></div>
+      <div class="scene-hills"></div>
+      <div class="scene-glow"></div>
+    </div>
+
+    <div class="relax-hud">
+      <div class="relax-title-block">
+        <p class="sub-kicker">NEZWORKS RELAX</p>
+        <h1 id="sceneTitle">Night Sky</h1>
+        <p id="sceneDesc">ดาวเต็มฟ้า ลมเบา ๆ — ปล่อยใจให้ลอยไปกับแสงดาว</p>
+      </div>
+      <a class="relax-mute btn btn-ghost btn-sm" id="muteBtn" data-cursor="hover" aria-label="เปิด/ปิดเสียง"><span>🔇 เสียงปิดอยู่</span></a>
+    </div>
+  </section>
+
+  <!-- CONTROLS -->
+  <section class="relax-controls">
+    <div class="container">
+
+      <!-- แสง: scene picker -->
+      <div class="rc-block sr">
+        <div class="rc-head">
+          <span class="rc-icon">◐</span>
+          <div>
+            <h3>แสง</h3>
+            <p>เลือกบรรยากาศที่สบายตา</p>
+          </div>
+        </div>
+        <div class="scene-picker" id="scenePicker">
+          <button class="scene-chip active" data-scene="night" data-cursor="hover"><i>🌙</i><span>Night Sky</span><small>กลางคืน</small></button>
+          <button class="scene-chip" data-scene="forest" data-cursor="hover"><i>🌲</i><span>Forest</span><small>ป่าไม้</small></button>
+          <button class="scene-chip" data-scene="rain" data-cursor="hover"><i>🌧</i><span>Rain</span><small>ฝนตก</small></button>
+          <button class="scene-chip" data-scene="flowers" data-cursor="hover"><i>🌼</i><span>Flower Field</span><small>ทุ่งดอกไม้</small></button>
+          <button class="scene-chip" data-scene="ocean" data-cursor="hover"><i>🌊</i><span>Ocean</span><small>ทะเล</small></button>
+          <button class="scene-chip" data-scene="aurora" data-cursor="hover"><i>✨</i><span>Aurora</span><small>แสงเหนือ</small></button>
+        </div>
+
+        <!-- day-night slider -->
+        <div class="brightness-ctl">
+          <div class="br-row">
+            <span class="br-label">🌙 กลางคืน</span>
+            <input type="range" min="0" max="100" value="30" id="brightness" aria-label="ปรับความมืด-สว่างของบรรยากาศ">
+            <span class="br-label">☀️ กลางวัน</span>
+          </div>
+          <p class="br-note">ลากเพื่อปรับความมืด → สว่าง ของบรรยากาศ (0–100)</p>
+        </div>
+      </div>
+
+      <!-- เสียง: sound mixer -->
+      <div class="rc-block sr" style="margin-top:22px">
+        <div class="rc-head">
+          <span class="rc-icon">♪</span>
+          <div>
+            <h3>เสียง</h3>
+            <p>ปรับเสียงธรรมชาติให้พอดีกับใจคุณ</p>
+          </div>
+        </div>
+        <div class="sound-mixer" id="soundMixer">
+          <div class="sound-row" data-sound="birds">
+            <span class="sd-icon">🐦</span><span class="sd-name">เสียงนก</span>
+            <input type="range" min="0" max="100" value="0" data-vol aria-label="เสียงนก">
+            <span class="sd-state" data-state>ปิด</span>
+          </div>
+          <div class="sound-row" data-sound="rain">
+            <span class="sd-icon">🌧</span><span class="sd-name">เสียงฝนตก</span>
+            <input type="range" min="0" max="100" value="0" data-vol aria-label="เสียงฝนตก">
+            <span class="sd-state" data-state>ปิด</span>
+          </div>
+          <div class="sound-row" data-sound="flowers">
+            <span class="sd-icon">🌼</span><span class="sd-name">ทุ่งดอกไม้</span>
+            <input type="range" min="0" max="100" value="0" data-vol aria-label="บรรยากาศทุ่งดอกไม้">
+            <span class="sd-state" data-state>ปิด</span>
+          </div>
+          <div class="sound-row" data-sound="wind">
+            <span class="sd-icon">🍃</span><span class="sd-name">เสียงลม</span>
+            <input type="range" min="0" max="100" value="0" data-vol aria-label="เสียงลม">
+            <span class="sd-state" data-state>ปิด</span>
+          </div>
+          <div class="sound-row" data-sound="ocean">
+            <span class="sd-icon">🌊</span><span class="sd-name">เสียงคลื่น</span>
+            <input type="range" min="0" max="100" value="0" data-vol aria-label="เสียงคลื่นทะเล">
+            <span class="sd-state" data-state>ปิด</span>
+          </div>
+          <div class="sound-row" data-sound="night">
+            <span class="sd-icon">🌙</span><span class="sd-name">ค่ำคืนแสงดาว</span>
+            <input type="range" min="0" max="100" value="0" data-vol aria-label="บรรยากาศกลางคืน">
+            <span class="sd-state" data-state>ปิด</span>
+          </div>
+        </div>
+        <p class="sd-note">เสียงสังเคราะห์ด้วย Web Audio — ไม่ต้องโหลดไฟล์ ทำงานได้ทันที</p>
+      </div>
+
+      <p class="relax-foot sr">พักสักหน่อยแล้วกลับมาสร้างสรรค์ต่อ — ผลงานดีๆ ไม่จำเป็นต้องรีบ<br><a href="index.html">← กลับหน้าหลัก</a></p>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer-base" style="border:none;padding-top:30px">
+    <span>© 2026 NezWorks. All rights reserved.</span>
+    <span class="footer-orbit"><i></i></span>
+    <span>Made with precision, delivered in orbit.</span>
+  </div>
+</footer>
+
+<script src="js/utils.js"></script>
+<script src="js/cursor.js"></script>
+<script src="js/relax.js"></script>
+</body>
+</html>
