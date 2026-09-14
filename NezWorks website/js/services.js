@@ -1,9 +1,28 @@
-/* ============ SERVICES — related-service discovery + orbital line ============ */
+/* ============ SERVICES — related-service discovery + orbital line + filter tabs ============ */
 (() => {
   const grid = document.querySelector('.services-grid');
   if (!grid) return;
 
   const cards = [...grid.querySelectorAll('.service-card')];
+
+  /* ---------- filter tabs ---------- */
+  const tabs = document.querySelectorAll('.svc-tab');
+  if (tabs.length) {
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const filter = tab.dataset.filter;
+        cards.forEach((card) => {
+          if (filter === 'all' || card.dataset.category === filter) {
+            card.classList.remove('hide-card');
+          } else {
+            card.classList.add('hide-card');
+          }
+        });
+      });
+    });
+  }
 
   cards.forEach((card) => {
     const rel = card.querySelector('.service-related');
