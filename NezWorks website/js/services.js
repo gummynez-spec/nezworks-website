@@ -1,64 +1,43 @@
-/* ============ SERVICES PAGE — category tabs + helper interaction ============ */
+/* ============ SERVICES PAGE — sidebar category switching ============ */
 (() => {
-  /* ---------- category tabs ---------- */
-  const tabs = document.querySelectorAll('.svc-tab');
-  const emptyTitle = document.querySelector('.svc-empty-title');
-  const emptyText = document.querySelector('.svc-empty-text');
+  const btns = document.querySelectorAll('.svc-side-btn');
+  const descs = document.querySelectorAll('.svc-cat-desc');
+  if (!btns.length) return;
 
-  if (tabs.length) {
-    /* read ?cat= from URL on load */
-    const urlCat = new URLSearchParams(location.search).get('cat') || 'all';
-    const matchTab = [...tabs].find(t => t.dataset.filter === urlCat);
-    if (matchTab) {
-      tabs.forEach(t => t.classList.remove('active'));
-      matchTab.classList.add('active');
-      updateEmptyState(urlCat);
-    }
+  /* read ?cat= from URL */
+  const urlCat = new URLSearchParams(location.search).get('cat') || 'all';
 
-    tabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        updateEmptyState(tab.dataset.filter);
-
-        /* update URL without reload */
-        const url = new URL(location);
-        url.searchParams.set('cat', tab.dataset.filter);
-        history.pushState({}, '', url);
-      });
+  function switchCat(cat) {
+    btns.forEach(b => b.classList.toggle('active', b.dataset.cat === cat));
+    descs.forEach(d => {
+      d.style.display = d.dataset.cat === cat ? '' : 'none';
     });
-
-    function updateEmptyState(cat) {
-      if (!emptyTitle || !emptyText) return;
-      if (cat === 'all') {
-        emptyTitle.textContent = 'COMING SOON';
-        emptyText.textContent = "We're building something worth seeing.";
-      } else {
-        const names = { logo:'Logo', banner:'Banner', poster:'Poster', video:'Video', graphic:'Graphic Design', content:'Content' };
-        emptyTitle.textContent = (names[cat] || cat) + ' — COMING SOON';
-        emptyText.textContent = "We're curating the best " + (names[cat] || cat).toLowerCase() + " work for you.";
-      }
+    /* re-trigger animation */
+    const content = document.getElementById('svcCatContent');
+    if (content) {
+      content.style.animation = 'none';
+      content.offsetHeight;
+      content.style.animation = '';
     }
-
-    /* browser back/forward */
-    window.addEventListener('popstate', () => {
-      const cat = new URLSearchParams(location.search).get('cat') || 'all';
-      const match = [...tabs].find(t => t.dataset.filter === cat);
-      if (match) {
-        tabs.forEach(t => t.classList.remove('active'));
-        match.classList.add('active');
-        updateEmptyState(cat);
-      }
-    });
   }
 
-  /* ---------- "Not sure where to start?" helper ---------- */
-  const helperTrigger = document.getElementById('helperTrigger');
-  const helperPanel = document.getElementById('helperPanel');
-  if (helperTrigger && helperPanel) {
-    helperTrigger.addEventListener('click', () => {
-      helperPanel.classList.toggle('open');
-      helperTrigger.textContent = helperPanel.classList.contains('open') ? 'CLOSE' : 'FIND MY SERVICE →';
+  /* initial state */
+  switchCat(urlCat);
+
+  /* click handlers */
+  btns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const cat = btn.dataset.cat;
+      switchCat(cat);
+      const url = new URL(location);
+      url.searchParams.set('cat', cat);
+      history.pushState({}, '', url);
     });
-  }
+  });
+
+  /* browser back/forward */
+  window.addEventListener('popstate', () => {
+    const cat = new URLSearchParams(location.search).get('cat') || 'all';
+    switchCat(cat);
+  });
 })();

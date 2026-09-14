@@ -44,133 +44,87 @@
   </div>
 </header>
 
-<main id="top">
+<div class="svc-layout">
 
-  <!-- ============ HERO ============ -->
-  <section class="svc-hero">
-    <div class="container">
-      <p class="svc-hero-label sr">SERVICES</p>
-      <h1 class="svc-hero-title sr">CREATIVE WORK,<br>BUILT AROUND<br><span class="accent">YOUR IDEA.</span></h1>
-      <p class="svc-hero-sub sr">From a logo to a full digital campaign,<br>find the creative talent to bring it to life.</p>
+  <!-- LEFT SIDEBAR -->
+  <aside class="svc-sidebar">
+    <div class="svc-sidebar-head">
+      <p class="svc-sidebar-title">SERVICES</p>
     </div>
-  </section>
+    <nav class="svc-sidebar-nav">
+      <button class="svc-side-btn active" data-cat="all"><span class="svc-num">01</span><span class="svc-label">ALL</span></button>
+      <button class="svc-side-btn" data-cat="logo"><span class="svc-num">02</span><span class="svc-label">LOGO</span></button>
+      <button class="svc-side-btn" data-cat="banner"><span class="svc-num">03</span><span class="svc-label">BANNER</span></button>
+      <button class="svc-side-btn" data-cat="poster"><span class="svc-num">04</span><span class="svc-label">POSTER</span></button>
+      <button class="svc-side-btn" data-cat="video"><span class="svc-num">05</span><span class="svc-label">VIDEO</span></button>
+      <button class="svc-side-btn" data-cat="graphic"><span class="svc-num">06</span><span class="svc-label">GRAPHIC DESIGN</span></button>
+    </nav>
+  </aside>
 
-  <!-- ============ CATEGORY TABS ============ -->
-  <section class="svc-tabs-section">
-    <div class="container">
-      <div class="svc-tabs sr" role="tablist">
-        <button class="svc-tab active" data-filter="all" role="tab">All</button>
-        <button class="svc-tab" data-filter="logo" role="tab">Logo</button>
-        <button class="svc-tab" data-filter="banner" role="tab">Banner</button>
-        <button class="svc-tab" data-filter="poster" role="tab">Poster</button>
-        <button class="svc-tab" data-filter="video" role="tab">Video</button>
-        <button class="svc-tab" data-filter="graphic" role="tab">Graphic Design</button>
-        <button class="svc-tab" data-filter="content" role="tab">Content</button>
+  <!-- MAIN CONTENT -->
+  <main class="svc-main" id="top">
+
+    <!-- hero -->
+    <div class="svc-main-hero">
+      <p class="svc-main-label">SERVICES</p>
+      <h1 class="svc-main-title">CREATIVE WORK,<br>BUILT AROUND<br><span class="accent">YOUR IDEA.</span></h1>
+      <p class="svc-main-sub">From a logo to a full digital campaign,<br>find the creative talent to bring it to life.</p>
+    </div>
+
+    <!-- category content (changes on sidebar click) -->
+    <div class="svc-cat-content" id="svcCatContent">
+
+      <div class="svc-cat-desc" data-cat="all">
+        <h2 class="svc-cat-name">ALL</h2>
+        <p class="svc-cat-text">Explore the creative services available through NezWorks.</p>
       </div>
-    </div>
-  </section>
-
-  <!-- ============ CREATIVE WORKS ============ -->
-  <section class="svc-works" id="svcWorks">
-    <div class="container">
-      <p class="svc-section-label sr">CREATIVE WORKS</p>
-      <div class="svc-empty-state sr" id="svcEmpty">
-        <div class="svc-empty-orb" aria-hidden="true">
-          <svg viewBox="0 0 120 120" fill="none">
-            <circle cx="60" cy="60" r="54" stroke="rgba(139,124,246,.15)" stroke-width="1"/>
-            <circle cx="60" cy="60" r="36" stroke="rgba(139,124,246,.10)" stroke-width="1"/>
-            <circle cx="60" cy="60" r="18" stroke="rgba(139,124,246,.08)" stroke-width="1"/>
-            <circle cx="60" cy="60" r="5" fill="rgba(139,124,246,.25)"/>
-            <circle cx="108" cy="60" r="3" fill="rgba(92,139,255,.4)">
-              <animateTransform attributeName="transform" type="rotate" from="0 60 60" to="360 60 60" dur="20s" repeatCount="indefinite"/>
-            </circle>
-          </svg>
-        </div>
-        <h3 class="svc-empty-title">COMING SOON</h3>
-        <p class="svc-empty-text">We're building something worth seeing.</p>
-        <a href="project.html" class="btn btn-primary" data-cursor="hover">Start a Project <span class="btn-arrow">→</span></a>
+      <div class="svc-cat-desc" data-cat="logo" style="display:none">
+        <h2 class="svc-cat-name">LOGO</h2>
+        <p class="svc-cat-text">Logo design and visual identity for brands that want to stand out.</p>
       </div>
-      <div class="svc-portfolio-grid" id="svcPortfolio"></div>
-    </div>
-  </section>
-
-  <!-- ============ NOT SURE WHERE TO START ============ -->
-  <section class="svc-helper" id="svcHelper">
-    <div class="container">
-      <div class="svc-helper-card sr">
-        <h2 class="svc-helper-title">NOT SURE WHERE TO START?</h2>
-        <p class="svc-helper-text">Tell us what you're trying to create.<br>We'll help you find the right creative.</p>
-        <button class="btn btn-ghost" id="helperTrigger" data-cursor="hover">FIND MY SERVICE <span class="btn-arrow">→</span></button>
+      <div class="svc-cat-desc" data-cat="banner" style="display:none">
+        <h2 class="svc-cat-name">BANNER</h2>
+        <p class="svc-cat-text">Digital banners and promotional visuals for campaigns and platforms.</p>
+      </div>
+      <div class="svc-cat-desc" data-cat="poster" style="display:none">
+        <h2 class="svc-cat-name">POSTER</h2>
+        <p class="svc-cat-text">Posters and promotional artwork designed to capture attention.</p>
+      </div>
+      <div class="svc-cat-desc" data-cat="video" style="display:none">
+        <h2 class="svc-cat-name">VIDEO</h2>
+        <p class="svc-cat-text">Video editing and visual storytelling for digital content.</p>
+      </div>
+      <div class="svc-cat-desc" data-cat="graphic" style="display:none">
+        <h2 class="svc-cat-name">GRAPHIC DESIGN</h2>
+        <p class="svc-cat-text">Creative graphics for brands, campaigns, social media, and digital platforms.</p>
       </div>
 
-      <!-- hidden selector panel -->
-      <div class="svc-helper-panel" id="helperPanel">
-        <p class="svc-helper-panel-q">WHAT ARE YOU TRYING TO CREATE?</p>
-        <div class="svc-helper-options">
-          <a href="services.html?cat=logo" class="svc-helper-opt" data-cursor="hover">
-            <span class="svc-helper-opt-icon">✦</span> A BRAND
-          </a>
-          <a href="services.html?cat=content" class="svc-helper-opt" data-cursor="hover">
-            <span class="svc-helper-opt-icon">✦</span> SOCIAL MEDIA CONTENT
-          </a>
-          <a href="services.html?cat=poster" class="svc-helper-opt" data-cursor="hover">
-            <span class="svc-helper-opt-icon">✦</span> MARKETING MATERIALS
-          </a>
-          <a href="services.html?cat=video" class="svc-helper-opt" data-cursor="hover">
-            <span class="svc-helper-opt-icon">✦</span> A VIDEO
-          </a>
-          <a href="project.html" class="svc-helper-opt" data-cursor="hover">
-            <span class="svc-helper-opt-icon">✦</span> SOMETHING ELSE
-          </a>
+      <!-- creative works -->
+      <div class="svc-works-section">
+        <p class="svc-works-label">CREATIVE WORKS</p>
+        <div class="svc-empty-state">
+          <div class="svc-empty-orb" aria-hidden="true">
+            <svg viewBox="0 0 120 120" fill="none">
+              <circle cx="60" cy="60" r="54" stroke="rgba(139,124,246,.15)" stroke-width="1"/>
+              <circle cx="60" cy="60" r="36" stroke="rgba(139,124,246,.10)" stroke-width="1"/>
+              <circle cx="60" cy="60" r="18" stroke="rgba(139,124,246,.08)" stroke-width="1"/>
+              <circle cx="60" cy="60" r="5" fill="rgba(139,124,246,.25)"/>
+              <circle cx="108" cy="60" r="3" fill="rgba(92,139,255,.4)">
+                <animateTransform attributeName="transform" type="rotate" from="0 60 60" to="360 60 60" dur="20s" repeatCount="indefinite"/>
+              </circle>
+            </svg>
+          </div>
+          <h3 class="svc-empty-title">COMING SOON</h3>
+          <p class="svc-empty-text">We're building something worth seeing.</p>
+          <a href="project.html" class="btn btn-primary" data-cursor="hover">START A PROJECT <span class="btn-arrow">→</span></a>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ============ FINAL CTA ============ -->
-  <section class="svc-final-cta">
-    <div class="container">
-      <div class="svc-final-inner sr">
-        <h2 class="svc-final-title">HAVE SOMETHING IN MIND?</h2>
-        <p class="svc-final-text">Let's find the right creative.</p>
-        <a href="project.html" class="btn btn-primary btn-lg" data-cursor="hover">START A PROJECT <span class="btn-arrow">→</span></a>
-      </div>
     </div>
-  </section>
 
-</main>
+  </main>
 
-<footer class="footer">
-  <div class="container footer-inner">
-    <div class="footer-brand">
-      <img class="footer-logo" src="assets/nezworks-logo.svg" alt="NezWorks logo">
-      <p>The creative orbital system.<br>Connecting businesses with the talent they need.</p>
-    </div>
-    <div class="footer-col">
-      <h5>SYSTEM</h5>
-      <a href="services.html">Services</a>
-      <a href="how.html">How we work</a>
-      <a href="career.html">Career</a>
-    </div>
-    <div class="footer-col">
-      <h5>EXPLORE</h5>
-      <a href="project.html">Start a project</a>
-      <a href="index.html#work">Work</a>
-      <a href="relax.html">Relax</a>
-    </div>
-    <div class="footer-col">
-      <h5>CONNECT</h5>
-      <a href="#">hello@nezworks.com</a>
-      <a href="#">Instagram</a>
-      <a href="#">LinkedIn</a>
-    </div>
-  </div>
-  <div class="container footer-base">
-    <span>© 2026 NezWorks. All rights reserved.</span>
-    <span class="footer-orbit"><i></i></span>
-    <span>Made with precision, delivered in orbit.</span>
-  </div>
-</footer>
+</div>
 
 <script src="js/utils.js"></script>
 <script src="js/cosmos.js"></script>
