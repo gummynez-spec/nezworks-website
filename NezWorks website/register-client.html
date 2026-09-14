@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NezWorks — ลงทะเบียนลูกค้า</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+<div class="scroll-progress" aria-hidden="true"><span></span></div>
+<div class="nebula" aria-hidden="true">
+  <div class="nebula-light nebula-purple"></div>
+  <div class="nebula-light nebula-blue"></div>
+  <div class="nebula-light nebula-peach"></div>
+</div>
+<canvas id="cosmos" aria-hidden="true"></canvas>
+<div class="cursor" id="cursor" aria-hidden="true">
+  <div class="cursor-dot"></div>
+  <div class="cursor-label"></div>
+</div>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <img class="logo-mark" src="assets/nezworks-logo.svg" alt="NezWorks logo">
+      <span class="logo-word">NEZWORKS</span>
+    </a>
+    <nav class="nav-links">
+      <a href="services.html" data-cursor="link">Services</a>
+      <a href="how.html" data-cursor="link">How we work</a>
+      <a href="career.html" data-cursor="link">Career</a>
+      <a href="relax.html" data-cursor="link">Relax</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="register-freelancer.html" class="btn btn-ghost btn-sm" data-cursor="hover">สมัคร Freelancer</a>
+    </div>
+  </div>
+</header>
+
+<main class="reg-wrap">
+  <form class="reg-card" id="clientForm" novalidate>
+
+    <div class="reg-head">
+      <span class="reg-breadcrumb"><a href="index.html">← ย้อนกลับ</a><span>·</span><span>ลูกค้า</span></span>
+      <h1>เล่าความต้องการของคุณ</h1>
+      <p>กรอกสั้น ๆ ให้เรารู้จักคุณก่อน — แล้วเราจะหาคนที่ใช่ให้ทันที</p>
+    </div>
+
+    <div class="reg-section">
+      <div class="reg-label"><span class="req">*</span> NAME — ชื่อของคุณ</div>
+      <input type="text" class="reg-input" name="name" required placeholder="เช่น สมหญิง ใจดี">
+    </div>
+
+    <div class="reg-section">
+      <div class="reg-label">BRAND OR COMPANY — แบรนด์หรือบริษัทของคุณ <span class="opt">(ไม่บังคับ)</span></div>
+      <input type="text" class="reg-input" name="brand" placeholder="เช่น Somying Studio (ถ้ามี)">
+    </div>
+
+    <div class="reg-section">
+      <div class="reg-label"><span class="req">*</span> WHAT DO YOU NEED HELP WITH? — ต้องการความช่วยเหลือด้านไหน?</div>
+      <div class="reg-choices" id="needChoices">
+        <label class="reg-choice"><input type="checkbox" name="needs" value="Graphic Design"><i></i>Graphic Design</label>
+        <label class="reg-choice"><input type="checkbox" name="needs" value="Logo and Branding"><i></i>Logo and Branding</label>
+        <label class="reg-choice"><input type="checkbox" name="needs" value="Social Media Design"><i></i>Social Media Design</label>
+        <label class="reg-choice"><input type="checkbox" name="needs" value="Video Editing"><i></i>Video Editing</label>
+        <label class="reg-choice"><input type="checkbox" name="needs" value="Content Creation"><i></i>Content Creation</label>
+        <label class="reg-choice" id="otherChoice">
+          <input type="checkbox" name="needs" value="Other" id="otherNeed"><i></i>Other :
+          <input type="text" class="other-input" id="otherNeedInput" placeholder="พิมพ์งานที่คุณต้องการ..." disabled>
+        </label>
+      </div>
+    </div>
+
+    <div class="reg-section">
+      <div class="reg-label">TELL US ABOUT YOUR PROJECT — เล่าเรื่องโปรเจกต์ <span class="opt">(ไม่บังคับ)</span></div>
+      <textarea class="reg-input" name="project" rows="4" placeholder="อยากได้โลโก้สไตล์มินิมอล ใช้กับแบรนด์กาแฟ โทนอบอุ่น... หรือปล่อยว่างไว้ก็ได้"></textarea>
+    </div>
+
+    <div class="reg-section">
+      <div class="reg-label"><span class="req">*</span> CONTACT — ช่องทางที่ติดต่อคุณได้</div>
+      <input type="text" class="reg-input" name="contact" required placeholder="Email / เบอร์โทร / Instagram / LINE ID">
+    </div>
+
+    <div class="reg-section">
+      <div class="reg-label">BUDGET — งบประมาณของคุณ</div>
+      <div class="budget-slider" id="budgetSlider">
+        <div class="bs-values">
+          <div class="bs-val low"><small>ต่ำสุด</small><b id="budgetLow">฿3,000</b></div>
+          <div class="bs-val high"><small>สูงสุด</small><b id="budgetHigh">฿5,000</b></div>
+        </div>
+        <div class="bs-track">
+          <div class="bs-fill" id="budgetFill"></div>
+          <span class="bs-thumb" id="thumbLow" tabindex="0" role="slider" aria-label="งบขั้นต่ำ"></span>
+          <span class="bs-thumb" id="thumbHigh" tabindex="0" role="slider" aria-label="งบสูงสุด"></span>
+        </div>
+        <div class="bs-scale"><span>฿0</span><span>฿5,000</span><span>฿10,000</span><span>฿25,000</span><span>฿50,000</span><span>฿100,000</span></div>
+      </div>
+    </div>
+
+    <div class="reg-submit">
+      <button type="submit" class="btn btn-primary btn-lg" data-cursor="hover">เข้าสู่ระบบ NezWorks <span class="btn-arrow">→</span></button>
+      <p class="reg-hint">ลงทะเบียนฟรี · ไม่มีค่าธรรมเนียมจนกว่างานจะสำเร็จ</p>
+    </div>
+  </form>
+
+  <!-- SUCCESS -->
+  <div class="reg-card reg-success" id="clientSuccess" hidden>
+    <div class="success-stage" aria-hidden="true">
+      <img class="success-logo" src="assets/nezworks-logo.svg" alt="">
+      <div class="success-orbit"><span class="success-sat"></span><span class="success-sat-final"></span></div>
+    </div>
+    <h1>ยินดีต้อนรับเข้าสู่วงโคจร!</h1>
+    <p>เราได้รับข้อมูลของคุณแล้ว — ทีมงานจะติดต่อกลับพร้อมคนที่ใช่ภายใน 24 ชั่วโมง</p>
+    <div class="reg-submit">
+      <a href="index.html" class="btn btn-ghost" data-cursor="hover">← กลับหน้าหลัก</a>
+    </div>
+  </div>
+
+</main>
+
+<script src="js/utils.js"></script>
+<script src="js/cosmos.js"></script>
+<script src="js/cursor.js"></script>
+<script src="js/scroll-nav.js"></script>
+<script src="js/register-forms.js"></script>
+</body>
+</html>

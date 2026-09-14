@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NezWorks — สมัคร Freelancer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+<div class="scroll-progress" aria-hidden="true"><span></span></div>
+<div class="nebula" aria-hidden="true">
+  <div class="nebula-light nebula-purple"></div>
+  <div class="nebula-light nebula-blue"></div>
+  <div class="nebula-light nebula-peach"></div>
+</div>
+<canvas id="cosmos" aria-hidden="true"></canvas>
+<div class="cursor" id="cursor" aria-hidden="true">
+  <div class="cursor-dot"></div>
+  <div class="cursor-label"></div>
+</div>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <img class="logo-mark" src="assets/nezworks-logo.svg" alt="NezWorks logo">
+      <span class="logo-word">NEZWORKS</span>
+    </a>
+    <nav class="nav-links">
+      <a href="services.html" data-cursor="link">Services</a>
+      <a href="how.html" data-cursor="link">How we work</a>
+      <a href="career.html" data-cursor="link">Career</a>
+      <a href="relax.html" data-cursor="link">Relax</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="register-client.html" class="btn btn-ghost btn-sm" data-cursor="hover">สมัครลูกค้า</a>
+    </div>
+  </div>
+</header>
+
+<main class="reg-wrap">
+
+  <!-- ============ STEP 1: PROFILE FORM ============ -->
+  <form class="reg-card" id="flForm" novalidate>
+    <div class="reg-head">
+      <span class="reg-breadcrumb"><a href="index.html">← ย้อนกลับ</a><span>·</span><span>Freelancer</span></span>
+      <h1>ให้เรารู้จักฝีมือของคุณ</h1>
+      <p>กรอกให้ครบ แล้วกด "ถัดไป" เพื่ออ่านข้อตกลงของทีม NezWorks</p>
+    </div>
+
+    <div class="reg-section">
+      <div class="reg-label"><span class="req">*</span> NAME — ชื่อของคุณ</div>
+      <input type="text" class="reg-input" name="name" required placeholder="เช่น ธีรเดช สร้างสรรค์">
+    </div>
+
+    <div class="reg-section">
+      <div class="reg-label"><span class="req">*</span> WHAT DO YOU DO? — คุณทำอะไรได้บ้าง? <span class="opt">(เลือกได้หลายข้อ)</span></div>
+      <div class="reg-choices">
+        <label class="reg-choice"><input type="checkbox" name="skills" value="Graphic Design"><i></i>Graphic Design</label>
+        <label class="reg-choice"><input type="checkbox" name="skills" value="Logo and Branding"><i></i>Logo and Branding</label>
+        <label class="reg-choice"><input type="checkbox" name="skills" value="Social Media Design"><i></i>Social Media Design</label>
+        <label class="reg-choice"><input type="checkbox" name="skills" value="Video Editing"><i></i>Video Editing</label>
+        <label class="reg-choice"><input type="checkbox" name="skills" value="Content Creation"><i></i>Content Creation</label>
+        <label class="reg-choice" id="otherChoice">
+          <input type="checkbox" name="skills" value="Other" id="otherSkill"><i></i>Other :
+          <input type="text" class="other-input" id="otherSkillInput" placeholder="พิมพ์ทักษะของคุณ..." disabled>
+        </label>
+      </div>
+    </div>
+
+    <div class="reg-section">
+      <div class="reg-label"><span class="req">*</span> SHOW US YOUR WORK — โชว์ผลงานของคุณ</div>
+      <div class="reg-upload" id="workUpload">
+        <input type="file" accept="image/*" multiple hidden>
+        <span class="ru-icon">🖼</span>
+        <b>อัปโหลดรูปผลงาน</b>
+        <small>อย่างน้อย 1 รูป · หรือวางลิงก์ด้านล่างแทนได้</small>
+      </div>
+      <input type="url" class="reg-input" id="portfolioUrl" name="portfolio" placeholder="ลิงก์ Portfolio / Behance / เว็บไซต์ / Instagram — อย่างน้อย 1 ช่องทาง" style="margin-top:12px">
+    </div>
+
+    <div class="reg-section">
+      <div class="reg-label"><span class="req">*</span> EXPERIENCES — ระดับประสบการณ์</div>
+      <div class="reg-choices" id="expChoices">
+        <label class="reg-choice"><input type="radio" name="exp" value="Beginner" required><i></i><span><b>Beginner</b> — มือใหม่ เริ่มต้นสายสร้างสรรค์</span></label>
+        <label class="reg-choice"><input type="radio" name="exp" value="Intermediate"><i></i><span><b>Intermediate</b> — มีประสบการณ์ ทำงานมาแล้วหลายชิ้น</span></label>
+        <label class="reg-choice"><input type="radio" name="exp" value="Professional"><i></i><span><b>Professional</b> — มืออาชีพ พร้อมรับงานทุกระดับ</span></label>
+      </div>
+    </div>
+
+    <div class="reg-section">
+      <div class="reg-label"><span class="req">*</span> CONTACT — ช่องทางติดต่อ</div>
+      <input type="text" class="reg-input" name="contact" required placeholder="Email / เบอร์โทร / Instagram / LINE ID">
+    </div>
+
+    <div class="reg-submit">
+      <button type="button" class="btn btn-primary btn-lg" id="flNext" data-cursor="hover">ถัดไป — อ่านข้อตกลง <span class="btn-arrow">→</span></button>
+      <p class="reg-hint">กรอกครบทุกช่อง * ก่อนกดถัดไป</p>
+    </div>
+  </form>
+
+  <!-- ============ STEP 2: TERMS ============ -->
+  <div class="reg-card" id="flTerms" hidden>
+    <div class="reg-head">
+      <span class="reg-breadcrumb"><a href="#" id="backToForm">← ย้อนกลับแก้ไข</a><span>·</span><span>ข้อตกลง</span></span>
+      <h1>ข้อตกลงสำหรับคนรับงาน</h1>
+      <p>เพื่อการทำงานที่ราบรื่นและเป็นธรรมสำหรับทั้งสองฝ่าย โปรดอ่านและยอมรับก่อนเริ่ม</p>
+    </div>
+
+    <div class="fl-terms" id="flTermsList">
+      <details class="term-item" open>
+        <summary><span class="term-num">01</span>ค่าธรรมเนียม <i class="term-chevron">→</i></summary>
+        <div class="term-body">
+          <ul>
+            <li>0–20,000 บาท → <b>8%</b></li>
+            <li>20,001–100,000 บาท → <b>7%</b></li>
+            <li>100,001–300,000 บาท → <b>6%</b></li>
+            <li>300,001 บาทขึ้นไป → <b>5%</b></li>
+          </ul>
+          <p>ไม่มีค่าธรรมเนียมสมัคร/ลงบริการ — คิดเฉพาะงานที่สำเร็จ</p>
+        </div>
+      </details>
+      <details class="term-item">
+        <summary><span class="term-num">02</span>การชำระเงิน <i class="term-chevron">→</i></summary>
+        <div class="term-body"><p>การชำระเงินดำเนินการผ่านระบบแพลตฟอร์ม โดยหักค่าธรรมเนียมตามอัตราก่อนโอนให้คนรับงาน เพื่อความปลอดภัยของทั้งสองฝ่าย</p></div>
+      </details>
+      <details class="term-item">
+        <summary><span class="term-num">03</span>การทำงานและการส่งมอบ <i class="term-chevron">→</i></summary>
+        <div class="term-body"><p>ดำเนินงานตามรายละเอียด ราคา และระยะเวลาที่ตกลง หากมีการเปลี่ยนแปลง ให้ตกลงกันผ่านระบบ NezWorks เพื่อมีข้อมูลอ้างอิงชัดเจน</p></div>
+      </details>
+      <details class="term-item">
+        <summary><span class="term-num">04</span>การยกเลิกและข้อพิพาท <i class="term-chevron">→</i></summary>
+        <div class="term-body"><p>หากไม่สามารถดำเนินงานต่อได้ แจ้งลูกค้าและ NezWorks เพื่อหาทางออกที่เหมาะสม หากเกิดข้อพิพาท NezWorks อาจขอหลักฐานจากทั้งสองฝ่ายเพื่อพิจารณาอย่างเป็นธรรม</p></div>
+      </details>
+      <details class="term-item">
+        <summary><span class="term-num">05</span>ผลงานและสิทธิ์ของผู้อื่น <i class="term-chevron">→</i></summary>
+        <div class="term-body"><p>ส่งมอบเฉพาะผลงานที่ตนมีสิทธิ์ใช้งานหรือสร้างขึ้นเอง ไม่ละเมิดลิขสิทธิ์หรือสิทธิของบุคคลอื่น</p></div>
+      </details>
+      <details class="term-item">
+        <summary><span class="term-num">06</span>การรีวิว <i class="term-chevron">→</i></summary>
+        <div class="term-body"><p>หลังจบงาน ทั้งสองฝ่ายให้คะแนนและรีวิวได้อย่างตรงไปตรงมา ไม่สร้างรีวิวปลอมหรือบิดเบือนคะแนน</p></div>
+      </details>
+      <details class="term-item">
+        <summary><span class="term-num">07</span>การใช้งานอย่างสุจริต <i class="term-chevron">→</i></summary>
+        <div class="term-body"><p>ใช้แพลตฟอร์มอย่างสุจริต ไม่หลอกลวง ไม่ใช้ข้อมูลเท็จ ไม่หลีกเลี่ยงระบบหรือค่าธรรมเนียม หากพบพฤติกรรมเสี่ยง NezWorks อาจระงับการใช้งานชั่วคราว</p></div>
+      </details>
+      <details class="term-item">
+        <summary><span class="term-num">08</span>ข้อมูลส่วนบุคคล <i class="term-chevron">→</i></summary>
+        <div class="term-body"><p>เก็บและใช้ข้อมูลเท่าที่จำเป็นต่อการให้บริการ ยืนยันตัวตน ชำระเงิน และความปลอดภัยของแพลตฟอร์ม ตามนโยบายความเป็นส่วนตัว</p></div>
+      </details>
+    </div>
+
+    <div class="fl-consents">
+      <label class="af-check"><input type="checkbox" id="consent1" required><i></i><span>ฉันอ่านและยอมรับ <b>Terms &amp; Conditions</b> ทั้ง 8 ข้อข้างต้น</span></label>
+      <label class="af-check"><input type="checkbox" id="consent2" required><i></i><span>ฉันยอมรับ <b>Privacy Policy</b> ของ NezWorks</span></label>
+      <label class="af-check"><input type="checkbox" id="consent3" required><i></i><span>ฉันยืนยันว่าข้อมูลที่ให้มาเป็นความจริงทั้งหมด</span></label>
+    </div>
+
+    <div class="reg-submit">
+      <button type="button" class="btn btn-primary btn-lg" id="flConfirm" data-cursor="hover" disabled>ยืนยันการส่ง <span class="btn-arrow">→</span></button>
+      <p class="reg-hint">ติ้กยอมรับครบ 3 ข้อเพื่อเปิดปุ่มยืนยัน</p>
+    </div>
+  </div>
+
+  <!-- ============ SUCCESS → WORKSPACE ============ -->
+  <div class="reg-card reg-success" id="flSuccess" hidden>
+    <div class="success-stage" aria-hidden="true">
+      <img class="success-logo" src="assets/nezworks-logo.svg" alt="">
+      <div class="success-orbit"><span class="success-sat"></span><span class="success-sat-final"></span></div>
+    </div>
+    <h1>คุณเข้าสู่วงโคจรแล้ว!</h1>
+    <p>บัญชี Freelancer ของคุณพร้อมใช้งาน — ขั้นต่อไป: สร้างผลงานแรกของคุณ ใส่ราคา และเริ่มรับงาน</p>
+    <div class="reg-submit">
+      <a href="freelancer.html" class="btn btn-primary btn-lg" data-cursor="hover">สร้างผลงานแรกของคุณ <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+
+</main>
+
+<script src="js/utils.js"></script>
+<script src="js/cosmos.js"></script>
+<script src="js/cursor.js"></script>
+<script src="js/scroll-nav.js"></script>
+<script src="js/register-forms.js"></script>
+</body>
+</html>
