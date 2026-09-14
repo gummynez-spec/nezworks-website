@@ -124,7 +124,12 @@ body{font-family:var(--font-body),'Noto Sans Thai',sans-serif}
 
 /* mobile: two buttons side-by-side near the home bar */
 @media(max-width:560px){
-  .hero-role-bar{gap:8px}
+  .hero-role-bar{
+    position:static;             /* grid child, not absolute */
+    align-self:end;
+    padding:0 16px calc(env(safe-area-inset-bottom, 0px) + 16px);
+    gap:8px;
+  }
   .rc-q{font-size:.62rem;letter-spacing:.26em}
   .rc-buttons{gap:10px;width:calc(100vw - 32px)}
   .role-btn{
@@ -147,7 +152,7 @@ body{font-family:var(--font-body),'Noto Sans Thai',sans-serif}
 
 /* short/landscape phones — compact hero so nothing overlaps */
 @media(max-width:920px) and (orientation:landscape){
-  .hero-role-bar{gap:6px;bottom:10px}
+  .hero-role-bar{gap:6px;position:static;padding-bottom:env(safe-area-inset-bottom, 10px)}
   .role-btn{padding:10px 14px;font-size:.85rem}
 }
 
