@@ -10,9 +10,19 @@
   overflow:hidden;
 }
 @media(max-width:560px){
-  .hero{padding-bottom:calc(env(safe-area-inset-bottom, 0px) + 190px)}
+  /* content up top, buttons breathe at the bottom */
+  .hero{padding-bottom:calc(env(safe-area-inset-bottom, 0px) + 185px)}
   .hero-title{font-size:clamp(2.1rem,10vw,2.8rem)}
   .hero-sub{font-size:.94rem;margin-bottom:0}
+  .orbital-system{width:min(120vmin,560px);height:min(120vmin,560px);opacity:.55}
+  .hero-floaters{display:none}
+}
+/* landscape phones: tighten the hero */
+@media(max-width:920px) and (orientation:landscape){
+  .hero{padding-bottom:calc(env(safe-area-inset-bottom, 0px) + 120px)}
+  .hero-title{font-size:clamp(1.6rem,6vw,2.4rem)}
+  .hero-sub{font-size:.88rem}
+  .orbital-system{opacity:.4}
 }
 .hero-parallax{
   position:absolute;inset:0;

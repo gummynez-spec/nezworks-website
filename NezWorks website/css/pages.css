@@ -124,15 +124,31 @@ body{font-family:var(--font-body),'Noto Sans Thai',sans-serif}
 
 /* mobile: two buttons side-by-side near the home bar */
 @media(max-width:560px){
-  .hero-role-bar{gap:10px}
-  .rc-q{font-size:.66rem;letter-spacing:.3em}
-  .rc-buttons{gap:10px;width:92vw}
+  .hero-role-bar{gap:8px}
+  .rc-q{font-size:.62rem;letter-spacing:.26em}
+  .rc-buttons{gap:10px;width:calc(100vw - 32px)}
   .role-btn{
-    flex:1;min-width:0;
-    padding:14px 10px;
-    font-size:.92rem;
+    flex:1 1 0;min-width:0;width:auto;
+    padding:13px 6px;
+    font-size:.9rem;letter-spacing:.02em;
+    border-radius:.55em;
+    /* lighter neumorphic shadows for small screens */
+    box-shadow:3px 3px 10px rgba(0,0,0,.45),-3px -3px 8px rgba(255,255,255,.03),
+               inset 0 1px 0 rgba(255,255,255,.08),
+               0 0 18px rgba(139,124,246,.10);
   }
-  .role-btn .btn-arrow{display:none;visibility:hidden}
+  .role-btn:hover{
+    box-shadow:3px 3px 10px rgba(0,0,0,.45),-3px -3px 8px rgba(255,255,255,.04),
+               inset 0 1px 0 rgba(255,255,255,.1),
+               0 0 26px rgba(139,124,246,.26);
+  }
+  .role-btn .btn-arrow{display:none}
+}
+
+/* short/landscape phones — compact hero so nothing overlaps */
+@media(max-width:920px) and (orientation:landscape){
+  .hero-role-bar{gap:6px;bottom:10px}
+  .role-btn{padding:10px 14px;font-size:.85rem}
 }
 
 /* ============ REGISTER PAGES SHARED ============ */

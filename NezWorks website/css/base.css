@@ -238,6 +238,15 @@ body.modal-open{overflow:hidden}
 .btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:6px 6px 14px rgba(0,0,0,.4),-5px -5px 12px rgba(255,255,255,.03)}
 .btn:disabled:after,.btn:disabled:before{display:none}
 
+/* touch devices: tappable, no overflow */
+@media (hover:none) and (pointer:coarse){
+  .btn{white-space:nowrap;max-width:100%}
+  .btn:active{
+    transform:scale(.96);
+    box-shadow:inset 4px 4px 12px rgba(0,0,0,.6),inset -4px -4px 12px rgba(255,255,255,.05);
+  }
+}
+
 /* ============ SECTION SHELL ============ */
 .section{position:relative;z-index:2;padding:120px 0}
 .section-head{margin-bottom:56px;max-width:640px}
