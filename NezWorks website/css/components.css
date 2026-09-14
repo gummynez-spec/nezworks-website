@@ -5,7 +5,7 @@
   position:relative;z-index:2;
   min-height:100vh;
   display:flex;align-items:center;justify-content:center;
-  padding:calc(var(--nav-h) + 40px) 0 60px;
+  padding:calc(var(--nav-h) + 40px) 0 150px;
   overflow:hidden;
 }
 .hero-parallax{

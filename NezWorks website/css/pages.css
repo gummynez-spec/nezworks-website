@@ -75,62 +75,51 @@
 }
 .sub-orbit-core img{width:62%;height:62%;filter:drop-shadow(0 4px 18px rgba(120,167,255,.35))}
 
-/* ============ LANDING ROLE CHOICE ============ */
+/* ============ LANDING ROLE CHOICE — glass purple buttons, bottom center ============ */
 body{font-family:var(--font-body),'Noto Sans Thai',sans-serif}
-.role-choice{margin-top:14px}
+.hero-role-bar{
+  position:absolute;left:50%;bottom:clamp(40px,7vh,72px);
+  transform:translateX(-50%);
+  z-index:5;
+  display:flex;flex-direction:column;align-items:center;gap:16px;
+  width:max-content;
+}
 .rc-q{
-  font-size:.78rem;letter-spacing:.3em;color:var(--ink-3);
-  margin-bottom:16px;font-weight:600;
+  font-size:.74rem;letter-spacing:.34em;color:var(--ink-3);
+  font-weight:600;
 }
-.rc-buttons{
-  display:grid;grid-template-columns:repeat(2,minmax(240px,300px));
-  gap:16px;justify-content:center;
+.rc-buttons{display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
+
+/* the glass purple role buttons — build on .btn base */
+.role-btn{
+  min-width:220px;justify-content:center;
+  font-size:1.02rem;letter-spacing:.06em;
+  color:var(--ink);
+  background:linear-gradient(145deg,rgba(139,124,246,.16),rgba(92,139,255,.06) 55%,rgba(13,16,32,.6));
+  border:1px solid rgba(139,124,246,.42);
+  box-shadow:6px 6px 16px rgba(0,0,0,.5),-5px -5px 12px rgba(255,255,255,.04),
+             inset 0 1px 0 rgba(255,255,255,.08),
+             0 0 24px rgba(139,124,246,.10);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
 }
-@media(max-width:640px){.rc-buttons{grid-template-columns:1fr;width:min(320px,88vw);margin-inline:auto}}
-.role-card{
-  position:relative;overflow:hidden;
-  display:flex;align-items:center;gap:18px;
-  padding:22px 24px;border-radius:20px;
-  background:var(--glass);
-  border:1px solid var(--stroke);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  transition:transform .35s var(--ease-out),border-color .35s,box-shadow .35s;
-  text-align:left;
+.role-btn:before{background:rgba(0,0,0,.22)}
+.role-btn:after{
+  background:linear-gradient(160deg,rgba(139,124,246,.75),rgba(92,139,255,.85));
 }
-.role-card:hover{
-  transform:translateY(-5px);
-  border-color:rgba(139,124,246,.6);
-  box-shadow:0 20px 50px rgba(0,0,0,.5),0 0 34px rgba(92,139,255,.14);
+.role-btn:hover{
+  color:#fff;
+  border-color:rgba(139,124,246,.75);
+  box-shadow:6px 6px 16px rgba(0,0,0,.5),-5px -5px 12px rgba(255,255,255,.05),
+             inset 0 1px 0 rgba(255,255,255,.1),
+             0 0 34px rgba(139,124,246,.28);
 }
-.role-card::before{
-  content:"";position:absolute;inset:0;z-index:0;
-  background:radial-gradient(120% 140% at 50% 120%,rgba(139,124,246,.16),transparent 60%);
-  opacity:0;transition:opacity .4s;
+.role-btn .btn-arrow{color:var(--accent-2);transition:transform .25s var(--ease-out)}
+.role-btn:hover .btn-arrow{transform:translateX(6px)}
+
+@media(max-width:560px){
+  .rc-buttons{flex-direction:column;align-items:center;width:min(300px,88vw)}
+  .role-btn{width:100%}
 }
-.role-card:hover::before{opacity:1}
-.role-icon{
-  position:relative;z-index:1;flex:none;
-  width:52px;height:52px;border-radius:16px;
-  display:grid;place-items:center;
-  color:var(--accent-2);
-  background:rgba(139,124,246,.10);
-  border:1px solid rgba(139,124,246,.3);
-  transition:transform .4s var(--ease-out);
-}
-.role-card:hover .role-icon{transform:rotate(-8deg) scale(1.08)}
-.role-icon svg{width:30px;height:30px}
-.role-text{position:relative;z-index:1;display:grid;gap:3px}
-.role-text b{
-  font-family:var(--font-display),'Noto Sans Thai',sans-serif;
-  font-size:1.05rem;font-weight:600;
-}
-.role-text small{font-size:.74rem;color:var(--ink-3)}
-.role-arrow{
-  position:relative;z-index:1;margin-left:auto;
-  color:var(--accent-2);font-size:1.2rem;
-  transition:transform .3s var(--ease-out);
-}
-.role-card:hover .role-arrow{transform:translateX(6px)}
 
 /* ============ REGISTER PAGES SHARED ============ */
 .reg-wrap{
