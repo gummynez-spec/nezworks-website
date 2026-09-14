@@ -4,9 +4,15 @@
 .hero{
   position:relative;z-index:2;
   min-height:100vh;
+  min-height:100svh;
   display:flex;align-items:center;justify-content:center;
-  padding:calc(var(--nav-h) + 40px) 0 150px;
+  padding:calc(var(--nav-h) + 30px) 0 calc(env(safe-area-inset-bottom, 0px) + 160px);
   overflow:hidden;
+}
+@media(max-width:560px){
+  .hero{padding-bottom:calc(env(safe-area-inset-bottom, 0px) + 190px)}
+  .hero-title{font-size:clamp(2.1rem,10vw,2.8rem)}
+  .hero-sub{font-size:.94rem;margin-bottom:0}
 }
 .hero-parallax{
   position:absolute;inset:0;
