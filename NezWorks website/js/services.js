@@ -1,70 +1,56 @@
-/* ============ SERVICES — related-service discovery + orbital line + filter tabs ============ */
+/* ============ SERVICES PAGE — sidebar filter + category nav ============ */
 (() => {
-  const grid = document.querySelector('.services-grid');
-  if (!grid) return;
+  const page = document.querySelector('.svc-page');
+  if (!page) return;
 
-  const cards = [...grid.querySelectorAll('.service-card')];
+  const links = document.querySelectorAll('.svc-side-link');
+  const empty = document.getElementById('svcEmpty');
+  const portfolio = document.getElementById('svcPortfolio');
 
-  /* ---------- filter tabs ---------- */
-  const tabs = document.querySelectorAll('.svc-tab');
-  if (tabs.length) {
-    tabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        filterCards(tab.dataset.filter);
-      });
-    });
+  /* read ?cat= from URL */
+  const params = new URLSearchParams(location.search);
+  const cat = params.get('cat') || 'all';
 
-    /* read ?cat= from URL on load */
-    const urlCat = new URLSearchParams(location.search).get('cat') || 'all';
-    const matchTab = [...tabs].find(t => t.dataset.filter === urlCat);
-    if (matchTab) {
-      tabs.forEach(t => t.classList.remove('active'));
-      matchTab.classList.add('active');
-      filterCards(urlCat);
-    }
-  }
+  /* highlight active sidebar link */
+  links.forEach((link) => {
+    const linkCat = new URL(link.href).searchParams.get('cat');
+    if (linkCat === cat) link.classList.add('active');
+    else link.classList.remove('active');
+  });
 
-  function filterCards(filter) {
-    cards.forEach((card) => {
-      if (filter === 'all' || card.dataset.category === filter) {
-        card.classList.remove('hide-card');
+  /* category switch: update URL without reload */
+  links.forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const newCat = new URL(link.href).searchParams.get('cat');
+      const url = new URL(location);
+      url.searchParams.set('cat', newCat);
+      history.pushState({}, '', url);
+
+      /* update active state */
+      links.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+
+      /* show/hide empty state (placeholder for future portfolio) */
+      if (newCat === 'all') {
+        empty.querySelector('.svc-empty-text').textContent = 'Creative work is coming soon.';
+        empty.querySelector('.svc-empty-sub').textContent = 'Select a category from the sidebar to explore services.';
       } else {
-        card.classList.add('hide-card');
+        const label = link.textContent.trim();
+        empty.querySelector('.svc-empty-text').textContent = label + ' projects coming soon.';
+        empty.querySelector('.svc-empty-sub').textContent = 'We\'re curating the best ' + label.toLowerCase() + ' work for you.';
       }
-    });
-  }
-
-  cards.forEach((card) => {
-    const rel = card.querySelector('.service-related');
-    if (!rel) return;
-    const items = (rel.dataset.related || '').split(',').map(s => s.trim()).filter(Boolean);
-    items.forEach((label) => {
-      const chip = document.createElement('span');
-      chip.textContent = label;
-      rel.appendChild(chip);
     });
   });
 
-  /* hover discovery: dim others, illuminate related */
-  cards.forEach((card) => {
-    card.addEventListener('mouseenter', () => {
-      if (NW.reduced) return;
-      grid.classList.add('dim-others');
-      const myService = card.dataset.service;
-      // related cards glow — find cards whose related list includes myService
-      cards.forEach((other) => {
-        if (other === card) return;
-        const otherRel = other.querySelector('.service-related');
-        const related = otherRel ? (otherRel.dataset.related || '') : '';
-        const isRelated = related.split(',').map(s => s.trim()).includes(myService);
-        other.classList.toggle('related-lit', isRelated);
-      });
-    });
-    card.addEventListener('mouseleave', () => {
-      grid.classList.remove('dim-others');
-      cards.forEach((c) => c.classList.remove('related-lit'));
+  /* browser back/forward */
+  window.addEventListener('popstate', () => {
+    const p = new URLSearchParams(location.search);
+    const c = p.get('cat') || 'all';
+    links.forEach((link) => {
+      const linkCat = new URL(link.href).searchParams.get('cat');
+      if (linkCat === c) link.classList.add('active');
+      else link.classList.remove('active');
     });
   });
 })();

@@ -6,13 +6,13 @@
 <title>NezWorks — Services</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/animations.css">
 <link rel="stylesheet" href="css/components.css">
 <link rel="stylesheet" href="css/pages.css">
 </head>
-<body>
+<body class="svc-page">
 
 <div class="scroll-progress" aria-hidden="true"><span></span></div>
 <div class="nebula" aria-hidden="true">
@@ -33,12 +33,10 @@
       <span class="logo-word">NEZWORKS</span>
     </a>
     <nav class="nav-links">
-      <li>
-        <a class="nav-link-parent" data-cursor="link">Services <span class="nav-chevron"></span></a>
-      </li>
-      <li><a href="how.html" data-cursor="link">How we work</a></li>
-      <li><a href="career.html" data-cursor="link">Career</a></li>
-      <li><a href="relax.html" data-cursor="link">Relax</a></li>
+      <a href="services.html" class="nav-active" data-cursor="link">Services</a>
+      <a href="how.html" data-cursor="link">How we work</a>
+      <a href="career.html" data-cursor="link">Career</a>
+      <a href="relax.html" data-cursor="link">Relax</a>
     </nav>
     <div class="nav-cta">
       <a href="project.html" class="btn btn-primary btn-sm" data-cursor="hover">Start a Project <span class="btn-arrow">→</span></a>
@@ -46,229 +44,39 @@
   </div>
 </header>
 
-<!-- Services Side Panel -->
-<aside class="svc-panel" id="svcPanel">
-  <div class="svc-panel-inner">
-    <p class="svc-panel-label">SERVICES</p>
-    <nav class="svc-panel-nav">
-      <a href="services.html?cat=all" class="svc-panel-link active" data-cat="all"><span class="svc-pdot"></span>All</a>
-      <a href="services.html?cat=logo" class="svc-panel-link" data-cat="logo"><span class="svc-pdot"></span>Logo</a>
-      <a href="services.html?cat=banner" class="svc-panel-link" data-cat="banner"><span class="svc-pdot"></span>Banner</a>
-      <a href="services.html?cat=poster" class="svc-panel-link" data-cat="poster"><span class="svc-pdot"></span>Poster</a>
-      <a href="services.html?cat=video" class="svc-panel-link" data-cat="video"><span class="svc-pdot"></span>Video</a>
-      <a href="services.html?cat=graphic" class="svc-panel-link" data-cat="graphic"><span class="svc-pdot"></span>Graphic Design</a>
+<div class="svc-layout">
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="svc-sidebar">
+    <p class="svc-sidebar-label">SERVICES</p>
+    <nav class="svc-sidebar-nav">
+      <a href="services.html?cat=all" class="svc-side-link active" data-cat="all"><span class="svc-sdot"></span>All</a>
+      <a href="services.html?cat=logo" class="svc-side-link" data-cat="logo"><span class="svc-sdot"></span>Logo</a>
+      <a href="services.html?cat=banner" class="svc-side-link" data-cat="banner"><span class="svc-sdot"></span>Banner</a>
+      <a href="services.html?cat=poster" class="svc-side-link" data-cat="poster"><span class="svc-sdot"></span>Poster</a>
+      <a href="services.html?cat=video" class="svc-side-link" data-cat="video"><span class="svc-sdot"></span>Video</a>
+      <a href="services.html?cat=graphic" class="svc-side-link" data-cat="graphic"><span class="svc-sdot"></span>Graphic Design</a>
     </nav>
-  </div>
-</aside>
-<div class="svc-overlay" id="svcOverlay"></div>
+  </aside>
 
-<main id="top">
-
-<section class="sub-hero">
-  <div class="container sub-hero-grid">
-    <div>
-      <nav class="sub-breadcrumb sr"><a href="index.html">HOME</a><span class="sep">/</span><span>SERVICES</span></nav>
-      <p class="sub-kicker sr">SERVICES</p>
-      <h1 class="sub-title sr">Everything your brand needs,<br><span class="accent">in one system.</span></h1>
-      <p class="sub-lead sr">Branding, video, content, UI/UX, creators and web — every creative discipline in one orbital system. Start with one service or combine them into a full mission.</p>
-      <div class="sub-cta-row sr">
-        <a href="project.html" class="btn btn-primary btn-lg" data-cursor="hover">Start a Project <span class="btn-arrow">→</span></a>
-        <a href="#svc-list" class="btn btn-ghost btn-lg" data-cursor="hover">Browse services</a>
+  <!-- MAIN CONTENT -->
+  <main class="svc-main" id="top">
+    <div class="svc-main-inner">
+      <div class="svc-empty" id="svcEmpty">
+        <div class="svc-empty-icon">
+          <svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="36" stroke="rgba(139,124,246,.25)" stroke-width="1.5"/><circle cx="40" cy="40" r="18" stroke="rgba(139,124,246,.15)" stroke-width="1"/><circle cx="40" cy="40" r="4" fill="rgba(139,124,246,.4)"/><circle cx="68" cy="40" r="2.5" fill="rgba(92,139,255,.6)"/></svg>
+        </div>
+        <p class="svc-empty-text">Creative work is coming soon.</p>
+        <p class="svc-empty-sub">Select a category from the sidebar to explore services.</p>
       </div>
+      <div class="svc-portfolio" id="svcPortfolio"></div>
     </div>
-    <div class="sub-orbit sr" aria-hidden="true">
-      <span class="sub-orbit-ring"></span>
-      <span class="sub-orbit-ring r2"></span>
-      <div class="sub-orbit-core"><img src="assets/nezworks-logo.svg" alt=""></div>
-    </div>
-  </div>
-  <div class="container">
-    <div class="sub-stats sr">
-      <div class="sub-stat"><b>6</b><span>Core services</span></div>
-      <div class="sub-stat"><b>120K+</b><span>Talents in orbit</span></div>
-      <div class="sub-stat"><b>8.4K+</b><span>Projects delivered</span></div>
-      <div class="sub-stat"><b>35+</b><span>Countries served</span></div>
-    </div>
-  </div>
-</section>
+  </main>
 
-<section class="sub-section" id="svc-list">
-  <div class="container">
-    <div class="sub-head">
-      <p class="sub-kicker sr">THE MENU</p>
-      <h2 class="sub-h2 sr">Pick your orbit.</h2>
-    </div>
-
-    <div class="svc-filter sr" role="tablist">
-      <button class="svc-tab active" data-filter="all" role="tab">All</button>
-      <button class="svc-tab" data-filter="logo" role="tab">Logo</button>
-      <button class="svc-tab" data-filter="banner" role="tab">Banner</button>
-      <button class="svc-tab" data-filter="poster" role="tab">Poster</button>
-      <button class="svc-tab" data-filter="video" role="tab">Video</button>
-      <button class="svc-tab" data-filter="graphic" role="tab">Graphic Design</button>
-    </div>
-
-    <div class="services-grid">
-
-      <article class="service-card sr" data-service="BRANDING" data-category="logo" data-cursor="explore" tabindex="0">
-        <div class="card-shine"></div>
-        <div class="card-grain"></div>
-        <div class="service-icon">
-          <svg class="orbit-icon" viewBox="0 0 48 48"><circle class="oi-core" cx="24" cy="24" r="9"/><circle class="oi-path" cx="24" cy="24" r="18"/><circle class="oi-sat" r="2.4" cx="42" cy="24"/></svg>
-        </div>
-        <h3>Branding & Identity</h3>
-        <p>Logo systems, visual identity, brand guidelines and strategy that make your business impossible to ignore.</p>
-        <div class="service-related" data-related="VIDEO,CONTENT,UI / UX"></div>
-        <span class="service-cta">Explore <span class="btn-arrow">→</span></span>
-      </article>
-
-      <article class="service-card sr" data-service="VIDEO" data-category="video" data-cursor="explore" tabindex="0">
-        <div class="card-shine"></div>
-        <div class="card-grain"></div>
-        <div class="service-icon">
-          <svg class="play-icon" viewBox="0 0 48 48"><circle class="pi-ring" cx="24" cy="24" r="20"/><path class="pi-play" d="M20 16.5v15l12-7.5z"/></svg>
-        </div>
-        <h3>Video Production</h3>
-        <p>Promos, explainers, social edits and motion design — produced, cut and polished by dedicated editors.</p>
-        <div class="service-related" data-related="BRANDING,CONTENT,CREATORS"></div>
-        <span class="service-cta">Explore <span class="btn-arrow">→</span></span>
-      </article>
-
-      <article class="service-card sr" data-service="CONTENT" data-category="poster" data-cursor="explore" tabindex="0">
-        <div class="card-shine"></div>
-        <div class="card-grain"></div>
-        <div class="service-icon">
-          <svg class="nodes-icon" viewBox="0 0 48 48"><circle class="ni-dot" cx="24" cy="12" r="3.5"/><circle class="ni-dot" cx="12" cy="32" r="3.5"/><circle class="ni-dot" cx="36" cy="32" r="3.5"/><line class="ni-line" x1="24" y1="12" x2="12" y2="32"/><line class="ni-line" x1="24" y1="12" x2="36" y2="32"/><line class="ni-line" x1="12" y1="32" x2="36" y2="32"/></svg>
-        </div>
-        <h3>Content Strategy</h3>
-        <p>Copywriting, campaigns and content systems that turn attention into relationships and relationships into revenue.</p>
-        <div class="service-related" data-related="BRANDING,CREATORS,VIDEO"></div>
-        <span class="service-cta">Explore <span class="btn-arrow">→</span></span>
-      </article>
-
-      <article class="service-card sr" data-service="UI / UX" data-category="graphic" data-cursor="explore" tabindex="0">
-        <div class="card-shine"></div>
-        <div class="card-grain"></div>
-        <div class="service-icon">
-          <svg class="orbit-icon" viewBox="0 0 48 48"><circle class="oi-core" cx="24" cy="24" r="9"/><circle class="oi-path" cx="24" cy="24" r="18"/><circle class="oi-sat" r="2.4" cx="42" cy="24"/></svg>
-        </div>
-        <h3>UI / UX Design</h3>
-        <p>Interfaces that feel alive — research, wireframes, prototypes and pixel-perfect design systems for web and mobile.</p>
-        <div class="service-related" data-related="BRANDING,VIDEO,CONTENT"></div>
-        <span class="service-cta">Explore <span class="btn-arrow">→</span></span>
-      </article>
-
-      <article class="service-card sr" data-service="CREATORS" data-category="banner" data-cursor="explore" tabindex="0">
-        <div class="card-shine"></div>
-        <div class="card-grain"></div>
-        <div class="service-icon">
-          <svg class="nodes-icon" viewBox="0 0 48 48"><circle class="ni-dot" cx="24" cy="24" r="3.5"/><circle class="ni-dot" cx="38" cy="14" r="3.5"/><circle class="ni-dot" cx="10" cy="14" r="3.5"/><circle class="ni-dot" cx="24" cy="40" r="3.5"/><line class="ni-line" x1="24" y1="24" x2="38" y2="14"/><line class="ni-line" x1="24" y1="24" x2="10" y2="14"/><line class="ni-line" x1="24" y1="24" x2="24" y2="40"/></svg>
-        </div>
-        <h3>Creator Network</h3>
-        <p>On-demand access to vetted creators, photographers and storytellers for always-on content production.</p>
-        <div class="service-related" data-related="VIDEO,CONTENT,BRANDING"></div>
-        <span class="service-cta">Explore <span class="btn-arrow">→</span></span>
-      </article>
-
-      <article class="service-card sr" data-service="WEB" data-category="banner" data-cursor="explore" tabindex="0">
-        <div class="card-shine"></div>
-        <div class="card-grain"></div>
-        <div class="service-icon">
-          <svg class="orbit-icon oi-dual" viewBox="0 0 48 48"><circle class="oi-core" cx="24" cy="24" r="9"/><circle class="oi-path" cx="24" cy="24" r="18"/><circle class="oi-path oi-p2" cx="24" cy="24" r="18"/><circle class="oi-sat" r="2.4" cx="42" cy="24"/></svg>
-        </div>
-        <h3>Web Development</h3>
-        <p>Fast, animated, accessible websites — built with modern stacks and launched without drama.</p>
-        <div class="service-related" data-related="UI / UX,BRANDING,CONTENT"></div>
-        <span class="service-cta">Explore <span class="btn-arrow">→</span></span>
-      </article>
-
-    </div>
-  </div>
-</section>
-
-<section class="sub-section sub-section-alt">
-  <div class="container">
-    <div class="sub-head">
-      <p class="sub-kicker sr">COMBINED MISSIONS</p>
-      <h2 class="sub-h2 sr">Or services that<br><span class="accent">travel together.</span></h2>
-    </div>
-    <div class="combo-grid">
-      <div class="combo-card sr">
-        <span class="combo-tag">LAUNCH KIT</span>
-        <h3>Brand + Web + Content</h3>
-        <p>New business? Identity, website and launch content built as one coordinated mission — one timeline, one team, one orbit.</p>
-        <div class="combo-price">from $14,000</div>
-      </div>
-      <div class="combo-card sr sr-d1">
-        <span class="combo-tag">CONTENT ENGINE</span>
-        <h3>Creators + Video + Strategy</h3>
-        <p>Always-on content with a managed pod — strategy leads, creators produce, editors polish. Your channels never sleep.</p>
-        <div class="combo-price">from $8,200/mo</div>
-      </div>
-      <div class="combo-card sr sr-d2">
-        <span class="combo-tag">PRODUCT ORBIT</span>
-        <h3>UI/UX + Web + Brand</h3>
-        <p>Product companies: design system, brand layer and marketing site engineered together from day one. No seams.</p>
-        <div class="combo-price">from $18,500</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="sub-section">
-  <div class="container">
-    <div class="cta-panel glass-reflect sr">
-      <div class="cta-orbits" aria-hidden="true">
-        <span class="cta-ring"></span>
-        <span class="cta-ring cta-ring-2"></span>
-        <span class="cta-sat"></span>
-      </div>
-      <p class="section-eyebrow">NOT SURE WHAT YOU NEED?</p>
-      <h2 class="cta-title">We'll find the right orbit.</h2>
-      <p class="cta-sub">Tell us the goal — we'll assemble the services and the talent to reach it.</p>
-      <a href="project.html" class="btn btn-primary btn-lg" data-cursor="hover">Start a Project <span class="btn-arrow">→</span></a>
-      <p class="cta-note">No commitment · Reply within 24h</p>
-    </div>
-  </div>
-</section>
-
-</main>
-
-<footer class="footer">
-  <div class="container footer-inner">
-    <div class="footer-brand">
-      <img class="footer-logo" src="assets/nezworks-logo.svg" alt="NezWorks logo">
-      <p>The creative orbital system.<br>Connecting businesses with the talent they need.</p>
-    </div>
-    <div class="footer-col">
-      <h5>SYSTEM</h5>
-      <a href="services.html">Services</a>
-      <a href="how.html">How we work</a>
-      <a href="career.html">Career</a>
-    </div>
-    <div class="footer-col">
-      <h5>EXPLORE</h5>
-      <a href="project.html">Start a project</a>
-      <a href="index.html#work">Work</a>
-      <a href="relax.html">Relax</a>
-    </div>
-    <div class="footer-col">
-      <h5>CONNECT</h5>
-      <a href="#">hello@nezworks.com</a>
-      <a href="#">Instagram</a>
-      <a href="#">LinkedIn</a>
-    </div>
-  </div>
-  <div class="container footer-base">
-    <span>© 2026 NezWorks. All rights reserved.</span>
-    <span class="footer-orbit"><i></i></span>
-    <span>Made with precision, delivered in orbit.</span>
-  </div>
-</footer>
+</div>
 
 <script src="js/utils.js"></script>
 <script src="js/cosmos.js"></script>
-<script src="js/nav-dropdown.js"></script>
 <script src="js/cursor.js"></script>
 <script src="js/scroll-nav.js"></script>
 <script src="js/services.js"></script>
