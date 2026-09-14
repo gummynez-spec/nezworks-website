@@ -1,56 +1,64 @@
-/* ============ SERVICES PAGE — sidebar filter + category nav ============ */
+/* ============ SERVICES PAGE — category tabs + helper interaction ============ */
 (() => {
-  const page = document.querySelector('.svc-page');
-  if (!page) return;
+  /* ---------- category tabs ---------- */
+  const tabs = document.querySelectorAll('.svc-tab');
+  const emptyTitle = document.querySelector('.svc-empty-title');
+  const emptyText = document.querySelector('.svc-empty-text');
 
-  const links = document.querySelectorAll('.svc-side-link');
-  const empty = document.getElementById('svcEmpty');
-  const portfolio = document.getElementById('svcPortfolio');
+  if (tabs.length) {
+    /* read ?cat= from URL on load */
+    const urlCat = new URLSearchParams(location.search).get('cat') || 'all';
+    const matchTab = [...tabs].find(t => t.dataset.filter === urlCat);
+    if (matchTab) {
+      tabs.forEach(t => t.classList.remove('active'));
+      matchTab.classList.add('active');
+      updateEmptyState(urlCat);
+    }
 
-  /* read ?cat= from URL */
-  const params = new URLSearchParams(location.search);
-  const cat = params.get('cat') || 'all';
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        updateEmptyState(tab.dataset.filter);
 
-  /* highlight active sidebar link */
-  links.forEach((link) => {
-    const linkCat = new URL(link.href).searchParams.get('cat');
-    if (linkCat === cat) link.classList.add('active');
-    else link.classList.remove('active');
-  });
+        /* update URL without reload */
+        const url = new URL(location);
+        url.searchParams.set('cat', tab.dataset.filter);
+        history.pushState({}, '', url);
+      });
+    });
 
-  /* category switch: update URL without reload */
-  links.forEach((link) => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const newCat = new URL(link.href).searchParams.get('cat');
-      const url = new URL(location);
-      url.searchParams.set('cat', newCat);
-      history.pushState({}, '', url);
-
-      /* update active state */
-      links.forEach(l => l.classList.remove('active'));
-      link.classList.add('active');
-
-      /* show/hide empty state (placeholder for future portfolio) */
-      if (newCat === 'all') {
-        empty.querySelector('.svc-empty-text').textContent = 'Creative work is coming soon.';
-        empty.querySelector('.svc-empty-sub').textContent = 'Select a category from the sidebar to explore services.';
+    function updateEmptyState(cat) {
+      if (!emptyTitle || !emptyText) return;
+      if (cat === 'all') {
+        emptyTitle.textContent = 'COMING SOON';
+        emptyText.textContent = "We're building something worth seeing.";
       } else {
-        const label = link.textContent.trim();
-        empty.querySelector('.svc-empty-text').textContent = label + ' projects coming soon.';
-        empty.querySelector('.svc-empty-sub').textContent = 'We\'re curating the best ' + label.toLowerCase() + ' work for you.';
+        const names = { logo:'Logo', banner:'Banner', poster:'Poster', video:'Video', graphic:'Graphic Design', content:'Content' };
+        emptyTitle.textContent = (names[cat] || cat) + ' — COMING SOON';
+        emptyText.textContent = "We're curating the best " + (names[cat] || cat).toLowerCase() + " work for you.";
+      }
+    }
+
+    /* browser back/forward */
+    window.addEventListener('popstate', () => {
+      const cat = new URLSearchParams(location.search).get('cat') || 'all';
+      const match = [...tabs].find(t => t.dataset.filter === cat);
+      if (match) {
+        tabs.forEach(t => t.classList.remove('active'));
+        match.classList.add('active');
+        updateEmptyState(cat);
       }
     });
-  });
+  }
 
-  /* browser back/forward */
-  window.addEventListener('popstate', () => {
-    const p = new URLSearchParams(location.search);
-    const c = p.get('cat') || 'all';
-    links.forEach((link) => {
-      const linkCat = new URL(link.href).searchParams.get('cat');
-      if (linkCat === c) link.classList.add('active');
-      else link.classList.remove('active');
+  /* ---------- "Not sure where to start?" helper ---------- */
+  const helperTrigger = document.getElementById('helperTrigger');
+  const helperPanel = document.getElementById('helperPanel');
+  if (helperTrigger && helperPanel) {
+    helperTrigger.addEventListener('click', () => {
+      helperPanel.classList.toggle('open');
+      helperTrigger.textContent = helperPanel.classList.contains('open') ? 'CLOSE' : 'FIND MY SERVICE →';
     });
-  });
+  }
 })();
