@@ -12,15 +12,27 @@
       tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-        const filter = tab.dataset.filter;
-        cards.forEach((card) => {
-          if (filter === 'all' || card.dataset.category === filter) {
-            card.classList.remove('hide-card');
-          } else {
-            card.classList.add('hide-card');
-          }
-        });
+        filterCards(tab.dataset.filter);
       });
+    });
+
+    /* read ?cat= from URL on load */
+    const urlCat = new URLSearchParams(location.search).get('cat') || 'all';
+    const matchTab = [...tabs].find(t => t.dataset.filter === urlCat);
+    if (matchTab) {
+      tabs.forEach(t => t.classList.remove('active'));
+      matchTab.classList.add('active');
+      filterCards(urlCat);
+    }
+  }
+
+  function filterCards(filter) {
+    cards.forEach((card) => {
+      if (filter === 'all' || card.dataset.category === filter) {
+        card.classList.remove('hide-card');
+      } else {
+        card.classList.add('hide-card');
+      }
     });
   }
 

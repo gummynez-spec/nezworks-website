@@ -33,10 +33,20 @@
       <span class="logo-word">NEZWORKS</span>
     </a>
     <nav class="nav-links">
-      <a href="services.html" data-cursor="link">Services</a>
-      <a href="how.html" data-cursor="link">How we work</a>
-      <a href="career.html" data-cursor="link">Career</a>
-      <a href="relax.html" data-cursor="link">Relax</a>
+      <li>
+        <a class="nav-link-parent" data-cursor="link">Services <span class="nav-chevron"></span></a>
+        <div class="svc-dropdown">
+          <a href="services.html?cat=all" data-cursor="link"><span class="svc-dot"></span>All</a>
+          <a href="services.html?cat=logo" data-cursor="link"><span class="svc-dot"></span>Logo</a>
+          <a href="services.html?cat=banner" data-cursor="link"><span class="svc-dot"></span>Banner</a>
+          <a href="services.html?cat=poster" data-cursor="link"><span class="svc-dot"></span>Poster</a>
+          <a href="services.html?cat=video" data-cursor="link"><span class="svc-dot"></span>Video</a>
+          <a href="services.html?cat=graphic" data-cursor="link"><span class="svc-dot"></span>Graphic Design</a>
+        </div>
+      </li>
+      <li><a href="how.html" data-cursor="link">How we work</a></li>
+      <li><a href="career.html" data-cursor="link">Career</a></li>
+      <li><a href="relax.html" data-cursor="link">Relax</a></li>
     </nav>
     <div class="nav-cta">
       <a href="project.html" class="btn btn-primary btn-sm" data-cursor="hover">Start a Project <span class="btn-arrow">→</span></a>
@@ -250,6 +260,7 @@
 
 <script src="js/utils.js"></script>
 <script src="js/cosmos.js"></script>
+<script src="js/nav-dropdown.js"></script>
 <script src="js/cursor.js"></script>
 <script src="js/scroll-nav.js"></script>
 <script src="js/services.js"></script>
