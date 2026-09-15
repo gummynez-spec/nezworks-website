@@ -156,12 +156,11 @@
   pointer-events:none;z-index:1;overflow:hidden;
 }
 .hiw-planet{
-  position:absolute;top:50%;right:-12%;
-  width:64vh;
-  height:64vh;
+  position:absolute;top:50%;right:-10%;
+  width:96vh;
+  height:96vh;
   opacity:0;
   transform:translateY(-50%) rotate(22deg);
-  filter:drop-shadow(0 0 44px rgba(139,124,246,.15));
   transition:opacity 1.6s var(--ease-soft),transform 2s var(--ease-soft);
   will-change:transform,opacity;
 }
@@ -239,9 +238,9 @@
   .hiw-step h3{font-size:.96rem}
   .hiw-step p{max-width:none}
   .hiw-planet{
-    width:48vh;
-    height:48vh;
-    right:-14%;
+    width:72vh;
+    height:72vh;
+    right:-12%;
   }
   .hiw-planet.active{opacity:.22}
   .nw-final{padding:28px 0 96px}
@@ -253,8 +252,8 @@
   .hiw-orbit{width:48px;height:48px}
   .hiw-steps::before{left:23px}
   .hiw-planet{
-    width:40vh;
-    height:40vh;
-    right:-18%;
+    width:56vh;
+    height:56vh;
+    right:-16%;
   }
 }
