@@ -48,14 +48,16 @@
         enterObs.observe(wrap);
       }
 
-      /* steps activate progressively as the user scrolls down */
+      /* steps activate progressively as the user scrolls (both directions) */
       var stepObs = new IntersectionObserver(function(entries){
         entries.forEach(function(entry){
-          if(!entry.isIntersecting || !started) return;
+          if(!started) return;
+          /* only trigger when the step is entering view, not while leaving */
+          if(entry.intersectionRatio < 0.5) return;
           var idx = stepEls.indexOf(entry.target);
-          if(idx > activeIdx) activate(idx);
+          if(idx >= 0 && idx !== activeIdx) activate(idx);
         });
-      },{ threshold:0.55, rootMargin:"-60px 0px" });
+      },{ threshold:0.5, rootMargin:"-40px 0px" });
 
       stepEls.forEach(function(step){ stepObs.observe(step); });
     } else {

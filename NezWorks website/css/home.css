@@ -117,7 +117,7 @@
 }
 .hiw-step{
   display:flex;gap:22px;align-items:center;
-  min-height:28vh;
+  min-height:22vh;
   opacity:.8;
   transition:opacity .6s var(--ease-out);
 }
@@ -146,11 +146,11 @@
 
 /* active step text — zoom effect */
 .hiw-copy{
-  transform:scale(.82);opacity:.55;
+  transform:scale(.8);opacity:.55;
   transform-origin:left center;
-  transition:transform .75s var(--ease-out),opacity .6s var(--ease-out);
+  transition:transform .7s var(--ease-out),opacity .55s var(--ease-out);
 }
-.hiw-step.active .hiw-copy{transform:scale(1.38);opacity:1}
+.hiw-step.active .hiw-copy{transform:scale(1.5);opacity:1}
 
 /* planets */
 .hiw-planets{
@@ -163,7 +163,7 @@
   height:96vh;
   opacity:0;
   transform:translateY(-50%) rotate(22deg);
-  transition:opacity 1.6s var(--ease-soft),transform 2s var(--ease-soft);
+  transition:opacity 1s var(--ease-soft),transform 1.2s var(--ease-soft);
   will-change:transform,opacity;
 }
 .hiw-planet.active{
@@ -236,11 +236,11 @@
   .nw-hiw{padding:80px 0 100px}
   .hiw-head{margin-bottom:40px}
   .hiw-steps{gap:28px}
-  .hiw-step{gap:18px;min-height:24vh}
+  .hiw-step{gap:18px;min-height:20vh}
   .hiw-step h3{font-size:.96rem}
   .hiw-step p{max-width:none}
-  .hiw-step.active .hiw-copy{transform:scale(1.28)}
-  .hiw-copy{transform:scale(.88)}
+  .hiw-step.active .hiw-copy{transform:scale(1.38)}
+  .hiw-copy{transform:scale(.85)}
   .hiw-planet{
     width:72vh;
     height:72vh;
@@ -255,8 +255,8 @@
   .nw-cat-grid{grid-template-columns:1fr}
   .hiw-orbit{width:48px;height:48px}
   .hiw-steps::before{left:23px}
-  .hiw-step{min-height:30vh}
-  .hiw-step.active .hiw-copy{transform:scale(1.22)}
+  .hiw-step{min-height:24vh}
+  .hiw-step.active .hiw-copy{transform:scale(1.32)}
   .hiw-planet{
     width:56vh;
     height:56vh;
