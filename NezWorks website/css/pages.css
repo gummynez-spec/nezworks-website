@@ -660,7 +660,9 @@ textarea.reg-input{resize:vertical;min-height:110px}
 .svc-sidebar-title{
   font-size:.56rem;letter-spacing:.42em;color:var(--ink-3);
   font-weight:600;
+  transition:opacity .3s var(--ease-out),transform .3s var(--ease-out);
 }
+.svc-search:hover + .svc-sidebar-title{opacity:0;transform:translateX(-8px)}
 
 /* --- expanding search pill (before SERVICES) --- */
 .svc-search{
