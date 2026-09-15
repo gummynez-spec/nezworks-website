@@ -178,7 +178,7 @@
   will-change:transform,opacity;
 }
 .hiw-planet.active{
-  opacity:.3;
+  opacity:.45;
   transform:translateY(-50%) rotate(0deg);
 }
 .hiw-planet.leaving{
@@ -257,7 +257,7 @@
     height:72vh;
     right:-26%;
   }
-  .hiw-planet.active{opacity:.22}
+  .hiw-planet.active{opacity:.33}
   .nw-final{padding:28px 0 96px}
   .nw-cta{padding:56px 22px 48px;border-radius:28px}
   .nw-cta-title{margin-bottom:28px}
