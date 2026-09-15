@@ -156,22 +156,22 @@
   pointer-events:none;z-index:1;overflow:hidden;
 }
 .hiw-planet{
-  position:absolute;top:50%;right:-13%;
-  width:min(56vh,86vw);
-  height:min(56vh,86vw);
+  position:absolute;top:50%;right:-14%;
+  width:52vh;
+  height:52vh;
   opacity:0;
-  transform:translateY(-50%) translateX(9%) rotate(26deg);
+  transform:translateY(-50%) rotate(22deg);
   filter:drop-shadow(0 0 44px rgba(139,124,246,.15));
-  transition:opacity 1.5s var(--ease-soft),transform 2s var(--ease-soft);
+  transition:opacity 1.6s var(--ease-soft),transform 2s var(--ease-soft);
   will-change:transform,opacity;
 }
 .hiw-planet.active{
   opacity:.3;
-  transform:translateY(-50%) translateX(0) rotate(0deg);
+  transform:translateY(-50%) rotate(0deg);
 }
 .hiw-planet.leaving{
   opacity:0;
-  transform:translateY(-50%) translateX(-6%) rotate(-40deg);
+  transform:translateY(-50%) rotate(-40deg);
 }
 
 
@@ -239,9 +239,9 @@
   .hiw-step h3{font-size:.96rem}
   .hiw-step p{max-width:none}
   .hiw-planet{
-    right:-14%;
-    width:min(46vh,74vw);
-    height:min(46vh,74vw);
+    width:42vh;
+    height:42vh;
+    right:-16%;
   }
   .hiw-planet.active{opacity:.22}
   .nw-final{padding:28px 0 96px}
@@ -253,8 +253,8 @@
   .hiw-orbit{width:48px;height:48px}
   .hiw-steps::before{left:23px}
   .hiw-planet{
-    right:-18%;
-    width:min(40vh,70vw);
-    height:min(40vh,70vw);
+    width:36vh;
+    height:36vh;
+    right:-20%;
   }
 }
