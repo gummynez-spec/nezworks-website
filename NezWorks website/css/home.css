@@ -147,6 +147,7 @@
 /* active step text — zoom effect */
 .hiw-copy{
   transform:scale(.82);opacity:.55;
+  transform-origin:left center;
   transition:transform .75s var(--ease-out),opacity .6s var(--ease-out);
 }
 .hiw-step.active .hiw-copy{transform:scale(1.38);opacity:1}
