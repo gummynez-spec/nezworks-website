@@ -2,85 +2,94 @@
 (function(){
   "use strict";
 
-  /* -------- HOW IT WORKS: Step activation + planet transitions -------- */
   var planets = ["mercury","venus","earth","mars"];
-  var activePlanet = -1;
-  var planetEls = [];
   var stepEls = [];
+  var planetEls = [];
+  var activeIdx = -1;
+  var started = false;
 
-  function initHiiw(){
+  function init(){
+    stepEls = Array.prototype.slice.call(document.querySelectorAll(".hiw-step"));
     planetEls = planets.map(function(id){
       var el = document.getElementById("planet-" + id);
-      if(el) el.classList.add("hiw-planet");
+      if(el){
+        el.classList.remove("active");
+        el.classList.remove("leaving");
+      }
       return el;
     });
+    if(!stepEls.length) return;
 
-    stepEls = Array.prototype.slice.call(document.querySelectorAll(".hiw-step"));
-    if(!stepEls.length || planetEls.every(function(el){ return !el; })) return;
-
+    /* reduced motion: show step 01 + planet 01 statically */
     if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){
-      stepEls.forEach(function(s,i){
-        s.classList.add("active");
-        if(planetEls[i]) planetEls[i].classList.add("active");
-      });
+      stepEls[0].classList.add("active");
+      if(planetEls[0]) planetEls[0].classList.add("active");
       return;
     }
 
-    /* explicit stepping on mobile */
+    /* users can always click any step */
     stepEls.forEach(function(step,i){
-      step.addEventListener("click",function(){
-        activateStep(i);
-      });
+      step.addEventListener("click", function(){ activate(i); });
     });
 
-    /* IntersectionObserver */
-    if(!("IntersectionObserver" in window)){
-      stepEls.forEach(function(s,i){
-        s.classList.add("active");
-        if(planetEls[i]) planetEls[i].classList.add("active");
-      });
-      return;
+    if("IntersectionObserver" in window){
+      /* Step 01 becomes active by default once the section is reached */
+      var wrap = document.querySelector(".hiw-steps");
+      if(wrap){
+        var enterObs = new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            if(entry.isIntersecting && !started){
+              started = true;
+              activate(0);
+              enterObs.disconnect();
+            }
+          });
+        },{ threshold:0.15 });
+        enterObs.observe(wrap);
+      }
+
+      /* steps activate progressively as the user scrolls down */
+      var stepObs = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(!entry.isIntersecting || !started) return;
+          var idx = stepEls.indexOf(entry.target);
+          if(idx > activeIdx) activate(idx);
+        });
+      },{ threshold:0.55, rootMargin:"-60px 0px" });
+
+      stepEls.forEach(function(step){ stepObs.observe(step); });
+    } else {
+      /* fallback */
+      stepEls[0].classList.add("active");
+      if(planetEls[0]) planetEls[0].classList.add("active");
     }
-
-    var lastTriggered = -1;
-    var observer = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(!entry.isIntersecting) return;
-        var idx = stepEls.indexOf(entry.target);
-        if(idx < 0 || idx === lastTriggered) return;
-        lastTriggered = idx;
-        activateStep(idx);
-      });
-    },{threshold:0.55,rootMargin:"-40px 0px"});
-
-    stepEls.forEach(function(step){ observer.observe(step); });
   }
 
-  function activateStep(idx){
-    if(idx === activePlanet) return;
-    if(activePlanet >= 0 && planetEls[activePlanet]){
-      planetEls[activePlanet].classList.remove("active");
-      planetEls[activePlanet].classList.add("leaving");
+  function activate(idx){
+    if(idx < 0 || idx >= stepEls.length || idx === activeIdx) return;
+
+    /* previous step returns to normal */
+    if(activeIdx >= 0){
+      stepEls[activeIdx].classList.remove("active");
+      var prev = planetEls[activeIdx];
+      if(prev){
+        prev.classList.remove("active");
+        prev.classList.add("leaving");
+        clearTimeout(prev._t);
+        prev._t = setTimeout(function(){ prev.classList.remove("leaving"); }, 2000);
+      }
     }
 
-    stepEls.forEach(function(s){ s.classList.remove("active"); });
-    if(stepEls[idx]) stepEls[idx].classList.add("active");
-
-    if(planetEls[idx]){
-      planetEls[idx].classList.remove("leaving");
-      void planetEls[idx].offsetWidth;
-      planetEls[idx].classList.add("active");
+    /* new step becomes active */
+    stepEls[idx].classList.add("active");
+    var cur = planetEls[idx];
+    if(cur){
+      cur.classList.remove("leaving");
+      void cur.offsetWidth;
+      cur.classList.add("active");
     }
-
-    /* remove leaving after animation so DOM stays clean */
-    if(activePlanet >= 0 && activePlanet !== idx && planetEls[activePlanet]){
-      var prev = planetEls[activePlanet];
-      setTimeout(function(){ prev.classList.remove("leaving"); },1600);
-    }
-    activePlanet = idx;
+    activeIdx = idx;
   }
 
-  document.addEventListener("DOMContentLoaded", function(){
-    initHiiw();
-  });
+  document.addEventListener("DOMContentLoaded", init);
 })();
