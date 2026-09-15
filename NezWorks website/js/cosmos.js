@@ -10,7 +10,7 @@
   let nodes = [];         // constellation anchor points
   const mouse = { x: -9999, y: -9999 };
 
-  const STAR_COUNT = NW.isMobile ? 70 : 160;
+  const STAR_COUNT = NW.isMobile ? 130 : 300;
 
   function resize() {
     DPR = Math.min(window.devicePixelRatio || 1, 2);
@@ -27,8 +27,8 @@
       stars.push({
         x: Math.random() * W,
         y: Math.random() * H,
-        r: Math.random() < 0.12 ? rand(1.2, 1.8) : rand(0.4, 1.1),   // vary size
-        base: rand(0.15, 0.7),                                        // vary opacity
+        r: Math.random() < 0.1 ? rand(1.3, 2.2) : rand(0.3, 1.0),      // fine grains, few bigger
+        base: rand(0.15, 0.65),                                        // vary opacity
         tw: Math.random() < 0.4,                                      // some twinkle
         twSpeed: rand(0.003, 0.01),                                   // vary timing
         twPhase: Math.random() * Math.PI * 2,
