@@ -662,25 +662,25 @@ textarea.reg-input{resize:vertical;min-height:110px}
   font-weight:600;
 }
 
-/* --- expanding search pill (beside SERVICES) --- */
+/* --- expanding search pill (before SERVICES) --- */
 .svc-search{
   display:flex;align-items:center;
-  width:60px;height:60px;flex-shrink:0;
+  width:46px;height:46px;flex-shrink:0;
   background:#9440f4;border-radius:999px;
-  box-shadow:2px 2px 20px rgba(0,0,0,.25),0 0 28px rgba(148,64,244,.25);
+  box-shadow:2px 2px 20px rgba(0,0,0,.25),0 0 22px rgba(148,64,244,.25);
   overflow:hidden;cursor:pointer;
   transition:width .35s var(--ease-out),box-shadow .35s var(--ease-out);
 }
-.svc-search:hover{width:190px}
+.svc-search:hover{width:150px}
 .svc-search-ico{
-  width:60px;height:60px;flex-shrink:0;
+  width:46px;height:46px;flex-shrink:0;
   display:grid;place-items:center;
 }
-.svc-search-ico svg{width:22px;height:22px;fill:#fff}
+.svc-search-ico svg{width:17px;height:17px;fill:#fff}
 .svc-search-input{
   flex:1;min-width:0;height:100%;
   background:transparent;border:none;outline:none;
-  color:#fff;font-size:15px;font-family:var(--font-body);
+  color:#fff;font-size:14px;font-family:var(--font-body);
   opacity:0;pointer-events:none;
   transition:opacity .25s .08s;
 }
