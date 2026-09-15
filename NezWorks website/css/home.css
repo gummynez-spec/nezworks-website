@@ -1,0 +1,240 @@
+/* ============ HOME — Sections 3-6 ============ */
+
+/* ===== SECTION 3: WHAT IS NEZWORKS ===== */
+.nw-about{padding:110px 0 100px;position:relative;overflow:hidden}
+.nw-about-inner{max-width:700px;margin:0 auto;text-align:center;position:relative;z-index:2}
+.nw-about-title{
+  font-family:var(--font-display);font-weight:600;
+  font-size:clamp(1.9rem,4.4vw,3.2rem);line-height:1.12;letter-spacing:-.01em;
+  margin-bottom:22px;
+}
+.nw-about-lead{
+  font-size:1.02rem;color:var(--ink-2);line-height:1.75;
+  max-width:52ch;margin:0 auto;
+}
+
+/* cosmic deco rings */
+.nw-about-deco{position:absolute;inset:0;pointer-events:none;z-index:0}
+.nw-about-ring{
+  position:absolute;border-radius:50%;
+  border:1px solid rgba(139,124,246,.08);
+}
+.nw-about-ring.r-a{width:640px;height:640px;left:-280px;top:-300px;animation:orbit-rotate 120s linear infinite}
+.nw-about-ring.r-b{width:480px;height:480px;right:-200px;bottom:-240px;border-color:rgba(92,139,255,.07);animation:orbit-rotate-rev 150s linear infinite}
+.nw-about-star{
+  position:absolute;width:4px;height:4px;border-radius:50%;
+  background:#fff;top:32%;right:28%;
+  box-shadow:0 0 10px 3px rgba(139,124,246,.5);
+  animation:nw-twinkle 6s ease-in-out infinite;
+}
+@keyframes nw-twinkle{0%,100%{opacity:.12}50%{opacity:.6}}
+
+
+/* ===== SECTION 4: WHAT WE CREATE ===== */
+.nw-create{padding:100px 0 110px}
+.nw-head-center{text-align:center;max-width:640px;margin:0 auto 48px}
+
+/* grid */
+.nw-cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.nw-cat-card{
+  position:relative;display:flex;flex-direction:column;gap:18px;
+  padding:28px 26px 30px;border-radius:18px;
+  background:linear-gradient(150deg,rgba(139,124,246,.04),rgba(13,16,32,.5) 65%);
+  border:1px solid rgba(139,124,246,.12);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  text-decoration:none;overflow:hidden;
+  transition:transform .35s var(--ease-out),border-color .35s,box-shadow .35s;
+}
+.nw-cat-card::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;
+  background:radial-gradient(circle at 28% 24%,rgba(139,124,246,.08),transparent 55%);
+  opacity:0;transition:opacity .35s;pointer-events:none;
+}
+.nw-cat-card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(139,124,246,.30);
+  box-shadow:0 20px 48px rgba(0,0,0,.4),0 0 28px rgba(139,124,246,.06);
+}
+.nw-cat-card:hover::before{opacity:1}
+
+/* icon */
+.nw-cat-ico{display:block;width:42px;height:42px}
+.nw-cat-ico svg{width:100%;height:100%;overflow:visible}
+.nwc-a{fill:rgba(139,124,246,.28)}
+.nwc-b{fill:none;stroke:rgba(139,124,246,.42);stroke-width:1.4}
+.nwc-b2{fill:none;stroke:rgba(139,124,246,.36);stroke-width:1.4;stroke-linecap:round}
+.nwc-c{fill:rgba(92,139,255,.5)}
+.nwc-f{fill:rgba(92,139,255,.4)}
+.nw-cat-card:hover .nw-cat-ico{filter:drop-shadow(0 0 10px rgba(139,124,246,.3))}
+
+.nw-cat-name{
+  font-family:var(--font-display);font-weight:600;
+  font-size:.92rem;letter-spacing:.06em;color:var(--ink);
+}
+.nw-cat-arrow{
+  position:absolute;top:24px;right:22px;
+  font-size:.85rem;color:var(--accent-2);
+  opacity:0;transform:translateX(-6px);
+  transition:opacity .3s var(--ease-out),transform .3s var(--ease-out);
+}
+.nw-cat-card:hover .nw-cat-arrow{opacity:.9;transform:none}
+
+/* explore link */
+.nw-create-more-wrap{text-align:center;margin-top:36px}
+.nw-create-more{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.7rem;letter-spacing:.3em;font-weight:600;color:var(--ink-3);
+  text-decoration:none;
+  border-bottom:1px solid rgba(139,124,246,.25);
+  padding-bottom:6px;transition:color .3s,border-color .3s;
+}
+.nw-create-more:hover{color:var(--ink);border-color:rgba(139,124,246,.5)}
+.nw-create-more .btn-arrow{color:var(--accent-2);transition:transform .25s var(--ease-out)}
+.nw-create-more:hover .btn-arrow{transform:translateX(5px)}
+
+
+/* ===== SECTION 5: HOW IT WORKS ===== */
+.nw-hiw{padding:100px 0 130px;position:relative;overflow:hidden}
+.nw-hiw .section-head{margin-bottom:64px;max-width:640px;position:relative;z-index:2}
+
+/* steps */
+.hiw-steps{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;gap:48px;
+  max-width:560px;
+}
+/* vertical connector */
+.hiw-steps::before{
+  content:"";position:absolute;left:27px;top:44px;bottom:44px;width:1px;
+  background:linear-gradient(180deg,transparent,rgba(139,124,246,.16) 12%,rgba(139,124,246,.16) 88%,transparent);
+}
+.hiw-step{display:flex;gap:22px;align-items:flex-start}
+.hiw-orbit{
+  position:relative;width:56px;height:56px;flex-shrink:0;
+  border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 35% 30%,rgba(139,124,246,.10),rgba(11,14,28,.92) 70%);
+  border:1px solid rgba(139,124,246,.22);
+  transition:border-color .5s var(--ease-out),box-shadow .5s var(--ease-out);
+}
+.hiw-orbit::after{
+  content:"";position:absolute;inset:-8px;border-radius:50%;
+  border:1px solid rgba(139,124,246,.10);
+  transition:border-color .5s var(--ease-out);
+}
+.hiw-step.active .hiw-orbit{
+  border-color:rgba(139,124,246,.50);
+  box-shadow:0 0 28px rgba(139,124,246,.14);
+}
+.hiw-step.active .hiw-orbit::after{border-color:rgba(139,124,246,.22)}
+.hiw-num{font-family:var(--font-display);font-size:.7rem;font-weight:600;letter-spacing:.14em;color:rgba(139,124,246,.75)}
+.hiw-step h3{font-family:var(--font-display);font-weight:600;font-size:1.06rem;letter-spacing:.02em;margin-bottom:8px}
+.hiw-step p{font-size:.88rem;color:var(--ink-3);line-height:1.65;max-width:42ch}
+
+/* planets */
+.hiw-planets{
+  position:absolute;top:0;right:0;bottom:0;
+  width:min(46vw,600px);
+  pointer-events:none;z-index:1;
+}
+.hiw-planet{
+  position:absolute;top:50%;right:-32%;width:86%;aspect-ratio:1;border-radius:50%;
+  opacity:0;
+  transform:translateY(-50%) rotate(26deg) scale(.94);
+  transition:opacity 1.2s var(--ease-soft),transform 1.5s var(--ease-soft);
+  will-change:transform,opacity;
+}
+.hiw-planet.active{opacity:.58;transform:translateY(-50%) rotate(0deg) scale(1)}
+.hiw-planet.leaving{opacity:0;transform:translateY(-50%) rotate(-52deg) scale(1.03)}
+
+/* planet surfaces */
+.p-mercury{background:radial-gradient(circle at 32% 28%,#8d8276 0%,#5c554e 42%,#241f1c 82%);box-shadow:0 0 120px 10px rgba(180,175,168,.06)}
+.p-venus{background:radial-gradient(circle at 32% 28%,#d8b98e 0%,#a3805c 42%,#3c2f22 82%);box-shadow:0 0 120px 10px rgba(216,185,142,.06)}
+.p-earth{background:radial-gradient(circle at 32% 28%,#9cc3e6 0%,#4d78ad 44%,#1b2c49 82%);box-shadow:0 0 120px 10px rgba(77,120,173,.06)}
+.p-mars{background:radial-gradient(circle at 32% 28%,#d99b78 0%,#a3573d 44%,#33201a 82%);box-shadow:0 0 120px 10px rgba(163,87,61,.06)}
+
+/* planet atmosphere highlight */
+.hiw-planet::after{
+  content:"";position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 28% 24%,rgba(255,255,255,.09),transparent 48%);
+  pointer-events:none;
+}
+
+
+/* ===== SECTION 6: FINAL CTA ===== */
+.nw-final{padding:40px 0 120px}
+.nw-cta{
+  position:relative;max-width:880px;margin:0 auto;text-align:center;
+  padding:clamp(64px,10vw,108px) 32px clamp(56px,9vw,92px);
+  border-radius:clamp(28px,5vw,52px);
+  background:linear-gradient(150deg,rgba(139,124,246,.07),rgba(92,139,255,.04) 55%,rgba(13,16,32,.6));
+  border:1px solid rgba(139,124,246,.14);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  overflow:hidden;
+}
+.nw-cta::before{
+  content:"";position:absolute;top:-160px;left:50%;
+  transform:translateX(-50%);width:460px;height:460px;border-radius:50%;
+  background:radial-gradient(circle,rgba(139,124,246,.12),transparent 62%);
+  pointer-events:none;
+}
+.nw-cta-title{
+  position:relative;z-index:1;
+  font-family:var(--font-display);font-weight:600;
+  font-size:clamp(1.6rem,3.8vw,2.6rem);line-height:1.14;letter-spacing:-.01em;
+  margin-bottom:36px;
+}
+.nw-cta-btn{position:relative;z-index:1}
+
+/* cta rings deco */
+.nw-cta-deco{position:absolute;inset:0;pointer-events:none}
+.nw-cta-ring{
+  position:absolute;top:50%;left:50%;border-radius:50%;
+  border:1px solid rgba(139,124,246,.06);
+  transform:translate(-50%,-50%);
+}
+.nw-cta-ring.r1{width:min(120%,680px);aspect-ratio:1}
+.nw-cta-ring.r2{width:min(86%,500px);aspect-ratio:1;border-color:rgba(92,139,255,.05)}
+.nw-cta-satwrap{
+  position:absolute;top:50%;left:50%;width:min(120%,680px);aspect-ratio:1;
+  transform:translate(-50%,-50%);
+  animation:orbit-rotate 44s linear infinite;
+}
+.nw-cta-satwrap i{
+  position:absolute;top:-3px;left:50%;margin-left:-2.5px;
+  width:5px;height:5px;border-radius:50%;background:#fff;
+  box-shadow:0 0 10px 2px rgba(92,139,255,.55);
+}
+
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1100px){
+  .hiw-planets{opacity:.5}
+}
+@media(max-width:920px){
+  .nw-cat-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:700px){
+  .nw-about{padding:80px 0 72px}
+  .nw-about-title br{display:none}
+  .nw-create{padding:80px 0 88px}
+  .nw-head-center{margin-bottom:36px}
+  .nw-cat-grid{grid-template-columns:1fr;gap:12px}
+  .nw-cat-card{padding:22px 20px 24px;gap:14px;border-radius:15px}
+  .nw-hiw{padding:80px 0 100px}
+  .hiw-steps{gap:36px}
+  .hiw-step{gap:18px}
+  .hiw-step h3{font-size:.96rem}
+  .hiw-step p{max-width:none}
+  .hiw-planets{
+    position:absolute;top:0;right:0;bottom:0;width:70vw;opacity:.35;
+  }
+  .hiw-planet{right:-38%;width:90%}
+  .nw-final{padding:28px 0 96px}
+  .nw-cta{padding:56px 22px 48px;border-radius:28px}
+  .nw-cta-title{margin-bottom:28px}
+}
+@media(max-width:480px){
+  .nw-cat-grid{grid-template-columns:1fr}
+  .hiw-orbit{width:48px;height:48px}
+  .hiw-steps::before{left:23px}
+}
