@@ -94,7 +94,7 @@
 
 
 /* ===== SECTION 5: HOW IT WORKS ===== */
-.nw-hiw{padding:100px 0 130px;position:relative;overflow:hidden}
+.nw-hiw{padding:90px 0 100px;position:relative;overflow:hidden}
 .hiw-wrap{position:relative}
 
 /* left column — heading + steps aligned together */
@@ -102,13 +102,24 @@
   position:relative;z-index:2;
   max-width:560px;margin-left:0;margin-right:auto;
 }
-.hiw-head{margin-bottom:54px}
+.hiw-head{margin-bottom:42px}
 .hiw-head .section-title{font-size:clamp(1.7rem,3.6vw,2.6rem)}
+.hiw-counter{
+  display:flex;align-items:baseline;gap:7px;
+  margin-top:16px;
+  font-family:var(--font-display);font-weight:600;
+  font-size:1.05rem;letter-spacing:.08em;color:var(--ink-3);
+}
+.hiw-counter b{
+  font-weight:600;color:var(--accent-2);font-size:1.25rem;
+  transition:color .4s var(--ease-out);
+}
+.hiw-counter i{font-style:normal;color:rgba(139,124,246,.4);font-size:.8rem}
 
 /* steps */
 .hiw-steps{
   position:relative;
-  display:flex;flex-direction:column;gap:50px;
+  display:flex;flex-direction:column;gap:40px;
 }
 /* vertical connector */
 .hiw-steps::before{
@@ -117,7 +128,7 @@
 }
 .hiw-step{
   display:flex;gap:22px;align-items:center;
-  min-height:22vh;
+  min-height:12vh;
   opacity:.8;
   transition:opacity .6s var(--ease-out);
 }
@@ -233,10 +244,10 @@
   .nw-head-center{margin-bottom:36px}
   .nw-cat-grid{grid-template-columns:1fr;gap:12px}
   .nw-cat-card{padding:22px 20px 24px;gap:14px;border-radius:15px}
-  .nw-hiw{padding:80px 0 100px}
-  .hiw-head{margin-bottom:40px}
-  .hiw-steps{gap:28px}
-  .hiw-step{gap:18px;min-height:20vh}
+  .nw-hiw{padding:80px 0 84px}
+  .hiw-head{margin-bottom:32px}
+  .hiw-steps{gap:24px}
+  .hiw-step{gap:18px;min-height:10vh}
   .hiw-step h3{font-size:.96rem}
   .hiw-step p{max-width:none}
   .hiw-step.active .hiw-copy{transform:scale(1.38)}
@@ -255,7 +266,7 @@
   .nw-cat-grid{grid-template-columns:1fr}
   .hiw-orbit{width:48px;height:48px}
   .hiw-steps::before{left:23px}
-  .hiw-step{min-height:24vh}
+  .hiw-step{min-height:10vh}
   .hiw-step.active .hiw-copy{transform:scale(1.32)}
   .hiw-planet{
     width:56vh;

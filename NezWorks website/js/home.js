@@ -7,8 +7,10 @@
   var planetEls = [];
   var activeIdx = -1;
   var started = false;
+  var counterEl = null;
 
   function init(){
+    counterEl = document.getElementById("hiwCounterCur");
     stepEls = Array.prototype.slice.call(document.querySelectorAll(".hiw-step"));
     planetEls = planets.map(function(id){
       var el = document.getElementById("planet-" + id);
@@ -84,6 +86,7 @@
 
     /* new step becomes active */
     stepEls[idx].classList.add("active");
+    if(counterEl) counterEl.textContent = (idx < 9 ? "0" : "") + (idx + 1);
     var cur = planetEls[idx];
     if(cur){
       cur.classList.remove("leaving");
