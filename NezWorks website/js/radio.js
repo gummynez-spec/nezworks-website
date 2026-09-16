@@ -108,7 +108,6 @@
       setupAudio();
       ensureTrack(moodKey);
       audio.currentTime = saved.t || 0;
-      audio.play().catch(() => {});
     }
     syncRadios();
   }
