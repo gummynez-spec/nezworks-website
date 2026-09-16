@@ -14,6 +14,7 @@ body{
   margin-top:var(--nav-h);
   overflow:hidden;
   border-radius:0 0 32px 32px;
+  background:#000;
 }
 .scene{
   position:absolute;inset:0;
