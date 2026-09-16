@@ -13,10 +13,16 @@
     });
   });
 
-  /* ---------- uploads show filled state ---------- */
+  /* ---------- uploads: click box to pick files, show filled state ---------- */
   document.querySelectorAll('.reg-upload').forEach((box) => {
     const input = box.querySelector('input[type="file"]');
     if (!input) return;
+    box.addEventListener('click', (e) => {
+      if (e.target.tagName !== 'INPUT') input.click();
+    });
+    box.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.target.closest('.reg-upload').querySelector('input[type="file"]').click(); }
+    });
     input.addEventListener('change', () => {
       if (input.files.length) {
         box.classList.add('filled');
