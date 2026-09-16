@@ -22,8 +22,8 @@
     scenes.forEach(s => s.classList.toggle('scene-active', s.dataset.scene === key));
     chips.forEach(c => c.classList.toggle('active', c.dataset.scene === key));
     const info = SCENE_INFO[key];
-    title.textContent = info.title;
-    desc.textContent = info.desc;
+    if (title) title.textContent = info.title;
+    if (desc) desc.textContent = info.desc;
   }
   chips.forEach(c => c.addEventListener('click', () => setScene(c.dataset.scene)));
 

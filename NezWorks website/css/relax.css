@@ -9,8 +9,8 @@ body{
 /* ---------- STAGE ---------- */
 .relax-stage{
   position:relative;
-  height:calc(100vh - var(--nav-h));
-  min-height:560px;
+  height:46vh;
+  min-height:340px;
   margin-top:var(--nav-h);
   overflow:hidden;
   border-radius:0 0 32px 32px;
@@ -31,22 +31,6 @@ body{
   transition:opacity .8s var(--ease-soft);
   pointer-events:none;
 }
-
-/* HUD */
-.relax-hud{
-  position:absolute;inset:auto 0 0 0;z-index:20;
-  display:flex;justify-content:space-between;align-items:flex-end;gap:16px;
-  padding:28px 34px;
-  background:linear-gradient(180deg,transparent,rgba(4,5,10,.55));
-}
-.relax-title-block h1{
-  font-family:var(--font-display),'Noto Sans Thai',sans-serif;
-  font-weight:600;font-size:clamp(1.8rem,4.5vw,3rem);
-  margin:6px 0 4px;
-  text-shadow:0 4px 30px rgba(0,0,0,.5);
-}
-.relax-title-block p{font-size:.88rem;color:var(--ink-2);text-shadow:0 2px 16px rgba(0,0,0,.6)}
-.relax-mute span{font-size:.72rem;letter-spacing:.08em}
 
 /* ---------- SCENES (pure CSS art) ---------- */
 
