@@ -63,7 +63,6 @@
   const ctx2d = fx?.getContext('2d');
 
   let W = 0, H = 0, DPR = 1, raf = null;
-  const RECT = { x0: 0, y0: 0, x1: 1, y1: 1 };   // normalised rain window (glass)
 
   function sizeCanvas() {
     if (!fx) return;
@@ -72,9 +71,6 @@
     fx.width = W * DPR; fx.height = H * DPR;
     fx.style.width = W + 'px'; fx.style.height = H + 'px';
     ctx2d.setTransform(DPR, 0, 0, DPR, 0, 0);
-    /* glass area inside the window frame */
-    RECT.x0 = W * 0.085; RECT.x1 = W * 0.915;
-    RECT.y0 = H * 0.085; RECT.y1 = H * 0.915;
   }
   window.addEventListener('resize', sizeCanvas);
 
@@ -105,8 +101,8 @@
         p.o = 0.5 + Math.random() * 0.5;
       } else if (key === 'rainy') {
         p.kind = 'rain';
-        p.x = RECT.x0 + Math.random() * (RECT.x1 - RECT.x0);
-        p.y = RECT.y0 + Math.random() * (RECT.y1 - RECT.y0);
+        p.x = Math.random() * W;
+        p.y = Math.random() * H;
         p.len = 12 + Math.random() * 16;
         p.v = 9 + Math.random() * 7;
         p.o = 0.12 + Math.random() * 0.18;   /* half of previous opacity */
@@ -170,7 +166,7 @@
         ctx2d.beginPath(); ctx2d.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx2d.fill();
       } else if (p.kind === 'rain') {
         p.y += p.v; p.x -= p.v * 0.18;   /* slight slant */
-        if (p.y > RECT.y1 + p.len) { p.y = RECT.y0 - p.len; p.x = RECT.x0 + Math.random() * (RECT.x1 - RECT.x0); }
+        if (p.y > H + p.len) { p.y = -p.len; p.x = Math.random() * W; }
         ctx2d.globalAlpha = p.o;
         ctx2d.strokeStyle = '#d9e2f6';
         ctx2d.lineWidth = 1.2;
