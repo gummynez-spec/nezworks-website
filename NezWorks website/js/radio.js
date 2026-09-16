@@ -9,15 +9,17 @@
     fun:   'assets/sounds/lofi-restaurant.mp3',
     focus: 'assets/sounds/trumpet-study.mp3',
   };
-  const LABELS = { rnb: 'R&B', jazz: 'Jazz', cozy: 'Cozy', warm: 'Warm', fun: 'Fun', focus: 'Focus' };
   const STORE_KEY = 'nezworks:radio';
   const IS_RELAX = (location.pathname.split('/').pop() || 'index.html').toLowerCase() === 'relax.html';
 
   let audio = null;
   let moodKey = null;
-  let widget = null;
+  let chip = null;
 
   /* ---------------- shared audio state ---------------- */
+  function loadState() {
+    try { return JSON.parse(sessionStorage.getItem(STORE_KEY) || 'null'); } catch (e) { return null; }
+  }
   function saveState() {
     try {
       sessionStorage.setItem(STORE_KEY, JSON.stringify({
@@ -28,111 +30,137 @@
   }
   window.addEventListener('pagehide', saveState);
 
-  function emit() {
-    window.dispatchEvent(new CustomEvent('relaxradio', { detail: { mood: moodKey } }));
-  }
-
   function isPlaying() { return !!(audio && !audio.paused && moodKey); }
 
+  function emit() {
+    window.dispatchEvent(new CustomEvent('relaxradio', { detail: { mood: moodKey, playing: isPlaying() } }));
+  }
+
+  function setupAudio() {
+    if (audio) return;
+    audio = new Audio();
+    audio.loop = true;
+    audio.volume = 0.55;
+  }
+
+  function ensureTrack(key) {
+    if (!key || !TRACKS[key]) return;
+    if (audio.src.indexOf(TRACKS[key]) === -1) {
+      audio.src = TRACKS[key];
+      audio.currentTime = 0;
+    }
+  }
+
+  /* keep ON/OFF rails in sync (chip + drawer) */
+  function syncRadios() {
+    const on = isPlaying();
+    document.querySelectorAll('.radio-input').forEach(rail => {
+      rail.querySelectorAll('input[type="radio"]').forEach(inp => {
+        const wantOn = (inp.value === 'on') === on;
+        inp.checked = wantOn;
+        const label = inp.closest('.label');
+        if (label) label.classList.toggle('active', wantOn);
+      });
+    });
+  }
+
+  function setPlaying(on) {
+    setupAudio();
+    if (!moodKey) {
+      const saved = loadState();
+      moodKey = (saved && TRACKS[saved.mood]) ? saved.mood : 'rnb';
+    }
+    ensureTrack(moodKey);
+    if (on) audio.play().catch(() => {});
+    else audio.pause();
+    saveState();
+    syncRadios();
+    emit();
+  }
+
+  function stopAll() {
+    if (audio) audio.pause();
+    syncRadios();
+    emit();
+    saveState();
+  }
+
   function playMood(key) {
-    if (!TRACKS[key]) key = null;
+    if (!TRACKS[key]) return;
     if (moodKey === key) {
       moodKey = null;
       if (audio) audio.pause();
     } else {
       moodKey = key;
-      if (!audio) {
-        audio = new Audio();
-        audio.loop = true;
-        audio.volume = 0.55;
-      }
-      if (key) {
-        if (audio.src.indexOf(TRACKS[key]) === -1) {
-          audio.src = TRACKS[key];
-          audio.currentTime = 0;
-        }
-        audio.play().catch(() => {});
-      } else {
-        audio.pause();
-      }
+      setupAudio();
+      ensureTrack(key);
+      audio.play().catch(() => {});
     }
     saveState();
-    updateUi();
+    syncRadios();
     emit();
   }
 
-  function toggle() {
-    if (!moodKey) {
-      if (window.RelaxRadio.onChipClose) window.RelaxRadio.onChipClose();
-      return;
-    }
-    if (isPlaying()) audio.pause();
-    else if (audio) audio.play().catch(() => {});
-    updateUi();
-  }
-
   function restore() {
-    let s = null;
-    try { s = JSON.parse(sessionStorage.getItem(STORE_KEY) || 'null'); } catch (e) {}
-    if (s && s.mood && TRACKS[s.mood]) {
-      moodKey = s.mood;
-      if (!audio) {
-        audio = new Audio();
-        audio.loop = true;
-        audio.volume = 0.55;
-      }
-      audio.src = TRACKS[moodKey];
-      audio.currentTime = s.t || 0;
+    const saved = loadState();
+    if (saved && saved.mood && TRACKS[saved.mood]) {
+      moodKey = saved.mood;
+      setupAudio();
+      ensureTrack(moodKey);
+      audio.currentTime = saved.t || 0;
       audio.play().catch(() => {});
     }
-    updateUi();
+    syncRadios();
   }
 
-  /* ---------------- draggable on/off chip (relax page only) ---------------- */
-  function updateUi() {
-    if (!widget) return;
-    const power = widget.querySelector('.rp-power');
-    const mood = widget.querySelector('.rp-mood');
-    const on = isPlaying();
-    power.classList.toggle('on', on);
-    power.setAttribute('aria-pressed', on);
-    mood.textContent = moodKey ? (LABELS[moodKey] + (on ? ' · ON' : ' · OFF')) : 'Pick a sound';
-    widget.classList.toggle('playing', on);
+  /* ---------------- draggable chip (relax page only) ---------------- */
+  function railHTML(name) {
+    return '<div class="radio-input" data-rail="' + name + '">'
+      + '<label class="label"><div class="back-side"></div>'
+      + '<input type="radio" name="' + name + '" value="on"><span class="text">ON</span><div class="bottom-line"></div></label>'
+      + '<label class="label"><div class="back-side"></div>'
+      + '<input type="radio" name="' + name + '" value="off"><span class="text">OFF</span><div class="bottom-line"></div></label>'
+      + '</div>';
   }
 
-  function buildWidget() {
+  function wireRails() {
+    document.querySelectorAll('.radio-input').forEach(rail => {
+      if (rail.dataset.wired) return;
+      rail.dataset.wired = '1';
+      rail.querySelectorAll('input[type="radio"]').forEach(inp => {
+        inp.addEventListener('change', () => {
+          if (rail.dataset.suppress === '1') return;
+          if (inp.checked) setPlaying(inp.value === 'on');
+        });
+      });
+    });
+  }
+
+  function buildChip() {
     if (!IS_RELAX || document.getElementById('radio-player')) return;
-    widget = document.createElement('div');
-    widget.id = 'radio-player';
-    widget.innerHTML =
-      '<button class="rp-power" aria-pressed="false" aria-label="Music on/off"></button>'
-      + '<div class="rp-label"><span class="rp-mood">Pick a sound</span></div>'
-      + '<button class="rp-close" aria-label="Close player"></button>';
+    chip = document.createElement('div');
+    chip.id = 'radio-player';
+    chip.innerHTML = railHTML('chip-power') + '<button class="rp-close" aria-label="Move music controls to the panel"></button>';
+    document.body.appendChild(chip);
 
-    document.body.appendChild(widget);
-    updateUi();
-
-    const power = widget.querySelector('.rp-power');
-    const close = widget.querySelector('.rp-close');
-
-    power.addEventListener('click', toggle);
-    close.addEventListener('click', () => {
+    chip.querySelector('.rp-close').addEventListener('click', () => {
+      stopAll();
       if (window.RelaxRadio.onChipClose) window.RelaxRadio.onChipClose();
     });
 
-    // drag freely (pointer events)
+    /* dragging */
     let dragging = false, moved = false, sx = 0, sy = 0, ox = 0, oy = 0;
-    const rect = () => widget.getBoundingClientRect();
+    const rect = () => chip.getBoundingClientRect();
 
-    widget.addEventListener('pointerdown', e => {
-      if (e.target.closest('.rp-power, .rp-close')) return;
+    chip.addEventListener('pointerdown', e => {
+      if (e.target.closest('.label, .rp-close')) return;
       dragging = true; moved = false;
       sx = e.clientX; sy = e.clientY;
       ox = rect().left; oy = rect().top;
-      widget.setPointerCapture(e.pointerId);
-      widget.classList.add('dragging');
+      chip.setPointerCapture(e.pointerId);
+      chip.classList.add('dragging');
     });
-    widget.addEventListener('pointermove', e => {
+    chip.addEventListener('pointermove', e => {
       if (!dragging) return;
       if (Math.abs(e.clientX - sx) + Math.abs(e.clientY - sy) > 6) moved = true;
       if (!moved) return;
@@ -140,32 +168,40 @@
       let ny = oy + (e.clientY - sy);
       nx = Math.max(8, Math.min(window.innerWidth - rect().width - 8, nx));
       ny = Math.max(8, Math.min(window.innerHeight - rect().height - 8, ny));
-      widget.style.left = nx + 'px';
-      widget.style.top = ny + 'px';
+      chip.style.left = nx + 'px';
+      chip.style.top = ny + 'px';
     });
-    function endDrag(e) {
+    function endDrag() {
       if (!dragging) return;
       dragging = false;
-      widget.classList.remove('dragging');
+      chip.classList.remove('dragging');
+      if (moved) {
+        chip.querySelectorAll('.radio-input').forEach(r => { r.dataset.suppress = '1'; });
+        setTimeout(() => chip.querySelectorAll('.radio-input').forEach(r => { r.dataset.suppress = '0'; }), 80);
+        moved = false;
+      }
     }
-    widget.addEventListener('pointerup', endDrag);
-    widget.addEventListener('pointercancel', endDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
 
-    // entrance
-    requestAnimationFrame(() => widget.classList.add('ready'));
+    wireRails();
+    syncRadios();
+    requestAnimationFrame(() => chip.classList.add('ready'));
   }
 
   window.RelaxRadio = {
     setMood: playMood,
     getMood: function () { return moodKey; },
+    setPlaying: setPlaying,
     isPlaying: isPlaying,
-    hideChip: function () { if (widget) widget.classList.add('hidden'); },
-    showChip: function () { if (widget) widget.classList.remove('hidden'); },
+    hideChip: function () { if (chip) chip.classList.add('hidden'); },
+    showChip: function () { if (chip) chip.classList.remove('hidden'); },
     onChipClose: null,
   };
 
   document.addEventListener('DOMContentLoaded', () => {
-    buildWidget();
+    buildChip();
+    wireRails();
     restore();
   });
 })();
