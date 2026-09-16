@@ -1,14 +1,17 @@
-/* ============ SERVICES PAGE — sidebar category switching ============ */
+/* ============ SERVICES PAGE — sidebar category switching (glider radio) ============ */
 (() => {
-  const btns = document.querySelectorAll('.svc-side-btn');
+  const radios = [...document.querySelectorAll('input[name="svc-cat"]')];
   const descs = document.querySelectorAll('.svc-cat-desc');
-  if (!btns.length) return;
+  if (!radios.length) return;
+
+  const byValue = Object.fromEntries(radios.map(r => [r.value, r]));
 
   /* read ?cat= from URL */
   const urlCat = new URLSearchParams(location.search).get('cat') || 'all';
 
   function switchCat(cat) {
-    btns.forEach(b => b.classList.toggle('active', b.dataset.cat === cat));
+    const radio = byValue[cat];
+    if (radio && !radio.checked) radio.checked = true;
     descs.forEach(d => {
       d.style.display = d.dataset.cat === cat ? '' : 'none';
     });
@@ -24,10 +27,11 @@
   /* initial state */
   switchCat(urlCat);
 
-  /* click handlers */
-  btns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const cat = btn.dataset.cat;
+  /* change handlers (also handles keyboard) */
+  radios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      if (!radio.checked) return;
+      const cat = radio.value;
       switchCat(cat);
       const url = new URL(location);
       url.searchParams.set('cat', cat);

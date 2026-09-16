@@ -62,13 +62,23 @@
       <p class="svc-sidebar-title">SERVICES</p>
     </div>
     <nav class="svc-sidebar-nav">
-      <button class="svc-side-btn active" data-cat="all"><span class="svc-label">ALL</span></button>
-      <button class="svc-side-btn" data-cat="logo"><span class="svc-label">LOGO</span></button>
-      <button class="svc-side-btn" data-cat="banner"><span class="svc-label">BANNER</span></button>
-      <button class="svc-side-btn" data-cat="poster"><span class="svc-label">POSTER</span></button>
-      <button class="svc-side-btn" data-cat="video"><span class="svc-label">VIDEO</span></button>
-      <button class="svc-side-btn" data-cat="graphic"><span class="svc-label">GRAPHIC DESIGN</span></button>
-      <button class="svc-side-btn" data-cat="content"><span class="svc-label">CONTENT</span></button>
+      <div class="radio-container" id="svcNav">
+        <input type="radio" name="svc-cat" id="svc-all" value="all" checked>
+        <label for="svc-all"><span class="svc-label">ALL</span></label>
+        <input type="radio" name="svc-cat" id="svc-logo" value="logo">
+        <label for="svc-logo"><span class="svc-label">LOGO</span></label>
+        <input type="radio" name="svc-cat" id="svc-banner" value="banner">
+        <label for="svc-banner"><span class="svc-label">BANNER</span></label>
+        <input type="radio" name="svc-cat" id="svc-poster" value="poster">
+        <label for="svc-poster"><span class="svc-label">POSTER</span></label>
+        <input type="radio" name="svc-cat" id="svc-video" value="video">
+        <label for="svc-video"><span class="svc-label">VIDEO</span></label>
+        <input type="radio" name="svc-cat" id="svc-graphic" value="graphic">
+        <label for="svc-graphic"><span class="svc-label">GRAPHIC DESIGN</span></label>
+        <input type="radio" name="svc-cat" id="svc-content" value="content">
+        <label for="svc-content"><span class="svc-label">CONTENT</span></label>
+        <div class="glider-container"><div class="glider"></div></div>
+      </div>
     </nav>
   </aside>
 
