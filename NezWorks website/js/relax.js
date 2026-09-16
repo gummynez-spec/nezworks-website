@@ -33,6 +33,7 @@
   const brightnessVal = document.getElementById('brightnessVal');
   const seasonBtns = [...document.querySelectorAll('.season-btn')];
   let currentSeason = 'none';
+  let fxEnabled = true;   // Effects on/off switch
 
   function applyBrightness(v) {
     const pct = Math.max(0, Math.min(100, v));
@@ -49,7 +50,7 @@
     });
     bg.style.backgroundImage = `url('assets/seasons/${key}.jpg')`;
     bg.classList.add('on');
-    if (!prefersReduced) setFx(key);
+    if (fxEnabled && !prefersReduced) setFx(key);
   }
   seasonBtns.forEach(btn => btn.addEventListener('click', () => onSeason(btn.dataset.season)));
   brightness?.addEventListener('input', () => applyBrightness(+brightness.value));
@@ -132,14 +133,33 @@
   }
   function setFx(key) {
     spawn(key);
+    if (fxEnabled && !prefersReduced) ensureLoop();
+  }
+  function ensureLoop() {
     if (!FXRUNNING && !prefersReduced) loop();
   }
+
+  /* Effects on/off switch */
+  const fxRadios = [...document.querySelectorAll('input[name="fx-toggle"]')];
+  fxRadios.forEach(r => r.addEventListener('change', () => {
+    fxEnabled = r.checked && r.value === 'on';
+    r.setAttribute('checked', r.checked && r.value === 'on');
+    if (fxEnabled) {
+      ensureLoop();
+      if (currentSeason !== 'none') setFx(currentSeason);
+    } else {
+      particles.length = 0;
+      fxMode = 'none';
+      ctx2d?.clearRect(0, 0, W, H);
+    }
+  }));
 
   /* ---------- per-frame render ---------- */
   let FXRUNNING = false;
 
   function render() {
     ctx2d.clearRect(0, 0, W, H);
+    if (!fxEnabled) return;
     for (const p of particles) {
       if (p.kind === 'snow') {
         p.y += p.v; p.phase += 0.02;

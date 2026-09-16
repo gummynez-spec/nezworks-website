@@ -132,6 +132,60 @@ input[type="range"]::-moz-range-thumb{
 .rd-foot{font-size:.68rem;color:var(--ink-3);line-height:1.7;border-top:1px solid var(--stroke-soft);padding-top:18px}
 .rd-foot a{color:var(--accent-2);text-decoration:underline;text-underline-offset:3px}
 
+/* ---------- FX on/off switch ---------- */
+.filter-switch {
+  border: 2px solid #6a4676;
+  border-radius: 30px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+  max-width: 400px;
+  overflow: hidden;
+}
+.filter-switch input {
+  display: none;
+}
+.filter-switch label {
+  flex: 1;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  border-radius: 30px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: all 0.5s;
+  font-weight: 500;
+  font-size: 18px;
+}
+.filter-switch .background {
+  position: absolute;
+  width: 49%;
+  height: 38px;
+  background-color: #e898e9;
+  top: 4px;
+  left: 4px;
+  border-radius: 30px;
+  transition: left 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+#option2:checked ~ .background {
+  left: 50%;
+}
+#option1:checked + label[for="option1"] {
+  color: #212121;
+  font-weight: bold;
+}
+#option2:checked + label[for="option2"] {
+  color: #212121;
+  font-weight: bold;
+}
+#option1:not(:checked) + label[for="option1"],
+#option2:not(:checked) + label[for="option2"] {
+  color: #7d7d7d;
+}
+
 @media(max-width:520px){
   .relax-drawer{padding-top:calc(var(--nav-h) + 14px)}
   .season-grid{grid-template-columns:repeat(5,1fr)}
