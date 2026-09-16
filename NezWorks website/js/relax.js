@@ -214,7 +214,11 @@
   const moodBtns = [...document.querySelectorAll('.mood-btn')];
   const radio = window.RelaxRadio;
 
-  if (radio) radio.onChipClose = openDrawer;
+  if (radio) {
+    radio.onChipClose = closeDrawer;
+    const saved = radio.getMood();
+    if (saved) radio.showChip();
+  }
 
   function syncMoodBtns() {
     const key = radio?.getMood() || null;

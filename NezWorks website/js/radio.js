@@ -145,6 +145,8 @@
 
     chip.querySelector('.rp-close').addEventListener('click', () => {
       stopAll();
+      chip.classList.add('dismissed');
+      chip.classList.add('hidden');
       if (window.RelaxRadio.onChipClose) window.RelaxRadio.onChipClose();
     });
 
@@ -195,7 +197,10 @@
     setPlaying: setPlaying,
     isPlaying: isPlaying,
     hideChip: function () { if (chip) chip.classList.add('hidden'); },
-    showChip: function () { if (chip) chip.classList.remove('hidden'); },
+    showChip: function () {
+      if (!chip || chip.classList.contains('dismissed')) return;
+      chip.classList.remove('hidden');
+    },
     onChipClose: null,
   };
 
