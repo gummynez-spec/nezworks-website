@@ -1,110 +1,26 @@
-/* bar-volume / radio-player widget */
+/* ---- Relax music chip: draggable on/off player (relax page) ---- */
 
-.radio-input {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background-color: black;
-  padding: 6px;
-  border-radius: 8px;
-  overflow: hidden;
-  height: 94px;
-}
-
-.radio-input input {
-  display: none;
-}
-
-.radio-input .label {
-  width: 70px;
-  height: 80px;
-  background-color: #2a2a2a;
-  border-radius: 4px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 6px;
-  border-top: 1px solid #383838;
-  transition: all 0.1s linear;
-  position: relative;
-  z-index: 2;
-}
-
-.label .back-side {
-  position: absolute;
-  top: -10px;
-  left: 0px;
-  background-color: #2a2a2a;
-  border-radius: 4px 4px 2px 2px;
-  width: 100%;
-  height: 14px;
-  box-shadow:
-    inset 0 5px 3px 1px rgba(0, 0, 0, 0.5),
-    inset 0px -5px 2px 0px rgba(178, 132, 236, 0.1);
-  transform: perspective(300px) rotateX(50deg);
-  z-index: 1;
-  opacity: 0;
-  transition: all 0.1s linear;
-}
-
-.label:has(input[type="radio"]:checked) .back-side {
-  opacity: 1;
-}
-
-.label:has(input[type="radio"]:checked) {
-  transform: perspective(200px) rotateX(-18deg);
-  transform-origin: 50% 40%;
-  box-shadow: inset 0px -20px 15px 0px rgba(0, 0, 0, 0.5);
-  border-top: 1px solid #c799f562;
-  margin-top: 6px;
-  border-radius: 0 0 4px 4px;
-}
-
-.label .text {
-  color: #c4c4c4;
-  font-size: 15px;
-  line-height: 12px;
-  padding: 0px;
-  font-weight: 800;
-  text-transform: uppercase;
-  transition: all 0.1s linear;
-  text-shadow: -1px -1px 1px rgb(224, 224, 224, 0.1);
-}
-
-.label input[type="radio"]:checked + .text {
-  color: #c196e8;
-  text-shadow:
-    0px 0px 8px rgba(193, 150, 232, 0.9),
-    1px 1px 2px rgb(0, 0, 0, 1);
-}
-
-.label .bottom-line {
-  width: 100%;
-  height: 4px;
-  border-radius: 999px;
-  background-color: #2a2a2a;
-  box-shadow: 0 0 3px 0px rgb(19, 19, 19);
-  border-top: 1px solid #383838;
-  transition: all 0.1s linear;
-}
-
-.label:has(input[type="radio"]:checked) .bottom-line {
-  background-color: #1a1a1a;
-  border-top: 1px solid #c196e840;
-}
-
-/* fixed bar on every page */
 #radio-player {
   position: fixed;
   left: 24px;
-  bottom: 24px;
+  top: calc(100vh - 96px);
   z-index: 2000;
-  border-radius: 8px;
-  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 999px;
+  background: rgba(10, 10, 16, .78);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(193, 150, 232, .28);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, .55);
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transform: translateY(14px);
+  transition: opacity .35s ease, transform .35s ease, box-shadow .25s ease;
 }
 
 #radio-player.ready {
@@ -112,16 +28,113 @@
   transform: translateY(0);
 }
 
+#radio-player.dragging {
+  cursor: grabbing;
+}
+
+#radio-player.hidden {
+  opacity: 0;
+  transform: translateY(14px);
+  pointer-events: none;
+}
+
+#radio-player.playing {
+  box-shadow: 0 0 26px rgba(193, 150, 232, .5), 0 12px 34px rgba(0, 0, 0, .55);
+  border-color: rgba(193, 150, 232, .7);
+}
+
+/* power button */
+.rp-power {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .22);
+  background: rgba(255, 255, 255, .05);
+  color: #c4c4c4;
+  cursor: pointer;
+  position: relative;
+  transition: all .2s var(--ease-out, ease-out);
+}
+
+.rp-power::before {  /* power icon: circle + line */
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  transform: rotate(15deg);
+}
+
+.rp-power::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 6px;
+  width: 2px;
+  height: 9px;
+  margin-left: -1px;
+  background: currentColor;
+  border-radius: 2px;
+}
+
+.rp-power.on {
+  border-color: rgba(193, 150, 232, .95);
+  background: rgba(193, 150, 232, .22);
+  color: #d9b9f0;
+  box-shadow: 0 0 14px rgba(193, 150, 232, .75);
+}
+
+/* label */
+.rp-label {
+  display: flex;
+  align-items: center;
+}
+
+.rp-mood {
+  font-family: var(--font-body, "Space Grotesk", sans-serif);
+  font-size: .74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  color: #e6e6e6;
+  white-space: nowrap;
+  min-width: 74px;
+}
+
+/* close */
+.rp-close {
+  width: 26px;
+  height: 26px;
+  flex: 0 0 auto;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .06);
+  color: #9a9aab;
+  cursor: pointer;
+  font-size: .8rem;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  transition: all .2s ease;
+}
+
+.rp-close:hover {
+  background: rgba(193, 150, 232, .25);
+  color: #fff;
+}
+
+.rp-close::before {
+  content: "×";
+}
+
 @media (max-width: 560px) {
   #radio-player {
-    left: 50%;
-    transform: translateX(-50%) translateY(16px);
-    max-width: calc(100vw - 24px);
-  }
-  #radio-player.ready {
-    transform: translateX(-50%) translateY(0);
-  }
-  #radio-player .radio-input {
-    overflow-x: auto;
+    left: 12px;
+    top: calc(100vh - 86px);
   }
 }

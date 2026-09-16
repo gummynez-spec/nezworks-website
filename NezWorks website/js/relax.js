@@ -13,10 +13,12 @@
   function openDrawer() {
     drawer.classList.add('open');
     drawer.setAttribute('aria-hidden', 'false');
+    window.RelaxRadio?.hideChip();
   }
   function closeDrawer() {
     drawer.classList.remove('open');
     drawer.setAttribute('aria-hidden', 'true');
+    window.RelaxRadio?.showChip();
   }
 
   if (relaxNav) relaxNav.addEventListener('click', e => { e.preventDefault(); openDrawer(); });
@@ -211,6 +213,8 @@
   /* Delegates to js/radio.js (persistent player bar shown on every page). */
   const moodBtns = [...document.querySelectorAll('.mood-btn')];
   const radio = window.RelaxRadio;
+
+  if (radio) radio.onChipClose = openDrawer;
 
   function syncMoodBtns() {
     const key = radio?.getMood() || null;
