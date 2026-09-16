@@ -698,7 +698,7 @@ textarea.reg-input{resize:vertical;min-height:110px}
 .radio-container{
   --main-color:#d9adf6;
   --main-color-opacity:#f7e4791c;
-  --total-radio:7;
+  --total-radio:8;
 
   display:flex;flex-direction:column;position:relative;
   padding-left:0.5rem;
@@ -761,6 +761,7 @@ textarea.reg-input{resize:vertical;min-height:110px}
 .radio-container input:nth-of-type(5):checked ~ .glider-container .glider{transform:translateY(400%)}
 .radio-container input:nth-of-type(6):checked ~ .glider-container .glider{transform:translateY(500%)}
 .radio-container input:nth-of-type(7):checked ~ .glider-container .glider{transform:translateY(600%)}
+.radio-container input:nth-of-type(8):checked ~ .glider-container .glider{transform:translateY(700%)}
 .svc-label{
   font-size:.78rem;letter-spacing:.06em;color:inherit;
   font-weight:500;transition:color .3s;
@@ -875,6 +876,7 @@ textarea.reg-input{resize:vertical;min-height:110px}
   .radio-container input:nth-of-type(5):checked ~ .glider-container .glider{transform:translateX(400%)}
   .radio-container input:nth-of-type(6):checked ~ .glider-container .glider{transform:translateX(500%)}
   .radio-container input:nth-of-type(7):checked ~ .glider-container .glider{transform:translateX(600%)}
+  .radio-container input:nth-of-type(8):checked ~ .glider-container .glider{transform:translateX(700%)}
   .svc-label{font-size:.74rem}
   .svc-main{margin-left:0;padding:32px 20px 60px}
   .svc-main-sub br{display:none}
