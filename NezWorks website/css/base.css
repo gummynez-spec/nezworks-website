@@ -234,6 +234,49 @@ body.modal-open{overflow:hidden}
 .btn-arrow{display:inline-block;transition:transform .25s var(--ease-out)}
 .btn:hover .btn-arrow{transform:translateX(5px)}
 
+/* ============ NAV USER CHIP — logged-in client/freelancer ============ */
+.nav-cta{display:flex;align-items:center;gap:10px}
+.user-chip{position:relative;z-index:60}
+.user-chip-btn{
+  display:flex;align-items:center;gap:10px;
+  padding:5px 14px 5px 6px;border-radius:999px;
+  background:var(--glass);border:1px solid var(--stroke);
+  cursor:pointer;color:var(--ink);
+  transition:border-color .25s,background .25s,transform .15s var(--ease-out);
+}
+.user-chip-btn:hover{border-color:rgba(139,124,246,.55);background:var(--glass-strong)}
+.user-avatar{
+  width:30px;height:30px;flex:none;border-radius:50%;
+  display:grid;place-items:center;
+  font-family:var(--font-display);font-weight:700;font-size:.82rem;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  box-shadow:0 0 12px rgba(139,124,246,.35);
+}
+.user-chip-text{display:flex;flex-direction:column;align-items:flex-start;line-height:1.2;min-width:0}
+.user-name{font-size:.78rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px}
+.user-role{
+  font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-2);
+}
+.user-menu{
+  position:absolute;top:calc(100% + 10px);right:0;min-width:190px;
+  padding:8px;border-radius:14px;
+  background:rgba(13,16,32,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--stroke);
+  display:grid;gap:2px;
+  box-shadow:0 22px 54px rgba(0,0,0,.55);
+  animation:float-in .28s var(--ease-out);
+}
+.user-menu a,.user-menu .user-logout{
+  width:100%;padding:10px 14px;border-radius:10px;text-align:left;
+  border:0;background:transparent;cursor:pointer;
+  font-size:.82rem;color:var(--ink-2);font-family:inherit;
+  transition:background .2s,color .2s;
+}
+.user-menu a:hover,.user-menu .user-logout:hover{background:rgba(139,124,246,.14);color:var(--ink)}
+.user-logout{color:var(--peach)}
+@keyframes float-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.user-menu{animation:none}}
+
 /* primary: full purple orbit fill */
 .btn-primary{background:linear-gradient(145deg,#1b1f3d,#0e1126)}
 /* ghost: dimmer purple fill */
