@@ -211,229 +211,36 @@
     loop();
   }
 
-  /* ---------------- ambience: Web Audio mood pads ---------------- */
+  /* ---------------- ambience: mood audio tracks ---------------- */
   const moodBtns = [...document.querySelectorAll('.mood-btn')];
-  let ctx = null;
-  let active = null;         // { stop():..., }
-
-  function ensureCtx() {
-    if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
-    if (ctx.state === 'suspended') ctx.resume();
-  }
-
-  function noiseBuffer(seconds = 2) {
-    const buf = ctx.createBuffer(1, ctx.sampleRate * seconds, ctx.sampleRate);
-    const d = buf.getChannelData(0);
-    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-    return buf;
-  }
-
-  /* one-shot band-passed noise (brush, hat, crackle…) */
-  function noiseHit({ band, q = 1, dur = 0.2, vol = 0.3, at = 0 }) {
-    const src = ctx.createBufferSource();
-    src.buffer = noiseBuffer(1);
-    const bp = ctx.createBiquadFilter();
-    bp.type = 'bandpass'; bp.frequency.value = band; bp.Q.value = q;
-    const g = ctx.createGain();
-    g.gain.setValueAtTime(0.0001, at);
-    g.gain.exponentialRampToValueAtTime(vol, at + 0.02);
-    g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
-    src.connect(bp).connect(g).connect(ctx.destination);
-    src.start(at); src.stop(at + dur + 0.05);
-    return src;
-  }
-
-  /* one-shot tone (kick, bass, pluck, chime…) */
-  function tone({ freq, fEnd = 0, type = 'sine', dur = 0.3, vol = 0.3, at = 0, detune = 0 }) {
-    const o = ctx.createOscillator();
-    o.type = type;
-    o.frequency.setValueAtTime(freq, at);
-    if (fEnd) o.frequency.exponentialRampToValueAtTime(fEnd, at + dur);
-    o.detune.value = detune;
-    const g = ctx.createGain();
-    g.gain.setValueAtTime(0.0001, at);
-    g.gain.exponentialRampToValueAtTime(vol, at + 0.015);
-    g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
-    o.connect(g).connect(ctx.destination);
-    o.start(at); o.stop(at + dur + 0.05);
-    return o;
-  }
-
-  /* ============ mood builders — each shaped to its name ============ */
-
-  function buildRnb() {
-    // warm Am9 pad + swung soft groove (kick + hat)
-    const nodes = [];
-    const t = ctx.currentTime + 0.03;
-    [55, 82.4, 110, 164.8, 246.9].forEach((f, i) => {
-      const g = ctx.createGain();
-      g.gain.setValueAtTime(0.0001, t);
-      g.gain.exponentialRampToValueAtTime(0.05, t + 1.2);
-      const o = ctx.createOscillator();
-      o.type = 'sine'; o.frequency.value = f; o.detune.value = (Math.random() - .5) * 8;
-      o.connect(g).connect(ctx.destination); o.start(t);
-      nodes.push(o);
-    });
-    const bpm = 62;                       // slow & mellow
-    let step = 0;
-    const tick = setInterval(() => {
-      const at = ctx.currentTime + 0.02;
-      if (step % 2 === 0) tone({ freq: 55, fEnd: 41, type: 'sine', dur: 0.28, vol: 0.5, at });      // kick
-      if (step % 4 === 2) noiseHit({ band: 6800, q: 2, dur: 0.06, vol: 0.12, at });                 // soft hat
-      if (step % 4 === 3) noiseHit({ band: 6800, q: 2, dur: 0.12, vol: 0.08, at });                 // swung back
-      step++;
-    }, 60000 / bpm / 2);
-    return { nodes, stop: () => { clearInterval(tick); nodes.forEach(o => { try { o.stop(); } catch (e) {} }); } };
-  }
-
-  function buildJazz() {
-    // Dm7 warm chord + soft brush swish (swing) + walking bass ghost
-    const nodes = [];
-    const t = ctx.currentTime + 0.03;
-    [146.8, 174.6, 220, 261.6].forEach((f, i) => {
-      const g = ctx.createGain();
-      g.gain.setValueAtTime(0.0001, t);
-      g.gain.exponentialRampToValueAtTime(0.045 + i * 0.006, t + 2);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + 8);
-      const o = ctx.createOscillator();
-      o.type = 'triangle'; o.frequency.value = f;
-      o.connect(g).connect(ctx.destination); o.start(t); o.stop(t + 8.5);
-      nodes.push(o);
-    });
-    let s = 0;
-    const tick = setInterval(() => {
-      const at = ctx.currentTime + 0.02;
-      if (s % 2 === 0) noiseHit({ band: 1400, q: 1.4, dur: 0.22, vol: 0.14, at });                  // brush swish
-      noiseHit({ band: 900, q: 1.1, dur: 0.08, vol: 0.05, at });                                     // soft brush stroke
-      if (s % 4 === 0) tone({ freq: [73.4, 98, 110, 87.3][Math.floor(Math.random()*4)], type: 'sine', dur: 0.24, vol: 0.18, at }); // walking bass
-      s++; if (s > 30) { clearInterval(tick); nodes.forEach(o => { try { o.stop(); } catch (e) {} }); }
-    }, 60000 / 96 / 2);
-    return { nodes, stop: () => { clearInterval(tick); nodes.forEach(o => { try { o.stop(); } catch (e) {} }); } };
-  }
-
-  function buildCozy() {
-    // fireplace: warm low drone + random crackles
-    const nodes = [];
-    const t = ctx.currentTime + 0.03;
-    [55, 82.4, 110].forEach((f, i) => {
-      const g = ctx.createGain();
-      g.gain.setValueAtTime(0.0001, t);
-      g.gain.exponentialRampToValueAtTime(0.05, t + 2);
-      const o = ctx.createOscillator();
-      o.type = 'sine'; o.frequency.value = f;
-      o.connect(g).connect(ctx.destination); o.start(t);
-      nodes.push(o);
-    });
-    function crackle() {
-      const at = ctx.currentTime + 0.02;
-      noiseHit({ band: 1500 + Math.random() * 2200, q: 3, dur: 0.015 + Math.random() * 0.04, vol: 0.03 + Math.random() * 0.05, at });
-      if (active && active.key === 'cozy') setTimeout(crackle, 120 + Math.random() * 420);
-    }
-    crackle();
-    return { nodes, stop: () => { nodes.forEach(o => { try { o.stop(); } catch (e) {} }); } };
-  }
-
-  function buildWarm() {
-    // mellow additive pad, slow filter breath — golden-hour lamp glow
-    const nodes = []; const sustain = [];
-    const t = ctx.currentTime + 0.03;
-    [98, 123.5, 146.8, 196, 246.9].forEach((f, i) => {
-      const g = ctx.createGain();
-      g.gain.setValueAtTime(0.0001, t);
-      g.gain.exponentialRampToValueAtTime(0.035 + i * 0.005, t + 2.5);
-      const o = ctx.createOscillator();
-      o.type = 'sine'; o.frequency.value = f; o.detune.value = (Math.random() - .5) * 5;
-      o.connect(g).connect(ctx.destination); o.start(t);
-      nodes.push(o); sustain.push({ g, o });
-    });
-    const w = ctx.createOscillator(); w.frequency.value = 0.07;                    // slow breath
-    const wg = ctx.createGain(); wg.gain.value = 0.012;
-    w.connect(wg);
-    const master = ctx.createGain(); master.gain.value = 1;
-    sustain.forEach(s => { s.g.disconnect(); s.g.connect(master); });
-    master.connect(ctx.destination);
-    wg.connect(master.gain); w.start(t);
-    return { nodes: [...nodes, w], stop: () => [...nodes, w, master].forEach(o => { try { o.stop?.() || o.disconnect(); } catch (e) {} }) };
-  }
-
-  function buildFun() {
-    // playful bright arpeggio loop + light bounce
-    const seq = [523.3, 659.3, 784, 880, 1046.5, 880, 784, 659.3];
-    let i = 0;
-    const nodes = [];
-    function arp() {
-      const at = ctx.currentTime + 0.02;
-      const f = seq[i % seq.length];
-      nodes.push(tone({ freq: f, type: 'triangle', dur: 0.16, vol: 0.14, at }));
-      if (i % 8 === 0) nodes.push(tone({ freq: 130.8, type: 'sine', dur: 0.2, vol: 0.2, at }));   // bass bounce
-      i++;
-      if (active && active.key === 'fun') setTimeout(arp, 150);
-    }
-    arp();
-    return { nodes, stop: () => nodes.forEach(o => { try { o.stop(); } catch (e) {} }) };
-  }
-
-  function buildDream() {
-    // airy, detuned echo pad that slowly swells — no rhythm, floats
-    const nodes = [];
-    const t = ctx.currentTime + 0.05;
-    [164.8, 246.9, 329.6, 392, 493.9].forEach((f, i) => {
-      [-6, 6].forEach(det => {
-        const g = ctx.createGain();
-        g.gain.setValueAtTime(0.0001, t);
-        g.gain.linearRampToValueAtTime(0.022, t + (4 + i * 0.6));          // very slow swell
-        g.gain.linearRampToValueAtTime(0.0001, t + 26 + i);
-        const o = ctx.createOscillator();
-        o.type = 'sine'; o.frequency.value = f; o.detune.value = det;
-        o.connect(g).connect(ctx.destination); o.start(t); o.stop(t + 28);
-        nodes.push(o);
-      });
-    });
-    return { nodes, stop: () => nodes.forEach(o => { try { o.stop(); } catch (e) {} }) };
-  }
-
-  function buildFocus() {
-    // steady calm heartbeat pulse + low drone — for concentrating
-    const nodes = [];
-    const t = ctx.currentTime + 0.03;
-    [110, 220].forEach(f => {
-      const g = ctx.createGain();
-      g.gain.setValueAtTime(0.0001, t);
-      g.gain.exponentialRampToValueAtTime(0.04, t + 1.5);
-      const o = ctx.createOscillator();
-      o.type = 'sine'; o.frequency.value = f;
-      o.connect(g).connect(ctx.destination); o.start(t);
-      nodes.push(o);
-    });
-    let beat = 0;
-    const tick = setInterval(() => {
-      const at = ctx.currentTime + 0.02;
-      tone({ freq: 110, fEnd: 82, type: 'sine', dur: 0.18, vol: 0.24, at });   // soft lub-dub
-      if (beat % 2 === 0) tone({ freq: 98, fEnd: 73, type: 'sine', dur: 0.14, vol: 0.16, at: at + 0.22 });
-      beat++;
-    }, 60000 / 66 / 2);
-    return { nodes, stop: () => { clearInterval(tick); nodes.forEach(o => { try { o.stop(); } catch (e) {} }); } };
-  }
-
-  const BUILDERS = {
-    rnb: buildRnb,
-    jazz: buildJazz,
-    cozy: buildCozy,
-    warm: buildWarm,
-    fun: buildFun,
-    dream: buildDream,
-    focus: buildFocus,
+  const TRACKS = {
+    rnb:   'assets/sounds/lofi-cocktail-bar.mp3',
+    jazz:  'assets/sounds/jazz-sunny-cafe.mp3',
+    cozy:  'assets/sounds/lofi-coffee-shop.mp3',
+    warm:  'assets/sounds/lofi-sunny-cafe.mp3',
+    fun:   'assets/sounds/lofi-restaurant.mp3',
+    focus: 'assets/sounds/trumpet-study.mp3',
   };
 
+  let audio = null;     // single <audio>, reused across moods
+  let activeKey = null;
+
   function stopMood() {
-    if (active) { active.stop(); active = null; }
+    if (audio) { audio.pause(); audio.currentTime = 0; }
+    activeKey = null;
   }
 
   function playMood(key) {
-    if (active && active.key === key) { stopMood(); return; }
+    if (activeKey === key) { stopMood(); return; }
     stopMood();
-    ensureCtx();
-    active = { key, ...BUILDERS[key]() };
+    if (!audio) {
+      audio = new Audio();
+      audio.loop = true;
+      audio.volume = 0.55;
+    }
+    audio.src = TRACKS[key];
+    audio.play().catch(() => {});
+    activeKey = key;
   }
 
   moodBtns.forEach(btn => btn.addEventListener('click', () => {
@@ -442,6 +249,7 @@
     if (on) { stopMood(); return; }
     btn.classList.add('active');
     btn.setAttribute('aria-pressed', 'true');
-    try { playMood(btn.dataset.mood); } catch (e) { console.warn('audio blocked', e); }
+    playMood(btn.dataset.mood);
   }));
 })();
+
