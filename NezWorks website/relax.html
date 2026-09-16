@@ -44,9 +44,75 @@
 
   <!-- SCENE STAGE -->
   <section class="relax-stage" id="relaxStage">
+    <div class="relax-bg" id="relaxBg" aria-hidden="true"></div>
+    <div class="relax-dim" id="relaxDim" aria-hidden="true"></div>
   </section>
 
 </main>
+
+<!-- RELAX CONTROL DRAWER (เปิดจากปุ่ม Relax ใน Header) -->
+<aside class="relax-drawer" id="relaxDrawer" aria-hidden="true">
+  <div class="rd-head">
+    <div>
+      <p class="rd-kicker">RELAX CONTROL</p>
+      <h2>ปรับบรรยากาศ</h2>
+    </div>
+    <button class="rd-close" id="rdClose" data-cursor="hover" aria-label="ปิดแผง">✕</button>
+  </div>
+
+  <!-- Season -->
+  <section class="rd-section">
+    <h3 class="rd-title">Season</h3>
+    <p class="rd-sub">เลือกบรรยากาศตามฤดูกาล</p>
+    <div class="season-grid" id="seasonGrid">
+      <button class="season-btn" data-season="summer" data-cursor="hover" aria-pressed="false">
+        <img src="assets/seasons/summer.jpg" alt=""><span>Summer</span>
+      </button>
+      <button class="season-btn" data-season="winter" data-cursor="hover" aria-pressed="false">
+        <img src="assets/seasons/winter.jpg" alt=""><span>Winter</span>
+      </button>
+      <button class="season-btn" data-season="autumn" data-cursor="hover" aria-pressed="false">
+        <img src="assets/seasons/autumn.jpg" alt=""><span>Autumn</span>
+      </button>
+      <button class="season-btn" data-season="spring" data-cursor="hover" aria-pressed="false">
+        <img src="assets/seasons/spring.jpg" alt=""><span>Spring</span>
+      </button>
+      <button class="season-btn" data-season="rainy" data-cursor="hover" aria-pressed="false">
+        <img src="assets/seasons/rainy.jpg" alt=""><span>Rainy</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Brightness -->
+  <section class="rd-section">
+    <h3 class="rd-title">Brightness</h3>
+    <p class="rd-sub">ลากเพื่อเพิ่ม-ลดความสว่าง</p>
+    <div class="rd-slider-row">
+      <span class="rd-sl-icon">🌑</span>
+      <input type="range" min="0" max="100" value="35" id="brightness" aria-label="ปรับความสว่าง">
+      <span class="rd-sl-icon">☀️</span>
+    </div>
+    <p class="rd-value" id="brightnessVal">ความสว่าง 35%</p>
+  </section>
+
+  <!-- Sound -->
+  <section class="rd-section">
+    <h3 class="rd-title">Sound</h3>
+    <p class="rd-sub">เลือกโมดเสียงที่ชอบ</p>
+    <div class="sound-grid" id="soundGrid">
+      <button class="mood-btn" data-mood="rnb" data-cursor="hover" aria-pressed="false">R&amp;B</button>
+      <button class="mood-btn" data-mood="jazz" data-cursor="hover" aria-pressed="false">Jazz</button>
+      <button class="mood-btn" data-mood="cozy" data-cursor="hover" aria-pressed="false">Cozy</button>
+      <button class="mood-btn" data-mood="warm" data-cursor="hover" aria-pressed="false">Warm</button>
+      <button class="mood-btn" data-mood="fun" data-cursor="hover" aria-pressed="false">Fun</button>
+      <button class="mood-btn" data-mood="space" data-cursor="hover" aria-pressed="false">Space</button>
+      <button class="mood-btn" data-mood="dream" data-cursor="hover" aria-pressed="false">Dream</button>
+      <button class="mood-btn" data-mood="focus" data-cursor="hover" aria-pressed="false">Focus</button>
+    </div>
+  </section>
+
+  <p class="rd-foot">ผลงานดีๆ ไม่จำเป็นต้องรีบ — พักให้สบายใจก่อนกลับไปสร้างสรรค์<br><a href="index.html">← กลับหน้าหลัก</a></p>
+</aside>
 
 <script src="js/utils.js"></script>
 <script src="js/nav-dropdown.js"></script>
