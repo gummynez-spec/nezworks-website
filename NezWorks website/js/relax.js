@@ -29,7 +29,6 @@
   /* ---------------- background: season image + brightness ---------------- */
   const bg = document.getElementById('relaxBg');
   const dim = document.getElementById('relaxDim');
-  const win = document.getElementById('relaxWindow');
   const brightness = document.getElementById('brightness');
   const brightnessVal = document.getElementById('brightnessVal');
   const seasonBtns = [...document.querySelectorAll('.season-btn')];
@@ -50,7 +49,6 @@
     });
     bg.style.backgroundImage = `url('assets/seasons/${key}.jpg')`;
     bg.classList.add('on');
-    win?.classList.toggle('on', key === 'rainy');
     if (!prefersReduced) setFx(key);
   }
   seasonBtns.forEach(btn => btn.addEventListener('click', () => onSeason(btn.dataset.season)));
