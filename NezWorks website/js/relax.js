@@ -3,7 +3,6 @@
   const stage = document.getElementById('relaxStage');
   const scenes = [...stage.querySelectorAll('.scene')];
   const chips = [...document.querySelectorAll('.scene-chip')];
-  const seasonBtns = [...document.querySelectorAll('.season-btn')];
   const title = document.getElementById('sceneTitle');
   const desc = document.getElementById('sceneDesc');
   const brightness = document.getElementById('brightness');
@@ -22,17 +21,11 @@
   function setScene(key) {
     scenes.forEach(s => s.classList.toggle('scene-active', s.dataset.scene === key));
     chips.forEach(c => c.classList.toggle('active', c.dataset.scene === key));
-    seasonBtns.forEach(b => {
-      const on = b.dataset.scene === key;
-      b.classList.toggle('active', on);
-      b.setAttribute('aria-pressed', on);
-    });
     const info = SCENE_INFO[key];
     title.textContent = info.title;
     desc.textContent = info.desc;
   }
   chips.forEach(c => c.addEventListener('click', () => setScene(c.dataset.scene)));
-  seasonBtns.forEach(b => b.addEventListener('click', () => setScene(b.dataset.scene)));
 
   /* ---------- brightness (0 night → 100 day) ---------- */
   function applyBrightness(v) {
@@ -232,7 +225,7 @@
   /* ---------- mute ---------- */
   function unmute() {
     muted = false;
-    muteBtn.querySelector('span').textContent = '🔊 เสียงเปิด';
+    if (muteBtn) muteBtn.querySelector('span').textContent = '🔊 เสียงเปิด';
   }
   function muteAll() {
     muted = true;
@@ -242,14 +235,14 @@
       r.querySelector('[data-state]').textContent = 'ปิด';
       r.querySelector('[data-vol]').value = 0;
     });
-    muteBtn.querySelector('span').textContent = '🔇 เสียงปิดอยู่';
+    if (muteBtn) muteBtn.querySelector('span').textContent = '🔇 เสียงปิดอยู่';
   }
-  muteBtn.addEventListener('click', () => (muted ? unmute() : muteAll()));
+  muteBtn?.addEventListener('click', () => (muted ? unmute() : muteAll()));
 
   /* suggested pairing: switching scene nudges a matching sound gently on */
-  [...chips, ...seasonBtns].forEach(btn => btn.addEventListener('click', () => {
+  chips.forEach(c => c.addEventListener('click', () => {
     if (muted) return;
-    const key = btn.dataset.scene;
+    const key = c.dataset.scene;
     if (['rain', 'ocean', 'wind', 'night'].includes(key)) {
       const row = document.querySelector(`.sound-row[data-sound="${key}"]`);
       if (row && !master.get(key)) {
