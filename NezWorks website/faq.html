@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>NezWorks — FAQ</title>
+<meta name="description" content="คำถามที่พบบ่อยเกี่ยวกับ NezWorks — เริ่มโปรเจกต์, ราคา, ชำระเงิน, การส่งงาน และการสมัครเป็นฟรีแลนซ์">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/radio.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/pages.css">
+<link rel="stylesheet" href="css/faq.css">
+</head>
+<body>
+
+<div class="scroll-progress" aria-hidden="true"><span></span></div>
+<div class="nebula" aria-hidden="true">
+  <div class="nebula-light nebula-purple"></div>
+  <div class="nebula-light nebula-blue"></div>
+  <div class="nebula-light nebula-peach"></div>
+</div>
+<canvas id="cosmos" aria-hidden="true"></canvas>
+<div class="cursor" id="cursor" aria-hidden="true">
+  <div class="cursor-dot"></div>
+  <div class="cursor-label"></div>
+</div>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <img class="logo-mark" src="assets/nezworks-logo.svg" alt="NezWorks logo">
+      <span class="logo-word">NEZWORKS</span>
+    </a>
+    <nav class="nav-links">
+      <a href="services.html" data-cursor="link">Services</a>
+      <a href="how.html" data-cursor="link">How we work</a>
+      <a href="relax.html" data-cursor="link">Relax</a>
+      <a href="faq.html" class="nav-active" data-cursor="link">FAQ</a>
+      <a href="contact.html" data-cursor="link">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="project.html" class="btn btn-primary btn-sm" data-cursor="hover">Start a Project <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+</header>
+
+
+<main id="top">
+
+<section class="sub-hero">
+  <div class="container sub-hero-grid">
+    <div>
+      <nav class="sub-breadcrumb sr"><a href="index.html">HOME</a><span class="sep">/</span><span>FAQ</span></nav>
+      <p class="sub-kicker sr">คำถามที่พบบ่อย</p>
+      <h1 class="sub-title sr">ตอบก่อนที่<br><span class="accent">คุณจะถาม</span></h1>
+      <p class="sub-lead sr">รวมทุกคำถามที่ผู้ใช้ส่วนใหญ่สงสัย — ตั้งแต่เริ่มโปรเจกต์ ราคา การชำระเงิน ไปจนถึงการส่งงาน ถ้ายังหาคำตอบไม่เจอ ทักหาเราทาง Contact ได้เลย</p>
+      <div class="sub-cta-row sr">
+        <a href="contact.html" class="btn btn-primary btn-lg" data-cursor="hover">ยังมีคำถาม? ติดต่อเรา <span class="btn-arrow">→</span></a>
+        <a href="#faq-list" class="btn btn-ghost btn-lg" data-cursor="hover">ดูคำถามทั้งหมด</a>
+      </div>
+    </div>
+    <div class="sub-orbit sr" aria-hidden="true">
+      <span class="sub-orbit-ring"></span>
+      <span class="sub-orbit-ring r2"></span>
+      <div class="sub-orbit-core"><img src="assets/nezworks-logo.svg" alt=""></div>
+    </div>
+  </div>
+</section>
+
+<section class="sub-section" id="faq-list">
+  <div class="container">
+    <div class="sub-head">
+      <p class="sub-kicker sr">FAQ</p>
+      <h2 class="sub-h2 sr">ทุกคำตอบ<br><span class="accent">ในที่เดียว</span></h2>
+    </div>
+
+    <div class="faq-grid sr" id="faqGrid">
+
+      <details class="faq-item" open>
+        <summary>
+          <span class="faq-num">01</span>
+          <span class="faq-q">NezWorks คืออะไร?</span>
+          <i class="faq-chevron" aria-hidden="true">→</i>
+        </summary>
+        <div class="faq-body">
+          <p>NezWorks คือระบบวงโคจรแห่งความคิดสร้างสรรค์ — เชื่อมธุรกิจและแบรนด์เข้ากับเหล่าฟรีแลนซ์มืออาชีพในด้าน Logo, Banner, Poster, Video, Graphic Design และ Content ครบวงจรในที่เดียว มีทีมงานคอยจัดการทุกขั้นตอนให้</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-num">02</span>
+          <span class="faq-q">เริ่มโปรเจกต์ยังไง?</span>
+          <i class="faq-chevron" aria-hidden="true">→</i>
+        </summary>
+        <div class="faq-body">
+          <p>เริ่มจากการแจ้งความต้องการ เช่น "อยากได้โลโก้" หรือ "ต้องการตัดต่อวิดีโอ" จากนั้นเลือกผลงานที่ใช่จากแฟ้มผลงานของฟรีแลนซ์ ราคาเริ่มต้นแสดงชัดเจนตั้งแต่แรก — ไม่ต้องรอ quote จากนั้นทีมงานดำเนินการต่อจนงานเสร็จส่งให้คุณตรวจ</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-num">03</span>
+          <span class="faq-q">มีบริการอะไรบ้าง?</span>
+          <i class="faq-chevron" aria-hidden="true">→</i>
+        </summary>
+        <div class="faq-body">
+          <p>ปัจจุบันครอบคลุม 6 หมวดหลัก: <b>Logo</b> (mark, wordmark, identity), <b>Banner</b> (เว็บ, โฆษณา, social header), <b>Poster</b> (อีเวนต์, โปรโมชัน, พิมพ์), <b>Video</b> (ตัดต่อ, visual storytelling), <b>Graphic Design</b> (งานกราฟิกแบรนด์) และ <b>Content</b> (คัดลอก, โพสต์โซเชียล, บทความ) และจะเพิ่มหมวดใหม่เรื่อยๆ</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-num">04</span>
+          <span class="faq-q">ใช้เวลานานแค่ไหนถึงได้งาน?</span>
+          <i class="faq-chevron" aria-hidden="true">→</i>
+        </summary>
+        <div class="faq-body">
+          <p>ตอบกลับข้อความแรกภายใน <b>24 ชั่วโมง</b> โดยเฉลี่ยงานสร้างสรรค์ส่งมอบตรงเวลา <b>96%</b> ระยะเวลาโปรเจกต์จริงขึ้นอยู่กับขนาดและความซับซ้อน — ระบุชัดเจนไว้ในทุกขั้นตอนก่อนเริ่ม</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-num">05</span>
+          <span class="faq-q">ชำระเงินยังไง? ปลอดภัยไหม?</span>
+          <i class="faq-chevron" aria-hidden="true">→</i>
+        </summary>
+        <div class="faq-body">
+          <p>ชำระผ่านระบบของ NezWorks เมื่อคุณพอใจกับงานแล้วเท่านั้น ฟรีแลนซ์จะได้รับเงินทันทีหลังส่งงานสำเร็จ — ระบบคุ้มครองทั้งสองฝ่าย ไม่มีการโอนเงินตรงให้ใครก่อนงานเสร็จ มั่นใจได้เลย</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-num">06</span>
+          <span class="faq-q">ถ้าไม่ชอบผลงานทำยังไง?</span>
+          <i class="faq-chevron" aria-hidden="true">→</i>
+        </summary>
+        <div class="faq-body">
+          <p>ทุกโปรเจกต์มีจุดตรวจงาน (milestones) และรอบสอบทาน — คุณดูความคืบหน้าตามเวลาจริงและอนุมัติก่อนปล่อยงาน แก้ไขได้ก่อนชำระเงิน จึงไม่มีเรื่องงานไม่ตรงใจโดยที่ไม่รู้ตัว</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-num">07</span>
+          <span class="faq-q">ได้ไฟล์อะไรบ้างหลังเสร็จงาน?</span>
+          <i class="faq-chevron" aria-hidden="true">→</i>
+        </summary>
+        <div class="faq-body">
+          <p>ได้รับไฟล์สมบูรณ์ทั้งหมด — ไฟล์ใช้งานจริง, ไฟล์ต้นฉบับ (source), และการสนับสนุนเพื่อเปิดตัว ตรวจทานทุกอย่างก่อนปล่อย และความเป็นเจ้าของผลงานโอนให้คุณเมื่อส่งมอบเรียบร้อย</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-num">08</span>
+          <span class="faq-q">ทำโปรเจกต์ต่อเนื่อง/เป็นประจำได้ไหม?</span>
+          <i class="faq-chevron" aria-hidden="true">→</i>
+        </summary>
+        <div class="faq-body">
+          <p>ได้ครับ — เรารองรับงานต่อเนื่อง เช่น คอนเทนต์ประจำ, ระบบแบรนด์ระยะยาว หรือแคมเปญตามรอบ ถ้าอยากได้แพ็กเกจรายเดือน/รายไตรมาส บอกเราผ่านหน้า Contact ได้เลย</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-num">09</span>
+          <span class="faq-q">อยากสมัครเป็นฟรีแลนซ์รับงาน ต้องทำยังไง?</span>
+          <i class="faq-chevron" aria-hidden="true">→</i>
+        </summary>
+        <div class="faq-body">
+          <p>ไปที่หน้า <a href="career.html">Career</a> แล้วสมัครเลย — NezWorks จัดหางานให้, จัดการแมตช์งาน, ประสานงานทุกขั้นตอน และดูแลเรื่องเงินให้ คุณโฟกัสแค่การสร้างสรรค์ผลงานเท่านั้น</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-num">10</span>
+          <span class="faq-q">มีค่าใช้จ่ายแอบแฝงไหม?</span>
+          <i class="faq-chevron" aria-hidden="true">→</i>
+        </summary>
+        <div class="faq-body">
+          <p>ไม่มีครับ — ราคาเริ่มต้นแสดงไว้ชัดเจนตั้งแต่แรก ไม่มีค่าใช้จ่ายซ่อนเร้น และค่าธรรมเนียมการเป็นฟรีแลนซ์ได้รับการดูแลให้ชัดเจนก่อนเริ่มงานทุกครั้ง เริ่มฟรี ไม่มีข้อผูกมัด</p>
+        </div>
+      </details>
+
+    </div>
+
+    <div class="faq-still sr">
+      <p>ยังหาคำตอบไม่เจอใช่ไหม?</p>
+      <a href="contact.html" class="btn btn-primary" data-cursor="hover">ส่งข้อความถึงเรา <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="sub-section sub-section-alt">
+  <div class="container">
+    <div class="cta-panel glass-reflect sr">
+      <div class="cta-orbits" aria-hidden="true">
+        <span class="cta-ring"></span>
+        <span class="cta-ring cta-ring-2"></span>
+        <span class="cta-sat"></span>
+      </div>
+      <p class="section-eyebrow">พร้อมเริ่มแล้วหรือยัง</p>
+      <h2 class="cta-title">บอกเราว่าคุณต้องการอะไร.</h2>
+      <p class="cta-sub">หนึ่งข้อความก็เพียงพอต่อการเริ่มต้น — เราตอบกลับภายใน 24 ชั่วโมง</p>
+      <a href="project.html" class="btn btn-primary btn-lg" data-cursor="hover">Start a Project <span class="btn-arrow">→</span></a>
+      <p class="cta-note">ไม่มีการผูกมัด · ตอบกลับภายใน 24 ชม.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <img class="footer-logo" src="assets/nezworks-logo.svg" alt="NezWorks logo">
+      <p>The creative orbital system.<br>Connecting businesses with the talent they need.</p>
+    </div>
+    <div class="footer-col">
+      <h5>SYSTEM</h5>
+      <a href="services.html">Services</a>
+      <a href="how.html">How we work</a>
+      <a href="career.html">Career</a>
+    </div>
+    <div class="footer-col">
+      <h5>EXPLORE</h5>
+      <a href="project.html">Start a project</a>
+      <a href="faq.html">FAQ</a>
+      <a href="relax.html">Relax</a>
+    </div>
+    <div class="footer-col">
+      <h5>CONNECT</h5>
+      <a href="contact.html">Contact</a>
+      <a href="#">hello@nezworks.com</a>
+      <a href="#">Instagram · LinkedIn</a>
+    </div>
+  </div>
+  <div class="container footer-base">
+    <span>© 2026 NezWorks. All rights reserved.</span>
+    <span class="footer-orbit"><i></i></span>
+    <span>Made with precision, delivered in orbit.</span>
+  </div>
+</footer>
+
+<script src="js/utils.js"></script>
+<script src="js/cosmos.js"></script>
+<script src="js/nav-dropdown.js"></script>
+<script src="js/cursor.js"></script>
+<script src="js/scroll-nav.js"></script>
+<script src="js/radio.js"></script>
+</body>
+</html>
