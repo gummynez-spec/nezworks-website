@@ -28,6 +28,9 @@
     if (drawer.classList.contains('open') && !drawer.contains(e.target) && e.target !== relaxNav) closeDrawer();
   });
 
+  /* open the control drawer automatically whenever the Relax page loads */
+  openDrawer();
+
   /* ---------------- background: season image + brightness ---------------- */
   const bg = document.getElementById('relaxBg');
   const dim = document.getElementById('relaxDim');
