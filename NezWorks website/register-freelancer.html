@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>NezWorks — สมัคร Freelancer</title>
+<title>NezWorks — Join as Freelancer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -42,7 +42,7 @@
       <a href="faq.html" data-cursor="link">FAQ</a>
     </nav>
     <div class="nav-cta">
-      <a href="register-client.html" class="btn btn-ghost btn-sm" data-cursor="hover">สมัครลูกค้า</a>
+      <a href="register-client.html" class="btn btn-ghost btn-sm" data-cursor="hover">Join as Client</a>
     </div>
   </div>
 </header>
@@ -53,18 +53,18 @@
   <!-- ============ STEP 1: PROFILE FORM ============ -->
   <form class="reg-card" id="flForm" novalidate>
     <div class="reg-head">
-      <span class="reg-breadcrumb"><a href="index.html">← ย้อนกลับ</a><span>·</span><span>Freelancer</span></span>
-      <h1>ให้เรารู้จักฝีมือของคุณ</h1>
-      <p>กรอกให้ครบ แล้วกด "ถัดไป" เพื่ออ่านข้อตกลงของทีม NezWorks</p>
+      <span class="reg-breadcrumb"><a href="index.html">← Back</a><span>·</span><span>Freelancer</span></span>
+      <h1>Show us your craft</h1>
+      <p>Fill in the details, then hit "Next" to review the NezWorks team agreement.</p>
     </div>
 
     <div class="reg-section">
-      <div class="reg-label"><span class="req">*</span> NAME — ชื่อของคุณ</div>
-      <input type="text" class="reg-input" name="name" required placeholder="เช่น ธีรเดช สร้างสรรค์">
+      <div class="reg-label"><span class="req">*</span> YOUR NAME</div>
+      <input type="text" class="reg-input" name="name" required placeholder="e.g. Terada Creative">
     </div>
 
     <div class="reg-section">
-      <div class="reg-label"><span class="req">*</span> WHAT DO YOU DO? — คุณทำอะไรได้บ้าง? <span class="opt">(เลือกได้หลายข้อ)</span></div>
+      <div class="reg-label"><span class="req">*</span> WHAT DO YOU DO? <span class="opt">(select all that apply)</span></div>
       <div class="reg-choices">
         <label class="reg-choice"><input type="checkbox" name="skills" value="Graphic Design"><i></i>Graphic Design</label>
         <label class="reg-choice"><input type="checkbox" name="skills" value="Logo and Branding"><i></i>Logo and Branding</label>
@@ -74,102 +74,102 @@
         <label class="reg-choice"><input type="checkbox" name="skills" value="Translation"><i></i>Translation</label>
         <label class="reg-choice" id="otherChoice">
           <input type="checkbox" name="skills" value="Other" id="otherSkill"><i></i>Other :
-          <input type="text" class="other-input" id="otherSkillInput" placeholder="พิมพ์ทักษะของคุณ..." disabled>
+          <input type="text" class="other-input" id="otherSkillInput" placeholder="Type your skill..." disabled>
         </label>
       </div>
     </div>
 
     <div class="reg-section">
-      <div class="reg-label"><span class="req">*</span> SHOW US YOUR WORK — โชว์ผลงานของคุณ</div>
+      <div class="reg-label"><span class="req">*</span> SHOW US YOUR WORK</div>
       <div class="reg-upload" id="workUpload">
         <input type="file" accept="image/*" multiple hidden>
         <span class="ru-icon">🖼</span>
-        <b>อัปโหลดรูปผลงาน</b>
-        <small>อย่างน้อย 1 รูป · หรือวางลิงก์ด้านล่างแทนได้</small>
+        <b>Upload your work</b>
+        <small>At least 1 image · or paste a link below instead</small>
       </div>
-      <input type="url" class="reg-input" id="portfolioUrl" name="portfolio" placeholder="ลิงก์ Portfolio / Behance / เว็บไซต์ / Instagram — อย่างน้อย 1 ช่องทาง" style="margin-top:12px">
+      <input type="url" class="reg-input" id="portfolioUrl" name="portfolio" placeholder="Portfolio / Behance / Website / Instagram — at least one channel" style="margin-top:12px">
     </div>
 
     <div class="reg-section">
-      <div class="reg-label"><span class="req">*</span> EXPERIENCES — ระดับประสบการณ์</div>
+      <div class="reg-label"><span class="req">*</span> EXPERIENCE LEVEL</div>
       <div class="reg-choices" id="expChoices">
-        <label class="reg-choice"><input type="radio" name="exp" value="Beginner" required><i></i><span><b>Beginner</b> — มือใหม่ เริ่มต้นสายสร้างสรรค์</span></label>
-        <label class="reg-choice"><input type="radio" name="exp" value="Intermediate"><i></i><span><b>Intermediate</b> — มีประสบการณ์ ทำงานมาแล้วหลายชิ้น</span></label>
-        <label class="reg-choice"><input type="radio" name="exp" value="Professional"><i></i><span><b>Professional</b> — มืออาชีพ พร้อมรับงานทุกระดับ</span></label>
+        <label class="reg-choice"><input type="radio" name="exp" value="Beginner" required><i></i><span><b>Beginner</b> — new to the craft, still building your portfolio</span></label>
+        <label class="reg-choice"><input type="radio" name="exp" value="Intermediate"><i></i><span><b>Intermediate</b> — experienced, several projects under your belt</span></label>
+        <label class="reg-choice"><input type="radio" name="exp" value="Professional"><i></i><span><b>Professional</b> — a pro, ready for projects of any size</span></label>
       </div>
     </div>
 
     <div class="reg-section">
-      <div class="reg-label"><span class="req">*</span> CONTACT — ช่องทางติดต่อ</div>
-      <input type="text" class="reg-input" name="contact" required placeholder="Email / เบอร์โทร / Instagram / LINE ID">
+      <div class="reg-label"><span class="req">*</span> CONTACT — how should we reach you?</div>
+      <input type="text" class="reg-input" name="contact" required placeholder="Email / Phone / Instagram / LINE ID">
     </div>
 
     <div class="reg-submit">
-      <button type="button" class="btn btn-primary btn-lg" id="flNext" data-cursor="hover">ถัดไป — อ่านข้อตกลง <span class="btn-arrow">→</span></button>
-      <p class="reg-hint">กรอกครบทุกช่อง * ก่อนกดถัดไป</p>
+      <button type="button" class="btn btn-primary btn-lg" id="flNext" data-cursor="hover">Next — Review Terms <span class="btn-arrow">→</span></button>
+      <p class="reg-hint">Fill in every * field before continuing</p>
     </div>
   </form>
 
   <!-- ============ STEP 2: TERMS ============ -->
   <div class="reg-card" id="flTerms" hidden>
     <div class="reg-head">
-      <span class="reg-breadcrumb"><a href="#" id="backToForm">← ย้อนกลับแก้ไข</a><span>·</span><span>ข้อตกลง</span></span>
-      <h1>ข้อตกลงสำหรับคนรับงาน</h1>
-      <p>เพื่อการทำงานที่ราบรื่นและเป็นธรรมสำหรับทั้งสองฝ่าย โปรดอ่านและยอมรับก่อนเริ่ม</p>
+      <span class="reg-breadcrumb"><a href="#" id="backToForm">← Back to edit</a><span>·</span><span>Terms</span></span>
+      <h1>Terms for freelancers</h1>
+      <p>To keep work smooth and fair for both sides, please read and accept before getting started.</p>
     </div>
 
     <div class="fl-terms" id="flTermsList">
       <details class="term-item" open>
-        <summary><span class="term-num">01</span>ค่าธรรมเนียม <i class="term-chevron">→</i></summary>
+        <summary><span class="term-num">01</span>Fees <i class="term-chevron">→</i></summary>
         <div class="term-body">
           <ul>
-            <li>0–20,000 บาท → <b>8%</b></li>
-            <li>20,001–100,000 บาท → <b>7%</b></li>
-            <li>100,001–300,000 บาท → <b>6%</b></li>
-            <li>300,001 บาทขึ้นไป → <b>5%</b></li>
+            <li>0–20,000 THB → <b>8%</b></li>
+            <li>20,001–100,000 THB → <b>7%</b></li>
+            <li>100,001–300,000 THB → <b>6%</b></li>
+            <li>300,001 THB and up → <b>5%</b></li>
           </ul>
-          <p>ไม่มีค่าธรรมเนียมสมัคร/ลงบริการ — คิดเฉพาะงานที่สำเร็จ</p>
+          <p>No sign-up or listing fees — you pay only when work is delivered.</p>
         </div>
       </details>
       <details class="term-item">
-        <summary><span class="term-num">02</span>การชำระเงิน <i class="term-chevron">→</i></summary>
-        <div class="term-body"><p>การชำระเงินดำเนินการผ่านระบบแพลตฟอร์ม โดยหักค่าธรรมเนียมตามอัตราก่อนโอนให้คนรับงาน เพื่อความปลอดภัยของทั้งสองฝ่าย</p></div>
+        <summary><span class="term-num">02</span>Payments <i class="term-chevron">→</i></summary>
+        <div class="term-body"><p>Payments are processed on-platform, with fees deducted per the rate above before funds are transferred to you. This protects both sides.</p></div>
       </details>
       <details class="term-item">
-        <summary><span class="term-num">03</span>การทำงานและการส่งมอบ <i class="term-chevron">→</i></summary>
-        <div class="term-body"><p>ดำเนินงานตามรายละเอียด ราคา และระยะเวลาที่ตกลง หากมีการเปลี่ยนแปลง ให้ตกลงกันผ่านระบบ NezWorks เพื่อมีข้อมูลอ้างอิงชัดเจน</p></div>
+        <summary><span class="term-num">03</span>Work &amp; Delivery <i class="term-chevron">→</i></summary>
+        <div class="term-body"><p>Deliver per the details, price, and timeline you agreed on. If anything changes, agree through the NezWorks system so there is a clear record.</p></div>
       </details>
       <details class="term-item">
-        <summary><span class="term-num">04</span>การยกเลิกและข้อพิพาท <i class="term-chevron">→</i></summary>
-        <div class="term-body"><p>หากไม่สามารถดำเนินงานต่อได้ แจ้งลูกค้าและ NezWorks เพื่อหาทางออกที่เหมาะสม หากเกิดข้อพิพาท NezWorks อาจขอหลักฐานจากทั้งสองฝ่ายเพื่อพิจารณาอย่างเป็นธรรม</p></div>
+        <summary><span class="term-num">04</span>Cancellation &amp; Disputes <i class="term-chevron">→</i></summary>
+        <div class="term-body"><p>If you can't continue a project, let the client and NezWorks know so we can find the right solution. In a dispute, NezWorks may ask both sides for evidence to reach a fair decision.</p></div>
       </details>
       <details class="term-item">
-        <summary><span class="term-num">05</span>ผลงานและสิทธิ์ของผู้อื่น <i class="term-chevron">→</i></summary>
-        <div class="term-body"><p>ส่งมอบเฉพาะผลงานที่ตนมีสิทธิ์ใช้งานหรือสร้างขึ้นเอง ไม่ละเมิดลิขสิทธิ์หรือสิทธิของบุคคลอื่น</p></div>
+        <summary><span class="term-num">05</span>Work &amp; Others' Rights <i class="term-chevron">→</i></summary>
+        <div class="term-body"><p>Deliver only work you own or have the right to use. Don't infringe copyright or anyone else's rights.</p></div>
       </details>
       <details class="term-item">
-        <summary><span class="term-num">06</span>การรีวิว <i class="term-chevron">→</i></summary>
-        <div class="term-body"><p>หลังจบงาน ทั้งสองฝ่ายให้คะแนนและรีวิวได้อย่างตรงไปตรงมา ไม่สร้างรีวิวปลอมหรือบิดเบือนคะแนน</p></div>
+        <summary><span class="term-num">06</span>Reviews <i class="term-chevron">→</i></summary>
+        <div class="term-body"><p>After a project, both sides may rate and review honestly. No fake reviews or tampering with scores.</p></div>
       </details>
       <details class="term-item">
-        <summary><span class="term-num">07</span>การใช้งานอย่างสุจริต <i class="term-chevron">→</i></summary>
-        <div class="term-body"><p>ใช้แพลตฟอร์มอย่างสุจริต ไม่หลอกลวง ไม่ใช้ข้อมูลเท็จ ไม่หลีกเลี่ยงระบบหรือค่าธรรมเนียม หากพบพฤติกรรมเสี่ยง NezWorks อาจระงับการใช้งานชั่วคราว</p></div>
+        <summary><span class="term-num">07</span>Fair Use <i class="term-chevron">→</i></summary>
+        <div class="term-body"><p>Use the platform honestly — no fraud, no false information, no bypassing the system or its fees. If risky behavior is found, NezWorks may temporarily suspend your account.</p></div>
       </details>
       <details class="term-item">
-        <summary><span class="term-num">08</span>ข้อมูลส่วนบุคคล <i class="term-chevron">→</i></summary>
-        <div class="term-body"><p>เก็บและใช้ข้อมูลเท่าที่จำเป็นต่อการให้บริการ ยืนยันตัวตน ชำระเงิน และความปลอดภัยของแพลตฟอร์ม ตามนโยบายความเป็นส่วนตัว</p></div>
+        <summary><span class="term-num">08</span>Personal Data <i class="term-chevron">→</i></summary>
+        <div class="term-body"><p>We collect and use only the data needed to provide the service, verify identity, process payments, and keep the platform safe — per our privacy policy.</p></div>
       </details>
     </div>
 
     <div class="fl-consents">
-      <label class="af-check"><input type="checkbox" id="consent1" required><i></i><span>ฉันอ่านและยอมรับ <b>Terms &amp; Conditions</b> ทั้ง 8 ข้อข้างต้น</span></label>
-      <label class="af-check"><input type="checkbox" id="consent2" required><i></i><span>ฉันยอมรับ <b>Privacy Policy</b> ของ NezWorks</span></label>
-      <label class="af-check"><input type="checkbox" id="consent3" required><i></i><span>ฉันยืนยันว่าข้อมูลที่ให้มาเป็นความจริงทั้งหมด</span></label>
+      <label class="af-check"><input type="checkbox" id="consent1" required><i></i><span>I have read and accept the <b>Terms &amp; Conditions</b> above (all 8 points)</span></label>
+      <label class="af-check"><input type="checkbox" id="consent2" required><i></i><span>I accept the <b>Privacy Policy</b> of NezWorks</span></label>
+      <label class="af-check"><input type="checkbox" id="consent3" required><i></i><span>I confirm that all the information I provided is true</span></label>
     </div>
 
     <div class="reg-submit">
-      <button type="button" class="btn btn-primary btn-lg" id="flConfirm" data-cursor="hover" disabled>ยืนยันการส่ง <span class="btn-arrow">→</span></button>
-      <p class="reg-hint">ติ้กยอมรับครบ 3 ข้อเพื่อเปิดปุ่มยืนยัน</p>
+      <button type="button" class="btn btn-primary btn-lg" id="flConfirm" data-cursor="hover" disabled>Confirm &amp; Submit <span class="btn-arrow">→</span></button>
+      <p class="reg-hint">Tick all 3 checkboxes to enable the confirm button</p>
     </div>
   </div>
 
@@ -179,10 +179,10 @@
       <img class="success-logo" src="assets/nezworks-logo.svg" alt="">
       <div class="success-orbit"><span class="success-sat"></span><span class="success-sat-final"></span></div>
     </div>
-    <h1>คุณเข้าสู่วงโคจรแล้ว!</h1>
-    <p>บัญชี Freelancer ของคุณพร้อมใช้งาน — ขั้นต่อไป: สร้างผลงานแรกของคุณ ใส่ราคา และเริ่มรับงาน</p>
+    <h1>You're in the orbit!</h1>
+    <p>Your Freelancer account is ready — next step: create your first piece of work, set a price, and start taking orders.</p>
     <div class="reg-submit">
-      <a href="freelancer.html" class="btn btn-primary btn-lg" data-cursor="hover">สร้างผลงานแรกของคุณ <span class="btn-arrow">→</span></a>
+      <a href="freelancer.html" class="btn btn-primary btn-lg" data-cursor="hover">Create your first work <span class="btn-arrow">→</span></a>
     </div>
   </div>
 

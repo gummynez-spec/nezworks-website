@@ -22,7 +22,7 @@
         box.classList.add('filled');
         const small = box.querySelector('small');
         if (!box.dataset.orig) box.dataset.orig = small.textContent;
-        small.textContent = `✓ เลือกแล้ว ${input.files.length} ไฟล์`;
+        small.textContent = `✓ ${input.files.length} file${input.files.length === 1 ? '' : 's'} selected`;
       }
     });
   });

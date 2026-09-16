@@ -49,9 +49,9 @@
           <div class="fw-actions">
             <span class="fw-status ${w.published ? 'live' : ''}">${w.published ? '● LIVE' : '○ DRAFT'}</span>
             <span class="fw-edit-group">
-              <button class="fw-btn edit" data-i="${i}" data-cursor="hover">แก้ไข</button>
-              <button class="fw-btn pub" data-i="${i}" data-cursor="hover">${w.published ? 'เลิกเผยแพร่' : 'เผยแพร่'}</button>
-              <button class="fw-btn del" data-i="${i}" data-cursor="hover">ลบ</button>
+              <button class="fw-btn edit" data-i="${i}" data-cursor="hover">Edit</button>
+              <button class="fw-btn pub" data-i="${i}" data-cursor="hover">${w.published ? 'Unpublish' : 'Publish'}</button>
+              <button class="fw-btn del" data-i="${i}" data-cursor="hover">Delete</button>
             </span>
           </div>
         </div>`;
@@ -93,7 +93,7 @@
   function showForm(editIdx = null) {
     home.hidden = true; success.hidden = true; form.hidden = false;
     form.dataset.editing = editIdx ?? '';
-    document.getElementById('workFormTitle').textContent = editIdx !== null ? 'แก้ไขผลงาน' : 'สร้างผลงานใหม่';
+    document.getElementById('workFormTitle').textContent = editIdx !== null ? 'Edit work' : 'Create new work';
     if (editIdx !== null) {
       const w = works[editIdx];
       document.getElementById('wTitle').value = w.title;
@@ -106,7 +106,7 @@
       coverImgData = null;
       if (coverBox) {
         coverBox.classList.remove('filled');
-        coverBox.querySelector('small').textContent = 'รูปเด่นของงานชิ้นนี้ — แนะนำขนาด 1:1 ขึ้นไป';
+        coverBox.querySelector('small').textContent = 'The hero image for this piece — 1:1 or larger recommended';
       }
     }
     window.scrollTo({ top: 0, behavior: NW.reduced ? 'auto' : 'smooth' });
@@ -141,7 +141,7 @@
     save();
 
     document.getElementById('workSuccessMsg').textContent =
-      `"${title}" พร้อมให้ลูกค้าเห็นแล้ว — เราจะแจ้งเตือนเมื่อมีคนสนใจ`;
+      `"${title}" is live — we'll notify you when someone's interested`;
     form.hidden = true;
     success.hidden = false;
     success.classList.add('play');

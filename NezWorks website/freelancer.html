@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>NezWorks — พื้นที่ของ Freelancer</title>
+<title>NezWorks — Freelancer Workspace</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -42,7 +42,7 @@
       <a href="faq.html" data-cursor="link">FAQ</a>
     </nav>
     <div class="nav-cta">
-      <button class="btn btn-primary btn-sm" id="newWorkBtn" data-cursor="hover">＋ สร้างผลงานใหม่</button>
+      <button class="btn btn-primary btn-sm" id="newWorkBtn" data-cursor="hover">＋ Create new work</button>
     </div>
   </div>
 </header>
@@ -54,14 +54,14 @@
   <div class="fw-container" id="fwHome">
     <div class="fw-head">
       <div>
-        <span class="reg-breadcrumb"><a href="index.html">← หน้าหลัก</a><span>·</span><span>พื้นที่ของฉัน</span></span>
-        <h1>ผลงานของคุณ</h1>
-        <p>สร้างรายการผลงาน ใส่ราคา และรายละเอียด — ให้ลูกค้าเห็นและกดจองคุณได้เลย</p>
+        <span class="reg-breadcrumb"><a href="index.html">← Home</a><span>·</span><span>My workspace</span></span>
+        <h1>Your work</h1>
+        <p>List your work with a price and details — so clients can see you and start booking.</p>
       </div>
       <div class="fw-stats-mini">
-        <div><b id="stWorks">0</b><span>ผลงาน</span></div>
-        <div><b id="stViews">0</b><span>เข้าชม</span></div>
-        <div><b id="stOrders">0</b><span>คำสั่งจอง</span></div>
+        <div><b id="stWorks">0</b><span>Works</span></div>
+        <div><b id="stViews">0</b><span>Views</span></div>
+        <div><b id="stOrders">0</b><span>Orders</span></div>
       </div>
     </div>
 
@@ -70,9 +70,9 @@
         <span></span><span class="eo2"></span>
         <img src="assets/nezworks-logo.svg" alt="">
       </div>
-      <h3>วงโคจรของคุณยังว่างอยู่</h3>
-      <p>สร้างผลงานแรกเพื่อเริ่มต้นรับงาน — ใส่รูป ราคา และรายละเอียด แค่นั้นก็พร้อมโชว์</p>
-      <button class="btn btn-primary btn-lg" id="emptyCreateBtn" data-cursor="hover">สร้างผลงานแรก <span class="btn-arrow">→</span></button>
+      <h3>Your orbit is still empty</h3>
+      <p>Create your first piece of work to start taking orders — add a photo, price, and details. That's all it takes.</p>
+      <button class="btn btn-primary btn-lg" id="emptyCreateBtn" data-cursor="hover">Create your first work <span class="btn-arrow">→</span></button>
     </div>
 
     <div class="fw-grid" id="fwGrid"></div>
@@ -81,18 +81,18 @@
   <!-- ============ CREATE / EDIT WORK FORM ============ -->
   <form class="reg-card fw-form" id="workForm" novalidate hidden>
     <div class="reg-head">
-      <span class="reg-breadcrumb"><a href="#" id="backToFw">← กลับพื้นที่ของฉัน</a></span>
-      <h1 id="workFormTitle">สร้างผลงานใหม่</h1>
-      <p>กรอกรายละเอียดผลงาน — ให้ลูกค้าเห็นว่าคุณเก่งแค่ไหน</p>
+      <span class="reg-breadcrumb"><a href="#" id="backToFw">← Back to my workspace</a></span>
+      <h1 id="workFormTitle">Create new work</h1>
+      <p>Fill in the details — so clients can see how good you are.</p>
     </div>
 
     <div class="reg-section">
-      <div class="reg-label"><span class="req">*</span> TITLE — ชื่อผลงาน / แพ็คเกจ</div>
-      <input type="text" class="reg-input" name="title" required id="wTitle" placeholder="เช่น Logo Design Minimal Style — เริ่มต้น 1,500฿">
+      <div class="reg-label"><span class="req">*</span> TITLE</div>
+      <input type="text" class="reg-input" name="title" required id="wTitle" placeholder="e.g. Minimal Logo Design — starting at 1,500 THB">
     </div>
 
     <div class="reg-section">
-      <div class="reg-label"><span class="req">*</span> CATEGORY — ประเภทงาน</div>
+      <div class="reg-label"><span class="req">*</span> CATEGORY</div>
       <div class="reg-choices" id="wCats">
         <label class="reg-choice"><input type="radio" name="wcat" value="Graphic Design" checked><i></i>Graphic Design</label>
         <label class="reg-choice"><input type="radio" name="wcat" value="Logo and Branding"><i></i>Logo and Branding</label>
@@ -104,17 +104,17 @@
     </div>
 
     <div class="reg-section">
-      <div class="reg-label"><span class="req">*</span> COVER IMAGE — รูปประกอบผลงาน</div>
+      <div class="reg-label"><span class="req">*</span> COVER IMAGE</div>
       <div class="reg-upload" id="workCoverUpload">
         <input type="file" accept="image/*" hidden>
         <span class="ru-icon">🖼</span>
-        <b>อัปโหลดรูปหน้าปก</b>
-        <small>รูปเด่นของงานชิ้นนี้ — แนะนำขนาด 1:1 ขึ้นไป</small>
+        <b>Upload cover image</b>
+        <small>The hero image for this piece — 1:1 or larger recommended</small>
       </div>
     </div>
 
     <div class="reg-section">
-      <div class="reg-label"><span class="req">*</span> PRICE — ราคาเริ่มต้น (บาท)</div>
+      <div class="reg-label"><span class="req">*</span> PRICE (THB)</div>
       <div class="price-input-row">
         <input type="number" class="reg-input price-num" id="wPrice" min="0" step="50" value="500" required>
         <div class="price-presets" id="pricePresets">
@@ -127,23 +127,23 @@
     </div>
 
     <div class="reg-section">
-      <div class="reg-label"><span class="req">*</span> DESCRIPTION — รายละเอียดงาน</div>
-      <textarea class="reg-input" name="desc" id="wDesc" rows="5" required placeholder="อธิบายว่าลูกค้าจะได้อะไรบ้าง เช่น ไฟล์ที่ส่ง จำนวนร่างแก้ไข ระยะเวลาส่งมอบ เช่น&#10;• โลโก้ 3 แนวทาง ส่งไฟล์ AI+PNG&#10;• แก้ไขได้ 2 รอบ ส่งงานภายใน 5 วัน"></textarea>
+      <div class="reg-label"><span class="req">*</span> DESCRIPTION</div>
+      <textarea class="reg-input" name="desc" id="wDesc" rows="5" required placeholder="What the client gets — files, revisions, turnaround time, e.g.&#10;• 3 logo concepts, delivered as AI + PNG&#10;• 2 rounds of revisions, delivery within 5 days"></textarea>
     </div>
 
     <div class="reg-section">
-      <div class="reg-label">DELIVERY TIME — ระยะเวลาส่งงาน</div>
+      <div class="reg-label">DELIVERY TIME</div>
       <div class="reg-choices" id="wDeliver" role="radiogroup">
-        <label class="reg-choice"><input type="radio" name="wdeliver" value="1 วัน"><i></i>เร็วมาก — 1 วัน</label>
-        <label class="reg-choice"><input type="radio" name="wdeliver" value="3 วัน" checked><i></i>มาตรฐาน — 3 วัน</label>
-        <label class="reg-choice"><input type="radio" name="wdeliver" value="7 วัน"><i></i>ละเอียด — 7 วัน</label>
-        <label class="reg-choice"><input type="radio" name="wdeliver" value="14 วัน"><i></i>โปรเจกต์ใหญ่ — 14 วัน</label>
+        <label class="reg-choice"><input type="radio" name="wdeliver" value="1 day"><i></i>Express — 1 day</label>
+        <label class="reg-choice"><input type="radio" name="wdeliver" value="3 days" checked><i></i>Standard — 3 days</label>
+        <label class="reg-choice"><input type="radio" name="wdeliver" value="7 days"><i></i>Detailed — 7 days</label>
+        <label class="reg-choice"><input type="radio" name="wdeliver" value="14 days"><i></i>Large project — 14 days</label>
       </div>
     </div>
 
     <div class="reg-submit">
-      <button type="submit" class="btn btn-primary btn-lg" data-cursor="hover">เผยแพร่ผลงาน <span class="btn-arrow">→</span></button>
-      <p class="reg-hint">เผยแพร่แล้วลูกค้าจะเห็นผลงานนี้ทันทีในหมวดของคุณ</p>
+      <button type="submit" class="btn btn-primary btn-lg" data-cursor="hover">Publish work <span class="btn-arrow">→</span></button>
+      <p class="reg-hint">Once published, it appears instantly in your category for clients</p>
     </div>
   </form>
 
@@ -153,10 +153,10 @@
       <img class="success-logo" src="assets/nezworks-logo.svg" alt="">
       <div class="success-orbit"><span class="success-sat"></span><span class="success-sat-final"></span></div>
     </div>
-    <h1>ผลงานเข้าสู่วงโคจรแล้ว!</h1>
-    <p id="workSuccessMsg">ผลงานของคุณพร้อมให้ลูกค้าเห็นแล้ว — เราจะแจ้งเตือนเมื่อมีคนสนใจ</p>
+    <h1>Your work is in the orbit!</h1>
+    <p id="workSuccessMsg">Your work is live for clients to see — we'll notify you when someone's interested.</p>
     <div class="reg-submit">
-      <button class="btn btn-primary btn-lg" id="backHomeBtn" data-cursor="hover">ดูผลงานของฉัน <span class="btn-arrow">→</span></button>
+      <button class="btn btn-primary btn-lg" id="backHomeBtn" data-cursor="hover">View my work <span class="btn-arrow">→</span></button>
     </div>
   </div>
 
