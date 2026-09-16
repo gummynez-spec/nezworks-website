@@ -32,6 +32,25 @@ body{
   position:absolute;inset:0;z-index:3;
   pointer-events:none;
 }
+.relax-window{
+  position:absolute;inset:0;z-index:4;
+  opacity:0;transition:opacity .6s var(--ease-soft);
+  pointer-events:none;
+}
+.relax-window.on{opacity:1}
+.relax-window::before{
+  /* window frame border */
+  content:"";position:absolute;inset:7%;
+  border:12px solid rgba(10,12,20,.9);
+  border-radius:14px;
+  box-shadow:0 0 0 2px rgba(255,255,255,.06), inset 0 0 40px rgba(0,0,0,.35);
+}
+.relax-window::after{
+  /* muntin crossbar */
+  content:"";position:absolute;left:50%;top:7%;bottom:7%;width:8px;
+  transform:translateX(-50%);
+  background:rgba(10,12,20,.9);
+}
 .relax-dim{
   position:absolute;inset:0;z-index:5;
   background:#000;
