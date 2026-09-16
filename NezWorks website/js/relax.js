@@ -3,6 +3,8 @@
   const stage = document.getElementById('relaxStage');
   if (!stage) return;
 
+  const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   /* ---------------- drawer toggle ---------------- */
   const drawer = document.getElementById('relaxDrawer');
   const closeBtn = document.getElementById('rdClose');
@@ -30,21 +32,180 @@
   const brightness = document.getElementById('brightness');
   const brightnessVal = document.getElementById('brightnessVal');
   const seasonBtns = [...document.querySelectorAll('.season-btn')];
+  let currentSeason = 'none';
 
   function applyBrightness(v) {
     const pct = Math.max(0, Math.min(100, v));
     const dark = 1 - pct / 100;          // 0 → no dim (bright), 1 → fully dark
     dim.style.opacity = (0.18 + dark * 0.82).toFixed(3);
-    if (brightnessVal) brightnessVal.textContent = `ความสว่าง ${Math.round(pct)}%`;
+    if (brightnessVal) brightnessVal.textContent = `Brightness ${Math.round(pct)}%`;
   }
+  function onSeason(key) {
+    currentSeason = key;
+    seasonBtns.forEach(b => {
+      const on = b.dataset.season === key;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on);
+    });
+    bg.style.backgroundImage = `url('assets/seasons/${key}.jpg')`;
+    bg.classList.add('on');
+    if (!prefersReduced) setFx(key);
+  }
+  seasonBtns.forEach(btn => btn.addEventListener('click', () => onSeason(btn.dataset.season)));
   brightness?.addEventListener('input', () => applyBrightness(+brightness.value));
   applyBrightness(+brightness.value ?? 35);
 
-  seasonBtns.forEach(btn => btn.addEventListener('click', () => {
-    seasonBtns.forEach(b => { b.classList.toggle('active', b === btn); b.setAttribute('aria-pressed', b === btn); });
-    bg.style.backgroundImage = `url('assets/seasons/${btn.dataset.season}.jpg')`;
-    bg.classList.add('on');
-  }));
+  /* ============================================================
+     LIVING STAGE — 3D parallax + wind sway + seasonal particles
+  ============================================================ */
+  const fx = document.getElementById('relaxFx');
+  const ctx2d = fx?.getContext('2d');
+
+  let W = 0, H = 0, DPR = 1, raf = null;
+  const mouse = { x: 0.5, y: 0.5, tx: 0.5, ty: 0.5 };
+
+  function sizeCanvas() {
+    if (!fx) return;
+    DPR = Math.min(2, window.devicePixelRatio || 1);
+    W = stage.clientWidth; H = stage.clientHeight;
+    fx.width = W * DPR; fx.height = H * DPR;
+    fx.style.width = W + 'px'; fx.style.height = H + 'px';
+    ctx2d.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  window.addEventListener('resize', sizeCanvas);
+
+  /* sway per season — tree & leaf motion on the photo itself */
+  const SWAY = { summer: .012, spring: .011, autumn: .012, winter: .004, rainy: 0, none: 0 };
+
+  /* ---------- particle factories ---------- */
+  const particles = [];
+  let fxMode = 'none';
+
+  function spawn(key) {
+    particles.length = 0;
+    fxMode = key;
+    const n = {
+      winter: Math.round(W / 7),
+      rainy:  Math.round(W / 5),
+      autumn: 34,
+      spring: 30,
+      summer: 26,
+    }[key] || 0;
+
+    for (let i = 0; i < n; i++) {
+      const p = {};
+      if (key === 'winter') {
+        p.kind = 'snow';
+        p.x = Math.random() * W; p.y = Math.random() * H;
+        p.r = 1 + Math.random() * 2.6;
+        p.v = 0.4 + Math.random() * 1.1;
+        p.drift = 0.3 + Math.random() * 0.8;
+        p.phase = Math.random() * Math.PI * 2;
+        p.o = 0.5 + Math.random() * 0.5;
+      } else if (key === 'rainy') {
+        p.kind = 'rain';
+        p.x = Math.random() * W; p.y = Math.random() * H;
+        p.len = 12 + Math.random() * 16;
+        p.v = 9 + Math.random() * 7;
+        p.o = 0.25 + Math.random() * 0.4;
+      } else if (key === 'autumn' || key === 'spring') {
+        p.kind = 'leaf';
+        p.x = Math.random() * W; p.y = Math.random() * H;
+        p.s = key === 'autumn' ? (4 + Math.random() * 4) : (3 + Math.random() * 3);
+        p.rot = Math.random() * Math.PI; p.vr = (Math.random() - 0.5) * 0.08;
+        p.v = 0.7 + Math.random() * 1.0;
+        p.drift = 0.6 + Math.random() * 1.4;
+        p.phase = Math.random() * Math.PI * 2;
+        p.color = key === 'autumn'
+          ? ['#e07a34', '#c9551f', '#e8b13a', '#a63d1f'][i % 4]
+          : ['#f6c6d8', '#f8ddb8', '#e8f0c9', '#f2b7c8'][i % 4];
+      } else if (key === 'summer') {
+        p.kind = 'shimmer';
+        p.x = Math.random() * W; p.y = Math.random() * H;
+        p.r = 0.8 + Math.random() * 1.8;
+        p.phase = Math.random() * Math.PI * 2;
+        p.speed = 0.4 + Math.random() * 0.8;
+      }
+      particles.push(p);
+    }
+  }
+  function setFx(key) {
+    spawn(key);
+    if (!FXRUNNING && !prefersReduced) loop();
+  }
+
+  /* ---------- per-frame render ---------- */
+  let FXRUNNING = false;
+
+  function render() {
+    ctx2d.clearRect(0, 0, W, H);
+    for (const p of particles) {
+      if (p.kind === 'snow') {
+        p.y += p.v; p.phase += 0.02;
+        p.x += Math.sin(p.phase) * p.drift * 0.5;
+        if (p.y > H + 4) { p.y = -4; p.x = Math.random() * W; }
+        ctx2d.globalAlpha = p.o;
+        ctx2d.fillStyle = '#fff';
+        ctx2d.beginPath(); ctx2d.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx2d.fill();
+      } else if (p.kind === 'rain') {
+        p.y += p.v; p.x -= p.v * 0.18;   /* slight slant */
+        if (p.y > H + p.len) { p.y = -p.len; p.x = Math.random() * W + 20; }
+        ctx2d.globalAlpha = p.o;
+        ctx2d.strokeStyle = '#b9c9f0';
+        ctx2d.lineWidth = 1.6;
+        ctx2d.beginPath();
+        ctx2d.moveTo(p.x, p.y);
+        ctx2d.lineTo(p.x - p.len * 0.2, p.y + p.len);
+        ctx2d.stroke();
+      } else if (p.kind === 'leaf') {
+        p.y += p.v; p.rot += p.vr; p.phase += 0.02;
+        p.x += Math.sin(p.phase) * p.drift;
+        if (p.y > H + 20) { p.y = -20; p.x = Math.random() * W; }
+        ctx2d.save();
+        ctx2d.translate(p.x, p.y); ctx2d.rotate(p.rot);
+        ctx2d.globalAlpha = 0.85;
+        ctx2d.fillStyle = p.color;
+        ctx2d.beginPath();
+        ctx2d.ellipse(0, 0, p.s, p.s * 0.45, 0, 0, Math.PI * 2);
+        ctx2d.fill();
+        ctx2d.restore();
+      } else if (p.kind === 'shimmer') {
+        p.phase += 0.03 * p.speed;
+        ctx2d.globalAlpha = 0.25 + Math.sin(p.phase) * 0.2;
+        ctx2d.fillStyle = '#fff7d6';
+        ctx2d.beginPath(); ctx2d.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx2d.fill();
+      }
+    }
+    ctx2d.globalAlpha = 1;
+  }
+
+  function loop() {
+    FXRUNNING = true;
+    const sway = SWAY[currentSeason] || 0;
+    const swayX = sway !== 0 ? Math.sin(performance.now() / 2400) * sway : 0;
+    const swayY = sway !== 0 ? Math.cos(performance.now() / 3000) * sway * 0.5 : 0;
+
+    mouse.x += (mouse.tx - mouse.x) * 0.045;
+    mouse.y += (mouse.ty - mouse.y) * 0.045;
+    const px = (mouse.x - 0.5) * 14;      // parallax shift
+    const py = (mouse.y - 0.5) * 9;
+
+    if (bg.classList.contains('on')) {
+      bg.style.transform = `translate3d(${px}px, ${py}px, 0) rotate(${swayX}rad) scale(1.05)`;
+    }
+    render();
+    raf = requestAnimationFrame(loop);
+  }
+
+  if (fx && ctx2d && !prefersReduced) {
+    sizeCanvas();
+    stage.addEventListener('pointermove', e => {
+      const r = stage.getBoundingClientRect();
+      mouse.tx = (e.clientX - r.left) / r.width;
+      mouse.ty = (e.clientY - r.top) / r.height;
+    });
+    loop();
+  }
 
   /* ---------------- ambience: Web Audio mood pads ---------------- */
   const moodBtns = [...document.querySelectorAll('.mood-btn')];

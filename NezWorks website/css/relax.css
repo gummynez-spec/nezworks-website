@@ -25,8 +25,13 @@ body{
   background-size:cover;background-position:center;
   opacity:0;
   transition:opacity 1.2s var(--ease-soft);
+  will-change:transform;
 }
 .relax-bg.on{opacity:1}
+.relax-fx{
+  position:absolute;inset:0;z-index:3;
+  pointer-events:none;
+}
 .relax-dim{
   position:absolute;inset:0;z-index:5;
   background:#000;
@@ -131,4 +136,9 @@ input[type="range"]::-moz-range-thumb{
   .relax-drawer{padding-top:calc(var(--nav-h) + 14px)}
   .season-grid{grid-template-columns:repeat(5,1fr)}
   .sound-grid{grid-template-columns:repeat(4,1fr)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .relax-bg{transition:opacity .3s}
+  .relax-fx{display:none}
 }

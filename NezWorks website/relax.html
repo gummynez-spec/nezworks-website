@@ -45,6 +45,7 @@
   <!-- SCENE STAGE -->
   <section class="relax-stage" id="relaxStage">
     <div class="relax-bg" id="relaxBg" aria-hidden="true"></div>
+    <canvas class="relax-fx" id="relaxFx" aria-hidden="true"></canvas>
     <div class="relax-dim" id="relaxDim" aria-hidden="true"></div>
   </section>
 
@@ -62,7 +63,7 @@
   <!-- Season -->
   <section class="rd-section">
     <h3 class="rd-title">Season</h3>
-    <p class="rd-sub">เลือกบรรยากาศตามฤดูกาล</p>
+    <p class="rd-sub">Pick a seasonal atmosphere</p>
     <div class="season-grid" id="seasonGrid">
       <button class="season-btn" data-season="summer" data-cursor="hover" aria-pressed="false">
         <img src="assets/seasons/summer.jpg" alt=""><span>Summer</span>
@@ -85,19 +86,19 @@
   <!-- Brightness -->
   <section class="rd-section">
     <h3 class="rd-title">Brightness</h3>
-    <p class="rd-sub">ลากเพื่อเพิ่ม-ลดความสว่าง</p>
+    <p class="rd-sub">Drag to increase or reduce brightness</p>
     <div class="rd-slider-row">
       <span class="rd-sl-icon">🌑</span>
-      <input type="range" min="0" max="100" value="35" id="brightness" aria-label="ปรับความสว่าง">
+      <input type="range" min="0" max="100" value="35" id="brightness" aria-label="Adjust brightness">
       <span class="rd-sl-icon">☀️</span>
     </div>
-    <p class="rd-value" id="brightnessVal">ความสว่าง 35%</p>
+    <p class="rd-value" id="brightnessVal">Brightness 35%</p>
   </section>
 
   <!-- Sound -->
   <section class="rd-section">
     <h3 class="rd-title">Sound</h3>
-    <p class="rd-sub">เลือกโมดเสียงที่ชอบ</p>
+    <p class="rd-sub">Choose your sound mood</p>
     <div class="sound-grid" id="soundGrid">
       <button class="mood-btn" data-mood="rnb" data-cursor="hover" aria-pressed="false">R&amp;B</button>
       <button class="mood-btn" data-mood="jazz" data-cursor="hover" aria-pressed="false">Jazz</button>
@@ -110,7 +111,7 @@
     </div>
   </section>
 
-  <p class="rd-foot">ผลงานดีๆ ไม่จำเป็นต้องรีบ — พักให้สบายใจก่อนกลับไปสร้างสรรค์<br><a href="index.html">← กลับหน้าหลัก</a></p>
+  <p class="rd-foot">Good work doesn't have to be rushed — rest before you create again<br><a href="index.html">← Back home</a></p>
 </aside>
 
 <script src="js/utils.js"></script>
