@@ -856,7 +856,10 @@
   width:36px;height:36px;margin:-18px 0 0 -18px;
   display:none;
 }
-@media (hover:hover) and (pointer:fine){.cursor{display:block}}
+@media (hover:hover) and (pointer:fine){
+  .cursor{display:block}
+  *{cursor:none !important}
+}
 .cursor-dot{
   position:absolute;left:50%;top:50%;
   width:46px;height:46px;
