@@ -68,6 +68,8 @@
     sessionStorage.removeItem(CLIENT_KEY);
     sessionStorage.removeItem('nw-freelancer-registered');
     sessionStorage.removeItem('nw-works');
+    sessionStorage.removeItem('nw-client-id');
+    sessionStorage.removeItem('nw-freelancer-id');
     location.reload();
   });
 })();

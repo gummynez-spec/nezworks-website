@@ -108,7 +108,7 @@
       });
     });
 
-    clientForm.addEventListener('submit', (e) => {
+    clientForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const needs = [...clientForm.querySelectorAll('input[name="needs"]:checked')].map(c => c.value);
       const name = clientForm.querySelector('[name="name"]');
@@ -122,7 +122,6 @@
         );
         return;
       }
-      /* remember in system (session demo) */
       const data = {
         name: name.value.trim(),
         brand: clientForm.querySelector('[name="brand"]').value.trim(),
@@ -132,6 +131,16 @@
         budget: [document.getElementById('budgetLow')?.textContent, document.getElementById('budgetHigh')?.textContent],
       };
       sessionStorage.setItem('nw-client', JSON.stringify(data));
+      try {
+        const c = window.SB;
+        if (c) {
+          const { data: row, error } = await c.from('clients').insert([{
+            name: data.name, brand: data.brand, needs: data.needs, project: data.project, contact: data.contact, budget: data.budget,
+          }]).select().single();
+          if (error) throw error;
+          if (row?.id) sessionStorage.setItem('nw-client-id', row.id);
+        }
+      } catch (err) { console.warn('[NezWorks] clients insert failed (tables missing?):', err?.message || err); }
       clientForm.hidden = true;
       clientSuccess.hidden = false;
       clientSuccess.classList.add('play');
@@ -201,15 +210,32 @@
       confirmBtn.disabled = !consents.every(x => x.checked);
     }));
 
-    confirmBtn.addEventListener('click', () => {
+    confirmBtn.addEventListener('click', async () => {
       const data = {
         name: flForm.querySelector('[name="name"]').value.trim(),
         skills: [...flForm.querySelectorAll('input[name="skills"]:checked')].map(c => c.value),
-        exp: flForm.querySelector('input[name="exp"]').value,
+        exp: flForm.querySelector('input[name="exp"]:checked')?.value || null,
         contact: flForm.querySelector('[name="contact"]').value.trim(),
         portfolio: document.getElementById('portfolioUrl').value.trim(),
       };
-      sessionStorage.setItem('nw-freelancer', JSON.stringify(data));
+      const localPayload = { ...data };
+      let freelancerId = sessionStorage.getItem('nw-freelancer-id') || null;
+      try {
+        const c = window.SB;
+        if (c) {
+          if (!freelancerId) {
+            const { data: row, error } = await c.from('freelancers').insert([{
+              name: data.name, skills: data.skills, exp: data.exp, contact: data.contact, portfolio: data.portfolio,
+            }]).select().single();
+            if (error) throw error;
+            if (row?.id) { freelancerId = row.id; sessionStorage.setItem('nw-freelancer-id', row.id); }
+          } else {
+            const { error } = await c.from('freelancers').update({ name: data.name, skills: data.skills, exp: data.exp, contact: data.contact, portfolio: data.portfolio }).eq('id', freelancerId);
+            if (error) console.warn('[NezWorks] freelancers update failed:', error.message);
+          }
+        }
+      } catch (err) { console.warn('[NezWorks] freelancers insert failed (tables missing?):', err?.message || err); }
+      sessionStorage.setItem('nw-freelancer', JSON.stringify({ ...localPayload, freelancer_id: freelancerId }));
       sessionStorage.setItem('nw-freelancer-registered', '1');
       flTerms.hidden = true;
       flSuccess.hidden = false;

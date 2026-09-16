@@ -18,6 +18,69 @@
 
   function save() { sessionStorage.setItem(STORAGE, JSON.stringify(works)); }
 
+  function freelancerId() {
+    return sessionStorage.getItem('nw-freelancer-id') || null;
+  }
+
+  const supabaseReady = () => window.SB && typeof window.SB.from === 'function';
+
+  function toRow(entry, fid) {
+    return {
+      freelancer_id: fid || null,
+      title: entry.title,
+      description: entry.desc,
+      price: entry.price,
+      cat: entry.cat,
+      deliver: entry.deliver,
+      cover_img: entry.coverImg,
+      published: entry.published,
+      views: entry.views || 0,
+      orders: entry.orders || 0,
+    };
+  }
+
+  function fromRow(r) {
+    return {
+      id: r.id || r._supabase_id,
+      title: r.title,
+      desc: r.description || r.desc || '',
+      price: Number(r.price) || 0,
+      cat: r.cat || 'Graphic Design',
+      deliver: r.deliver || '3 days',
+      coverImg: r.cover_img || r.coverImg || null,
+      cover: r.cover_img ? null : (r.cover || null),
+      published: r.published !== false,
+      views: r.views || 0,
+      orders: r.orders || 0,
+    };
+  }
+
+  async function loadFromSupabase() {
+    if (!supabaseReady()) return false;
+    const fid = freelancerId();
+    try {
+      let q = window.SB.from('works').select('*').order('created_at', { ascending: false });
+      if (fid) q = q.eq('freelancer_id', fid);
+      else q = q.limit(40);
+      const { data, error } = await q;
+      if (error) throw error;
+      if (Array.isArray(data) && data.length) {
+        works = data.map(fromRow);
+        save();
+        return true;
+      }
+      if (Array.isArray(data) && data.length === 0 && fid) {
+        works = [];
+        save();
+        return true;
+      }
+      return false;
+    } catch (e) {
+      console.warn('[NezWorks] works load failed (tables missing?):', e?.message || e);
+      return false;
+    }
+  }
+
   /* ---------- rendering ---------- */
   function renderStats() {
     document.getElementById('stWorks').textContent = works.length;
@@ -119,7 +182,7 @@
   document.getElementById('backHomeBtn')?.addEventListener('click', showHome);
 
   /* ---------- submit ---------- */
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const title = document.getElementById('wTitle').value.trim();
     const desc = document.getElementById('wDesc').value.trim();
@@ -136,9 +199,29 @@
     };
 
     const editing = form.dataset.editing;
-    if (editing !== '') works[+editing] = { ...works[+editing], ...entry };
-    else works.unshift(entry);
-    save();
+    if (editing !== '' && works[+editing]) {
+      const cur = works[+editing];
+      Object.assign(cur, entry);
+      if (cur.id && supabaseReady()) {
+        try {
+          const fid = freelancerId();
+          const { error } = await window.SB.from('works').update(toRow(cur, fid)).eq('id', cur.id);
+          if (error) throw error;
+        } catch (err) { console.warn('[NezWorks] works update failed:', err?.message || err); }
+      }
+      save();
+    } else {
+      works.unshift(entry);
+      if (supabaseReady()) {
+        try {
+          const fid = freelancerId();
+          const { data: row, error } = await window.SB.from('works').insert([toRow(entry, fid)]).select().single();
+          if (error) throw error;
+          if (row?.id) works[0].id = row.id;
+          save();
+        } catch (err) { console.warn('[NezWorks] works insert failed (tables missing?):', err?.message || err); save(); }
+      } else save();
+    }
 
     document.getElementById('workSuccessMsg').textContent =
       `"${title}" is live — we'll notify you when someone's interested`;
@@ -148,14 +231,27 @@
   });
 
   /* ---------- card actions (edit / publish / delete) ---------- */
-  grid.addEventListener('click', (e) => {
+  grid.addEventListener('click', async (e) => {
     const btn = e.target.closest('.fw-btn');
     if (!btn) return;
     const i = +btn.dataset.i;
     if (btn.classList.contains('edit')) showForm(i);
-    else if (btn.classList.contains('pub')) { works[i].published = !works[i].published; save(); render(); }
-    else if (btn.classList.contains('del')) { works.splice(i, 1); save(); render(); }
+    else if (btn.classList.contains('pub')) {
+      works[i].published = !works[i].published;
+      if (works[i].id && supabaseReady()) {
+        try { await window.SB.from('works').update({ published: works[i].published }).eq('id', works[i].id); } catch (err) { console.warn('[NezWorks] works publish toggle failed:', err?.message || err); }
+      }
+      save(); render();
+    }
+    else if (btn.classList.contains('del')) {
+      const id = works[i].id;
+      works.splice(i, 1); save(); render();
+      if (id && supabaseReady()) {
+        try { await window.SB.from('works').delete().eq('id', id); } catch (err) { console.warn('[NezWorks] works delete failed:', err?.message || err); }
+      }
+    }
   });
 
   render();
+  if (window.SB) loadFromSupabase().then((ok) => { if (ok) render(); }).catch(() => {});
 })();

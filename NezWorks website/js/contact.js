@@ -5,7 +5,7 @@
 
   const okBox = document.getElementById('contactOk');
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = form.querySelector('#cName').value.trim();
     const email = form.querySelector('#cEmail').value.trim();
@@ -20,6 +20,15 @@
       });
       return;
     }
+
+    const payload = { name, email, topic, message };
+    try {
+      const c = window.SB;
+      if (c) {
+        const { error } = await c.from('contact_messages').insert([payload]);
+        if (error) throw error;
+      }
+    } catch (err) { console.warn('[NezWorks] contact insert failed (tables missing?):', err?.message || err); }
 
     form.hidden = true;
     okBox.hidden = false;

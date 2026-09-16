@@ -121,9 +121,24 @@
   });
 
   /* ---------- submit → NezWorks success moment ---------- */
-  function submit() {
+  async function submit() {
     const email = document.getElementById('pmEmail');
     if (!email.checkValidity()) { email.reportValidity(); return; }
+
+    const payload = {
+      service: answers.service || null,
+      scope: answers.scope || null,
+      name: document.getElementById('pmName')?.value?.trim() || null,
+      email: email.value?.trim() || null,
+      brief: document.getElementById('pmBrief')?.value?.trim() || null,
+    };
+    try {
+      const c = window.SB;
+      if (c) {
+        const { error } = await c.from('project_requests').insert([payload]);
+        if (error) throw error;
+      }
+    } catch (err) { console.warn('[NezWorks] project request insert failed (tables missing?):', err?.message || err); }
 
     form.hidden = true;
     success.hidden = false;
