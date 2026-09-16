@@ -862,17 +862,17 @@
 }
 .cursor-dot{
   position:absolute;left:50%;top:50%;
-  width:46px;height:46px;
+  width:30px;height:30px;
   transform:translate(-50%,-50%);
   background:linear-gradient(135deg,#e9e4ff 0%,#cdb9f5 55%,#b9a1ee 100%);
-  -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><path d='M20 3 L26 14 L36 20 L26 26 L20 37 L14 26 L4 20 L14 14 Z'/></svg>") center/contain no-repeat;
-  mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><path d='M20 3 L26 14 L36 20 L26 26 L20 37 L14 26 L4 20 L14 14 Z'/></svg>") center/contain no-repeat;
-  filter:drop-shadow(0 0 4px rgba(186,168,255,.35)) drop-shadow(0 1px 1px rgba(0,0,0,.18));
+  -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><path d='M20 2 L26 13 L31 20 L26 27 L20 38 L14 27 L9 20 L14 13 Z'/></svg>") center/contain no-repeat;
+  mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><path d='M20 2 L26 13 L31 20 L26 27 L20 38 L14 27 L9 20 L14 13 Z'/></svg>") center/contain no-repeat;
+  filter:drop-shadow(0 0 5px rgba(186,168,255,.8)) drop-shadow(0 0 14px rgba(186,168,255,.45));
   opacity:.96;
   transition:transform .2s var(--ease-out),opacity .2s,filter .2s;
 }
 .cursor-label{
-  position:absolute;left:40px;top:50%;
+  position:absolute;left:34px;top:50%;
   transform:translateY(-50%);
   padding:4px 10px;border-radius:999px;
   background:rgba(15,18,35,.55);backdrop-filter:blur(3px);
@@ -883,16 +883,16 @@
 .cursor.hover .cursor-dot{
   transform:translate(-50%,-50%) scale(.9);
   opacity:.8;
-  filter:drop-shadow(0 0 5px rgba(186,168,255,.4)) drop-shadow(0 1px 1px rgba(0,0,0,.18));
+  filter:drop-shadow(0 0 6px rgba(186,168,255,.85)) drop-shadow(0 0 16px rgba(186,168,255,.5));
 }
 .cursor.view .cursor-dot{
   opacity:.95;
-  filter:drop-shadow(0 0 6px rgba(186,168,255,.4)) drop-shadow(0 1px 1px rgba(0,0,0,.18));
+  filter:drop-shadow(0 0 7px rgba(186,168,255,.85)) drop-shadow(0 0 18px rgba(186,168,255,.5));
 }
 .cursor.view .cursor-label{opacity:1}
 .cursor.explore .cursor-dot{
   opacity:.95;
-  filter:drop-shadow(0 0 6px rgba(186,168,255,.45)) drop-shadow(0 1px 1px rgba(0,0,0,.18));
+  filter:drop-shadow(0 0 8px rgba(186,168,255,.9)) drop-shadow(0 0 20px rgba(186,168,255,.55));
 }
 .cursor.explore .cursor-label{opacity:1}
 .cursor.hidden{opacity:0}
