@@ -208,44 +208,29 @@
   }
 
   /* ---------------- ambience: mood audio tracks ---------------- */
+  /* Delegates to js/radio.js (persistent player bar shown on every page). */
   const moodBtns = [...document.querySelectorAll('.mood-btn')];
-  const TRACKS = {
-    rnb:   'assets/sounds/lofi-cocktail-bar.mp3',
-    jazz:  'assets/sounds/jazz-sunny-cafe.mp3',
-    cozy:  'assets/sounds/lofi-coffee-shop.mp3',
-    warm:  'assets/sounds/lofi-sunny-cafe.mp3',
-    fun:   'assets/sounds/lofi-restaurant.mp3',
-    focus: 'assets/sounds/trumpet-study.mp3',
-  };
+  const radio = window.RelaxRadio;
 
-  let audio = null;     // single <audio>, reused across moods
-  let activeKey = null;
-
-  function stopMood() {
-    if (audio) { audio.pause(); audio.currentTime = 0; }
-    activeKey = null;
+  function syncMoodBtns() {
+    const key = radio?.getMood() || null;
+    moodBtns.forEach(b => {
+      const on = b.dataset.mood === key;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on);
+    });
   }
 
-  function playMood(key) {
-    if (activeKey === key) { stopMood(); return; }
-    stopMood();
-    if (!audio) {
-      audio = new Audio();
-      audio.loop = true;
-      audio.volume = 0.55;
-    }
-    audio.src = TRACKS[key];
-    audio.play().catch(() => {});
-    activeKey = key;
+  if (radio) {
+    moodBtns.forEach(btn => btn.addEventListener('click', () => {
+      const next = btn.dataset.mood === radio.getMood() ? null : btn.dataset.mood;
+      radio.setMood(next);
+      syncMoodBtns();
+    }));
+  } else {
+    moodBtns.forEach(b => { b.classList.add('disabled'); b.setAttribute('aria-disabled', 'true'); });
   }
-
-  moodBtns.forEach(btn => btn.addEventListener('click', () => {
-    const on = btn.classList.contains('active');
-    moodBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
-    if (on) { stopMood(); return; }
-    btn.classList.add('active');
-    btn.setAttribute('aria-pressed', 'true');
-    playMood(btn.dataset.mood);
-  }));
+  window.addEventListener('relaxradio', syncMoodBtns);
+  syncMoodBtns();
 })();
 
