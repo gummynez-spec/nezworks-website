@@ -78,9 +78,29 @@
       <h2 class="sub-h2 sr">ทุกคำตอบ<br><span class="accent">ในที่เดียว</span></h2>
     </div>
 
+    <!-- search + category filter -->
+    <div class="faq-tools sr">
+      <div class="faq-search">
+        <svg class="faq-search-ico" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M18.9,16.776A10.539,10.539,0,1,0,16.776,18.9l5.1,5.1L24,21.88ZM10.5,18A7.5,7.5,0,1,1,18,10.5,7.507,7.507,0,0,1,10.5,18Z"/>
+        </svg>
+        <input type="text" class="faq-search-input" id="faqSearch" placeholder="ค้นหาคำถาม… เช่น ราคา, ชำระเงิน, โลโก้" aria-label="ค้นหาคำถาม">
+      </div>
+      <div class="faq-cats" id="faqCats">
+        <button class="faq-cat active" data-cat="all" data-cursor="hover">ทั้งหมด</button>
+        <button class="faq-cat" data-cat="start" data-cursor="hover">เริ่มต้น</button>
+        <button class="faq-cat" data-cat="price" data-cursor="hover">ราคา &amp; ชำระเงิน</button>
+        <button class="faq-cat" data-cat="process" data-cursor="hover">การส่งงาน</button>
+        <button class="faq-cat" data-cat="talent" data-cursor="hover">สำหรับฟรีแลนซ์</button>
+      </div>
+    </div>
+
     <div class="faq-grid sr" id="faqGrid">
 
-      <details class="faq-item" open>
+      <!-- ============ เริ่มต้น ============ -->
+      <p class="faq-group-head" data-group="start">เริ่มต้น</p>
+
+      <details class="faq-item" data-cat="start" data-tags="NezWorks คือ อะไร ระบบ แพลตฟอร์ม เกี่ยวกับเรา" open>
         <summary>
           <span class="faq-num">01</span>
           <span class="faq-q">NezWorks คืออะไร?</span>
@@ -91,7 +111,7 @@
         </div>
       </details>
 
-      <details class="faq-item">
+      <details class="faq-item" data-cat="start" data-tags="เริ่ม โปรเจกต์ ยังไง เริ่มงาน ขั้นตอน สั่งงาน">
         <summary>
           <span class="faq-num">02</span>
           <span class="faq-q">เริ่มโปรเจกต์ยังไง?</span>
@@ -102,7 +122,7 @@
         </div>
       </details>
 
-      <details class="faq-item">
+      <details class="faq-item" data-cat="start" data-tags="บริการ อะไร บ้าง logo banner poster video graphic content หมวด">
         <summary>
           <span class="faq-num">03</span>
           <span class="faq-q">มีบริการอะไรบ้าง?</span>
@@ -113,53 +133,9 @@
         </div>
       </details>
 
-      <details class="faq-item">
+      <details class="faq-item" data-cat="start" data-tags="ต่อเนื่อง ประจำ รายเดือน แพ็กเกจ คอนเทนต์ ยาวนาน">
         <summary>
           <span class="faq-num">04</span>
-          <span class="faq-q">ใช้เวลานานแค่ไหนถึงได้งาน?</span>
-          <i class="faq-chevron" aria-hidden="true">→</i>
-        </summary>
-        <div class="faq-body">
-          <p>ตอบกลับข้อความแรกภายใน <b>24 ชั่วโมง</b> โดยเฉลี่ยงานสร้างสรรค์ส่งมอบตรงเวลา <b>96%</b> ระยะเวลาโปรเจกต์จริงขึ้นอยู่กับขนาดและความซับซ้อน — ระบุชัดเจนไว้ในทุกขั้นตอนก่อนเริ่ม</p>
-        </div>
-      </details>
-
-      <details class="faq-item">
-        <summary>
-          <span class="faq-num">05</span>
-          <span class="faq-q">ชำระเงินยังไง? ปลอดภัยไหม?</span>
-          <i class="faq-chevron" aria-hidden="true">→</i>
-        </summary>
-        <div class="faq-body">
-          <p>ชำระผ่านระบบของ NezWorks เมื่อคุณพอใจกับงานแล้วเท่านั้น ฟรีแลนซ์จะได้รับเงินทันทีหลังส่งงานสำเร็จ — ระบบคุ้มครองทั้งสองฝ่าย ไม่มีการโอนเงินตรงให้ใครก่อนงานเสร็จ มั่นใจได้เลย</p>
-        </div>
-      </details>
-
-      <details class="faq-item">
-        <summary>
-          <span class="faq-num">06</span>
-          <span class="faq-q">ถ้าไม่ชอบผลงานทำยังไง?</span>
-          <i class="faq-chevron" aria-hidden="true">→</i>
-        </summary>
-        <div class="faq-body">
-          <p>ทุกโปรเจกต์มีจุดตรวจงาน (milestones) และรอบสอบทาน — คุณดูความคืบหน้าตามเวลาจริงและอนุมัติก่อนปล่อยงาน แก้ไขได้ก่อนชำระเงิน จึงไม่มีเรื่องงานไม่ตรงใจโดยที่ไม่รู้ตัว</p>
-        </div>
-      </details>
-
-      <details class="faq-item">
-        <summary>
-          <span class="faq-num">07</span>
-          <span class="faq-q">ได้ไฟล์อะไรบ้างหลังเสร็จงาน?</span>
-          <i class="faq-chevron" aria-hidden="true">→</i>
-        </summary>
-        <div class="faq-body">
-          <p>ได้รับไฟล์สมบูรณ์ทั้งหมด — ไฟล์ใช้งานจริง, ไฟล์ต้นฉบับ (source), และการสนับสนุนเพื่อเปิดตัว ตรวจทานทุกอย่างก่อนปล่อย และความเป็นเจ้าของผลงานโอนให้คุณเมื่อส่งมอบเรียบร้อย</p>
-        </div>
-      </details>
-
-      <details class="faq-item">
-        <summary>
-          <span class="faq-num">08</span>
           <span class="faq-q">ทำโปรเจกต์ต่อเนื่อง/เป็นประจำได้ไหม?</span>
           <i class="faq-chevron" aria-hidden="true">→</i>
         </summary>
@@ -168,20 +144,34 @@
         </div>
       </details>
 
-      <details class="faq-item">
+      <!-- ============ ราคา & ชำระเงิน ============ -->
+      <p class="faq-group-head" data-group="price">ราคา &amp; ชำระเงิน</p>
+
+      <details class="faq-item" data-cat="price" data-tags="ราคา เท่าไหร่ ค่าใช้จ่าย เริ่มต้น cost price quote">
         <summary>
-          <span class="faq-num">09</span>
-          <span class="faq-q">อยากสมัครเป็นฟรีแลนซ์รับงาน ต้องทำยังไง?</span>
+          <span class="faq-num">05</span>
+          <span class="faq-q">ราคาเริ่มเท่าไหร่? มี quote ไหม?</span>
           <i class="faq-chevron" aria-hidden="true">→</i>
         </summary>
         <div class="faq-body">
-          <p>ไปที่หน้า <a href="career.html">Career</a> แล้วสมัครเลย — NezWorks จัดหางานให้, จัดการแมตช์งาน, ประสานงานทุกขั้นตอน และดูแลเรื่องเงินให้ คุณโฟกัสแค่การสร้างสรรค์ผลงานเท่านั้น</p>
+          <p>ทุกผลงานแสดง<b>ราคาเริ่มต้นชัดเจน</b> — เช่น โลโก้เริ่มที่ $150, แบนเนอร์ $30, โปสเตอร์ $45 เป็นต้น คุณรู้งบประมาณล่วงหน้าโดยไม่ต้องรอ quote ราคาเจาะจงจะถูกยืนยันก่อนเริ่มงานทุกครั้ง</p>
         </div>
       </details>
 
-      <details class="faq-item">
+      <details class="faq-item" data-cat="price" data-tags="ชำระเงิน ยังไง ปลอดภัย โอน จ่าย ระบบ escrow คุ้มครอง">
         <summary>
-          <span class="faq-num">10</span>
+          <span class="faq-num">06</span>
+          <span class="faq-q">ชำระเงินยังไง? ปลอดภัยไหม?</span>
+          <i class="faq-chevron" aria-hidden="true">→</i>
+        </summary>
+        <div class="faq-body">
+          <p>ชำระผ่านระบบของ NezWorks เมื่อคุณพอใจกับงานแล้วเท่านั้น ฟรีแลนซ์จะได้รับเงินทันทีหลังส่งงานสำเร็จ — ระบบคุ้มครองทั้งสองฝ่าย ไม่มีการโอนเงินตรงให้ใครก่อนงานเสร็จ มั่นใจได้เลย</p>
+        </div>
+      </details>
+
+      <details class="faq-item" data-cat="price" data-tags="ค่าใช้จ่าย แอบแฝง ซ่อน ฟรี ไม่ผูกมัด hidden fee">
+        <summary>
+          <span class="faq-num">07</span>
           <span class="faq-q">มีค่าใช้จ่ายแอบแฝงไหม?</span>
           <i class="faq-chevron" aria-hidden="true">→</i>
         </summary>
@@ -190,6 +180,81 @@
         </div>
       </details>
 
+      <!-- ============ การส่งงาน ============ -->
+      <p class="faq-group-head" data-group="process">การส่งงาน</p>
+
+      <details class="faq-item" data-cat="process" data-tags="ใช้เวลา นาน กี่วัน เสร็จ ส่งมอบ ภายใน delivery">
+        <summary>
+          <span class="faq-num">08</span>
+          <span class="faq-q">ใช้เวลานานแค่ไหนถึงได้งาน?</span>
+          <i class="faq-chevron" aria-hidden="true">→</i>
+        </summary>
+        <div class="faq-body">
+          <p>ตอบกลับข้อความแรกภายใน <b>24 ชั่วโมง</b> โดยเฉลี่ยงานสร้างสรรค์ส่งมอบตรงเวลา <b>96%</b> ระยะเวลาโปรเจกต์จริงขึ้นอยู่กับขนาดและความซับซ้อน — ระบุชัดเจนไว้ในทุกขั้นตอนก่อนเริ่ม</p>
+        </div>
+      </details>
+
+      <details class="faq-item" data-cat="process" data-tags="ไม่ชอบ ผลงาน แก้ไข revision เปลี่ยน ผิดพลาด ทักว์">
+        <summary>
+          <span class="faq-num">09</span>
+          <span class="faq-q">ถ้าไม่ชอบผลงานทำยังไง?</span>
+          <i class="faq-chevron" aria-hidden="true">→</i>
+        </summary>
+        <div class="faq-body">
+          <p>ทุกโปรเจกต์มีจุดตรวจงาน (milestones) และรอบสอบทาน — คุณดูความคืบหน้าตามเวลาจริงและอนุมัติก่อนปล่อยงาน แก้ไขได้ก่อนชำระเงิน จึงไม่มีเรื่องงานไม่ตรงใจโดยที่ไม่รู้ตัว</p>
+        </div>
+      </details>
+
+      <details class="faq-item" data-cat="process" data-tags="ไฟล์ อะไร บ้าง ต้นฉบับ source สิทธิ์ เจ้าของ งาน">
+        <summary>
+          <span class="faq-num">10</span>
+          <span class="faq-q">ได้ไฟล์อะไรบ้างหลังเสร็จงาน?</span>
+          <i class="faq-chevron" aria-hidden="true">→</i>
+        </summary>
+        <div class="faq-body">
+          <p>ได้รับไฟล์สมบูรณ์ทั้งหมด — ไฟล์ใช้งานจริง, ไฟล์ต้นฉบับ (source), และการสนับสนุนเพื่อเปิดตัว ตรวจทานทุกอย่างก่อนปล่อย และความเป็นเจ้าของผลงานโอนให้คุณเมื่อส่งมอบเรียบร้อย</p>
+        </div>
+      </details>
+
+      <!-- ============ สำหรับฟรีแลนซ์ ============ -->
+      <p class="faq-group-head" data-group="talent">สำหรับฟรีแลนซ์</p>
+
+      <details class="faq-item" data-cat="talent" data-tags="สมัคร ฟรีแลนซ์ รับงาน freelance ครีเอทีฟ เข้าร่วม">
+        <summary>
+          <span class="faq-num">11</span>
+          <span class="faq-q">อยากสมัครเป็นฟรีแลนซ์รับงาน ต้องทำยังไง?</span>
+          <i class="faq-chevron" aria-hidden="true">→</i>
+        </summary>
+        <div class="faq-body">
+          <p>ไปที่หน้า <a href="career.html">Career</a> แล้วสมัครเลย — NezWorks จัดหางานให้, จัดการแมตช์งาน, ประสานงานทุกขั้นตอน และดูแลเรื่องเงินให้ คุณโฟกัสแค่การสร้างสรรค์ผลงานเท่านั้น</p>
+        </div>
+      </details>
+
+      <details class="faq-item" data-cat="talent" data-tags="ได้เงิน ยังไง จ่าย ฟรีแลนซ์ ค่าธรรมเนียม commission">
+        <summary>
+          <span class="faq-num">12</span>
+          <span class="faq-q">ฟรีแลนซ์ได้เงินยังไง? มีค่าธรรมเนียมไหม?</span>
+          <i class="faq-chevron" aria-hidden="true">→</i>
+        </summary>
+        <div class="faq-body">
+          <p>เมื่อลูกค้าอนุมัติงาน ฟรีแลนซ์จะได้รับเงิน<b>ทันทีหลังส่งมอบ</b> ผ่านระบบการชำระเงินที่จัดการให้ทั้งหมด — ไม่ต้องตามเอง และค่าธรรมเนียมแจ้งให้ชัดเจนตั้งแต่ก่อนเริ่มงาน</p>
+        </div>
+      </details>
+
+    </div>
+
+    <div class="faq-empty" id="faqEmpty" hidden>
+      <div class="faq-empty-orb" aria-hidden="true">
+        <svg viewBox="0 0 120 120" fill="none">
+          <circle cx="60" cy="60" r="54" stroke="rgba(139,124,246,.15)" stroke-width="1"/>
+          <circle cx="60" cy="60" r="36" stroke="rgba(139,124,246,.10)" stroke-width="1"/>
+          <circle cx="60" cy="60" r="18" stroke="rgba(139,124,246,.08)" stroke-width="1"/>
+          <circle cx="60" cy="60" r="5" fill="rgba(139,124,246,.25)"/>
+        </svg>
+      </div>
+      <h3>ไม่พบคำถามที่ค้นหา</h3>
+      <p>ลองค้นหาด้วยคำอื่น หรือส่งข้อความมาหาเราโดยตรงได้เลย</p>
+      <a href="contact.html" class="btn btn-primary" data-cursor="hover">ส่งข้อความถึงเรา <span class="btn-arrow">→</span></a>
     </div>
 
     <div class="faq-still sr">
@@ -255,6 +320,7 @@
 <script src="js/nav-dropdown.js"></script>
 <script src="js/cursor.js"></script>
 <script src="js/scroll-nav.js"></script>
+<script src="js/faq.js"></script>
 <script src="js/radio.js"></script>
 </body>
 </html>
