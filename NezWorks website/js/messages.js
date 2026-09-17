@@ -103,8 +103,13 @@
             <button class="btn btn-primary btn-sm" id="createWelcomeBtn" data-cursor="hover">
               Start Welcome Chat <span class="btn-arrow">→</span>
             </button>
+            <br><br>
+            <button class="btn btn-ghost btn-sm" id="createTestBtn" data-cursor="hover" style="font-size:.72rem">
+              Create Test Chat (temporary)
+            </button>
           </div>`;
         document.getElementById('createWelcomeBtn')?.addEventListener('click', createWelcomeChat);
+        document.getElementById('createTestBtn')?.addEventListener('click', createTestChat);
       }
     } catch (e) { console.warn('[NezWorks] loadConversations:', e?.message || e); }
   }
@@ -163,6 +168,40 @@
       await loadConversations();
       if (convo) openConversation(convo);
     } catch (e) { console.warn('[NezWorks] createWelcomeChat:', e?.message || e); }
+  }
+
+  /* ---- Create test chat (temporary) ---- */
+  async function createTestChat() {
+    const c = window.SB;
+    if (!c || !myRowId) return;
+
+    const isFreelancer = user.role === 'freelancer';
+    const convoData = isFreelancer
+      ? { client_id: null, freelancer_id: myRowId, client_name: 'Test Client', freelancer_name: user.displayName || user.name }
+      : { client_id: myRowId, freelancer_id: null, client_name: user.displayName || user.name, freelancer_name: 'Test Freelancer' };
+
+    const { data: convo, error } = await c.from('conversations').insert([{
+      ...convoData,
+      last_message: 'Thank you for your order!',
+    }]).select().single();
+
+    if (error) { alert('Error: ' + error.message); return; }
+    if (!convo) return;
+
+    const msgs = [
+      { sender_id: 'system', sender_role: 'system', type: 'text', content: 'สวัสดีค่ะ ขอบคุณที่มาใช้บริการ NezWorks 🎉\n\nเราพร้อมช่วยเหลือคุณทุกขั้นตอน หากมีคำถามอะไร สามารถพิมพ์ถามในแชทนี้ได้เลยนะคะ\n\n- ทีม NezWorks' },
+      { sender_id: 'test-freelancer', sender_role: 'freelancer', type: 'text', content: 'สวัสดีครับ! ผมจะเริ่มออกแบบโลโก้ให้ภายในวันนี้' },
+      { sender_id: 'test-client', sender_role: 'client', type: 'text', content: 'ได้เลยครับ รอชม!' },
+      { sender_id: 'test-freelancer', sender_role: 'freelancer', type: 'invoice', content: 'Invoice — ฿3,500', invoice_data: { items: [{ name: 'Logo Design', qty: 1, price: 3000 }, { name: 'Brand Guideline', qty: 1, price: 500 }], total: 3500, status: 'pending' } },
+      { sender_id: 'test-client', sender_role: 'client', type: 'text', content: 'Thank you for your order!' },
+    ];
+
+    for (const m of msgs) {
+      await c.from('messages').insert([{ conversation_id: convo.id, ...m }]);
+    }
+
+    await loadConversations();
+    openConversation(convo);
   }
 
   function renderConversationList() {
