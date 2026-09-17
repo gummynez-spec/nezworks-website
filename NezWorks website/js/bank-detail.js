@@ -76,7 +76,29 @@
         <form id="bankForm" novalidate>
           <div class="bank-section">
             <h3>Account Info</h3>
-            <div class="bank-field"><span class="bf-label">Bank name</span><input class="bf-input" type="text" name="bank" required placeholder="e.g. SCB, KBank, BBL"></div>
+            <div class="bank-field">
+              <span class="bf-label">Bank name</span>
+              <select class="bf-input" name="bank" required>
+                <option value="">Select bank</option>
+                <option value="SCB">SCB (ไทยพาณิชย์)</option>
+                <option value="KBank">KBank (กสิกรไทย)</option>
+                <option value="BBL">BBL (กรุงเทพ)</option>
+                <option value="BAY">BAY (กรุงศรีอยุธยา)</option>
+                <option value="KTB">KTB (กรุงไทย)</option>
+                <option value="TTB">TTB (ทหารไทยธนชาต)</option>
+                <option value="GSB">GSB (ออมสิน)</option>
+                <option value="LH_BANK">LH Bank (โฮมโปร)</option>
+                <option value="CIMB">CIMB (ซีไอเอ็มบี)</option>
+                <option value="UOB">UOB (ยูโอบี)</option>
+                <option value="HSBC">HSBC</option>
+                <option value="STD_CHARTERED">Standard Chartered</option>
+                <option value="ICBC">ICBC</option>
+                <option value="PAYPAL">PayPal</option>
+                <option value="PROMPTPAY">PromptPay</option>
+                <option value="TRUEMONEY">TrueMoney Wallet</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
             <div class="bank-field"><span class="bf-label">Account name</span><input class="bf-input" type="text" name="accountName" required placeholder="Full name on account"></div>
             <div class="bank-field"><span class="bf-label">Account number</span><input class="bf-input" type="text" name="accountNo" required placeholder="123-4-56789-0"></div>
           </div>
