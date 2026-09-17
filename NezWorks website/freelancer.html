@@ -34,12 +34,12 @@
       <span class="logo-word">NEZWORKS</span>
     </a>
     <nav class="nav-links">
-      <a href="index.html" data-cursor="link">Home</a>
-      <a href="services.html" data-cursor="link">Services</a>
-      <a href="how.html" data-cursor="link">How we work</a>
-      <a href="relax.html" data-cursor="link">Relax</a>
-      <a href="contact.html" data-cursor="link">Contact</a>
-      <a href="faq.html" data-cursor="link">FAQ</a>
+      <a href="index.html" data-cursor="link" data-i18n="nav-home">Home</a>
+      <a href="services.html" data-cursor="link" data-i18n="nav-services">Services</a>
+      <a href="how.html" data-cursor="link" data-i18n="nav-how">How we work</a>
+      <a href="relax.html" data-cursor="link" data-i18n="nav-relax">Relax</a>
+      <a href="contact.html" data-cursor="link" data-i18n="nav-contact">Contact</a>
+      <a href="faq.html" data-cursor="link" data-i18n="nav-faq">FAQ</a>
     </nav>
     <div class="nav-cta" style="display:flex;gap:8px">
       <a href="messages.html" class="btn btn-ghost btn-sm" data-cursor="hover">Messages</a>
@@ -56,13 +56,13 @@
     <div class="fw-head">
       <div>
         <span class="reg-breadcrumb"><a href="index.html">← Home</a><span>·</span><span>My workspace</span></span>
-        <h1>Your projects</h1>
-        <p>List your projects with a price and details — so clients can see you and start booking.</p>
+        <h1 data-i18n="fw-home-title">Your projects</h1>
+        <p data-i18n="fw-home-desc">List your projects with a price and details — so clients can see you and start booking.</p>
       </div>
       <div class="fw-stats-mini">
-        <div><b id="stWorks">0</b><span>Projects</span></div>
-        <div><b id="stViews">0</b><span>Views</span></div>
-        <div><b id="stOrders">0</b><span>Orders</span></div>
+        <div><b id="stWorks">0</b><span data-i18n="fw-stat-works">Projects</span></div>
+        <div><b id="stViews">0</b><span data-i18n="fw-stat-views">Views</span></div>
+        <div><b id="stOrders">0</b><span data-i18n="fw-stat-orders">Orders</span></div>
       </div>
     </div>
 
@@ -71,9 +71,9 @@
         <span></span><span class="eo2"></span>
         <img src="assets/nezworks-logo.svg" alt="">
       </div>
-      <h3>Your orbit is still empty</h3>
-      <p>Create your first project to start taking orders — add a photo, price, and details. That's all it takes.</p>
-      <button class="btn btn-primary btn-lg" id="emptyCreateBtn" data-cursor="hover">Create your first project <span class="btn-arrow">→</span></button>
+      <h3 data-i18n="fw-empty-title">Your orbit is still empty</h3>
+      <p data-i18n="fw-empty-desc">Create your first project to start taking orders — add a photo, price, and details. That's all it takes.</p>
+      <button class="btn btn-primary btn-lg" id="emptyCreateBtn" data-cursor="hover" data-i18n="fw-create-btn">Create your first project <span class="btn-arrow">→</span></button>
     </div>
 
     <div class="fw-grid" id="fwGrid"></div>
@@ -173,6 +173,7 @@
 <script src="js/scroll.js"></script>
 <script src="js/register-forms.js"></script>
 <script src="js/freelancer-workspace.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/radio.js"></script>
 </body>
 </html>

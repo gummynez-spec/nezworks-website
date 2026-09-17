@@ -59,12 +59,12 @@
       <span class="logo-word">NEZWORKS</span>
     </a>
     <nav class="nav-links">
-      <a href="index.html" data-cursor="link">Home</a>
-      <a href="services.html" data-cursor="link">Services</a>
-      <a href="how.html" data-cursor="link">How we work</a>
-      <a href="relax.html" data-cursor="link">Relax</a>
-      <a href="contact.html" data-cursor="link">Contact</a>
-      <a href="faq.html" data-cursor="link">FAQ</a>
+      <a href="index.html" data-cursor="link" data-i18n="nav-home">Home</a>
+      <a href="services.html" data-cursor="link" data-i18n="nav-services">Services</a>
+      <a href="how.html" data-cursor="link" data-i18n="nav-how">How we work</a>
+      <a href="relax.html" data-cursor="link" data-i18n="nav-relax">Relax</a>
+      <a href="contact.html" data-cursor="link" data-i18n="nav-contact">Contact</a>
+      <a href="faq.html" data-cursor="link" data-i18n="nav-faq">FAQ</a>
     </nav>
     <div class="nav-cta"></div>
   </div>
@@ -74,17 +74,17 @@
   <div class="login-card">
     <div class="login-header">
       <img src="assets/nezworks-logo.svg" alt="NezWorks">
-      <h1>Welcome back</h1>
-      <p>Log in to your NezWorks account</p>
+      <h1 data-i18n="login-title">Welcome back</h1>
+      <p data-i18n="login-subtitle">Log in to your NezWorks account</p>
     </div>
 
     <form id="loginForm" novalidate>
       <div class="login-field">
-        <label>Email</label>
+        <label data-i18n="login-email">Email</label>
         <input type="email" name="email" required placeholder="your@email.com" autocomplete="email">
       </div>
       <div class="login-field">
-        <label>Password</label>
+        <label data-i18n="login-password">Password</label>
         <div class="pw-wrap">
           <input type="password" name="password" required placeholder="Your password" autocomplete="current-password">
           <button type="button" class="pw-toggle" data-cursor="hover" aria-label="Show password">
@@ -93,12 +93,12 @@
           </button>
         </div>
       </div>
-      <button type="submit" class="login-btn" id="loginBtn" data-cursor="hover">Log in</button>
+      <button type="submit" class="login-btn" id="loginBtn" data-cursor="hover" data-i18n="login-btn">Log in</button>
       <div class="login-error" id="loginError"></div>
     </form>
 
     <div class="login-footer">
-      Don't have an account? <a href="register-client.html">Register as Client</a> or <a href="register-freelancer.html">Freelancer</a>
+      <span data-i18n="login-footer">Don't have an account?</span> <a href="register-client.html" data-i18n="login-reg-client">Register as Client</a> <span data-i18n="login-or">or</span> <a href="register-freelancer.html" data-i18n="login-reg-free">Freelancer</a>
     </div>
   </div>
 </main>
@@ -111,6 +111,7 @@
 <script src="js/cursor.js"></script>
 <script src="js/login.js"></script>
 <script src="js/scroll.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/radio.js"></script>
 </body>
 </html>

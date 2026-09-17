@@ -236,6 +236,38 @@ body.modal-open{overflow:hidden}
 
 /* ============ NAV USER CHIP — logged-in client/freelancer ============ */
 .nav-cta{display:flex;align-items:center;gap:10px}
+
+/* Language dropdown */
+.lang-dropdown{position:relative}
+.lang-toggle{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 14px 5px 10px;border-radius:999px;
+  background:rgba(255,255,255,.06);border:1px solid var(--stroke-soft);
+  font:inherit;font-size:.78rem;font-weight:500;color:var(--ink-2);
+  cursor:pointer;transition:background .2s,border-color .2s;
+  white-space:nowrap;flex:none;
+}
+.lang-toggle:hover{background:rgba(255,255,255,.1);border-color:var(--accent-2);color:var(--ink)}
+.lang-flag{font-size:1rem;line-height:1}
+.lang-label{font-size:.72rem;letter-spacing:.08em;font-weight:600}
+.lang-menu{
+  position:absolute;top:calc(100% + 6px);right:0;
+  min-width:140px;padding:6px;border-radius:14px;
+  background:rgba(22,22,30,.92);border:1px solid var(--stroke);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  opacity:0;visibility:hidden;transform:translateY(-6px);
+  transition:opacity .15s,transform .15s,visibility .15s;
+  z-index:100;
+}
+.lang-menu.open{opacity:1;visibility:visible;transform:translateY(0)}
+.lang-option{
+  display:flex;align-items:center;gap:10px;
+  width:100%;padding:10px 14px;border:none;border-radius:10px;
+  background:transparent;font:inherit;font-size:.82rem;color:var(--ink-2);
+  cursor:pointer;transition:background .15s;color:var(--ink);
+}
+.lang-option:hover{background:rgba(255,255,255,.08)}
+.lang-option .lang-flag{font-size:1.1rem}
 .user-chip{position:relative;z-index:60}
 .user-chip-btn{
   display:flex;align-items:center;gap:10px;

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+    <title>MedLuna — Your Care, Coordinated</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #0B1A23; }
+      #root {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        font-family: 'Inter', system-ui, sans-serif; color: #E8F0F2;
+      }
+      .clip { position: absolute; inset: 0; display: grid; place-items: center; }
+      .scene { background: #0B1A23; }
+
+      /* Scene 1: Hook */
+      #hook { background: linear-gradient(135deg, #0B1A23 0%, #0F2A3A 50%, #0B1A23 100%); }
+      #hook .hook-text { font-size: 72px; font-weight: 300; letter-spacing: -0.02em; line-height: 1.2; max-width: 1200px; text-align: center; }
+      #hook .hook-text em { font-weight: 700; color: #5CC8D7; font-style: normal; }
+
+      /* Scene 2: Problem */
+      #problem { background: #0B1A23; }
+      #problem .problem-inner { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+      #problem .problem-text { font-size: 56px; font-weight: 400; text-align: center; max-width: 1100px; line-height: 1.4; color: #8BA8B4; }
+      #problem .problem-text strong { color: #E8F0F2; font-weight: 600; }
+
+      /* Scene 3: MedLuna reveal */
+      #reveal { background: radial-gradient(ellipse at 50% 50%, #12354A 0%, #0B1A23 70%); }
+      #reveal .reveal-inner { text-align: center; }
+      #reveal .logo-text { font-size: 120px; font-weight: 800; letter-spacing: -0.04em; color: #5CC8D7; }
+      #reveal .tagline { font-size: 36px; font-weight: 300; margin-top: 16px; color: #A3C4D0; }
+
+      /* Scene 4: How it works */
+      #steps { background: #0B1A23; }
+      #steps .steps-inner { display: flex; gap: 80px; align-items: flex-start; padding: 0 160px; width: 100%; }
+      #steps .step { flex: 1; }
+      #steps .step-num { font-size: 80px; font-weight: 800; color: #5CC8D7; line-height: 1; opacity: 0.3; }
+      #steps .step-title { font-size: 36px; font-weight: 700; margin-top: 12px; color: #E8F0F2; }
+      #steps .step-desc { font-size: 24px; font-weight: 300; margin-top: 10px; color: #8BA8B4; line-height: 1.5; }
+      #steps .steps-label { position: absolute; top: 120px; left: 160px; font-size: 20px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #5CC8D7; }
+
+      /* Scene 5: Benefits */
+      #benefits { background: linear-gradient(180deg, #0B1A23 0%, #0F2A3A 100%); }
+      #benefits .benefits-inner { text-align: center; }
+      #benefits .benefits-title { font-size: 64px; font-weight: 700; margin-bottom: 60px; }
+      #benefits .benefits-grid { display: flex; gap: 60px; }
+      #benefits .benefit { text-align: center; max-width: 320px; }
+      #benefits .benefit-icon { font-size: 48px; margin-bottom: 16px; color: #5CC8D7; }
+      #benefits .benefit-title { font-size: 32px; font-weight: 700; }
+      #benefits .benefit-desc { font-size: 22px; font-weight: 300; color: #8BA8B4; margin-top: 8px; }
+
+      /* Scene 6: CTA */
+      #cta { background: radial-gradient(ellipse at 50% 60%, #12354A 0%, #0B1A23 70%); }
+      #cta .cta-inner { text-align: center; }
+      #cta .cta-url { font-size: 72px; font-weight: 700; color: #5CC8D7; }
+      #cta .cta-sub { font-size: 28px; font-weight: 300; color: #A3C4D0; margin-top: 16px; }
+
+      /* Decorative elements */
+      .orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
+      .line-accent { position: absolute; height: 2px; background: linear-gradient(90deg, transparent, #5CC8D7, transparent); }
+    </style>
+  </head>
+  <body>
+    <div data-hf-id="hf-qbnw" id="root" data-composition-id="main" data-start="0" data-duration="60" data-width="1920" data-height="1080">
+
+      <!-- Scene 1: Hook (0-6s) -->
+      <section data-hf-id="hf-o3yv" id="hook" class="clip scene" data-start="0" data-duration="6">
+        <div data-hf-id="hf-q8k0" class="orb" style="width:600px;height:600px;background:#5CC8D7;opacity:0.08;top:-200px;right:-100px;"></div>
+        <div data-hf-id="hf-am8e" class="orb" style="width:400px;height:400px;background:#5CC8D7;opacity:0.05;bottom:-150px;left:-50px;"></div>
+        <div data-hf-id="hf-m22i" class="line-accent" style="width:200px;top:50%;left:120px;transform:translateY(-50%);opacity:0.3;"></div>
+        <div data-hf-id="hf-8ti2" class="hook-text">
+          Your journey to better health<br data-hf-id="hf-x5px">starts with <em data-hf-id="hf-lh2m">one message</em>.
+        </div>
+      </section>
+
+      <!-- Scene 2: Problem (6-14s) -->
+      <section data-hf-id="hf-qu9f" id="problem" class="clip scene" data-start="6" data-duration="8">
+        <div data-hf-id="hf-r6ry" class="orb" style="width:500px;height:500px;background:#2A4A5A;opacity:0.15;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+        <div data-hf-id="hf-g2xm" class="problem-inner">
+          <div data-hf-id="hf-80i7" class="problem-text">
+            Finding the right care<br data-hf-id="hf-rsrt"><strong data-hf-id="hf-1q7k">in a foreign country</strong><br data-hf-id="hf-szow">shouldn't feel overwhelming.
+          </div>
+        </div>
+      </section>
+
+      <!-- Scene 3: MedLuna reveal (14-22s) -->
+      <section data-hf-id="hf-1sok" id="reveal" class="clip scene" data-start="14" data-duration="8">
+        <div data-hf-id="hf-bhzu" class="orb" style="width:800px;height:800px;background:#5CC8D7;opacity:0.06;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+        <div data-hf-id="hf-bx55" class="orb" style="width:300px;height:300px;background:#5CC8D7;opacity:0.1;top:30%;right:20%;"></div>
+        <div data-hf-id="hf-8tew" class="reveal-inner">
+          <div data-hf-id="hf-0mx9" class="logo-text">MedLuna</div>
+          <div data-hf-id="hf-qhkb" class="tagline">Medical Travel, Coordinated.</div>
+        </div>
+      </section>
+
+      <!-- Scene 4: How it works (22-38s) -->
+      <section data-hf-id="hf-viqy" id="steps" class="clip scene" data-start="22" data-duration="16">
+        <div data-hf-id="hf-ii0o" class="orb" style="width:500px;height:500px;background:#5CC8D7;opacity:0.05;bottom:-100px;right:-100px;"></div>
+        <div data-hf-id="hf-wne1" class="steps-label">How It Works</div>
+        <div data-hf-id="hf-frd2" class="steps-inner">
+          <div data-hf-id="hf-uqbq" class="step">
+            <div data-hf-id="hf-pfme" class="step-num">01</div>
+            <div data-hf-id="hf-f36n" class="step-title">Share Your Case</div>
+            <div data-hf-id="hf-gk13" class="step-desc">Tell us what you need. We listen, review, and plan.</div>
+          </div>
+          <div data-hf-id="hf-jlje" class="step">
+            <div data-hf-id="hf-ptxf" class="step-num">02</div>
+            <div data-hf-id="hf-baqn" class="step-title">We Coordinate</div>
+            <div data-hf-id="hf-kmfl" class="step-desc">Hospital selection, appointments, travel, and accommodation — handled.</div>
+          </div>
+          <div data-hf-id="hf-jzuf" class="step">
+            <div data-hf-id="hf-q88g" class="step-num">03</div>
+            <div data-hf-id="hf-vyy8" class="step-title">You Heal</div>
+            <div data-hf-id="hf-99kj" class="step-desc">World-class care in Thailand, with support every step of the way.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Scene 5: Benefits (38-50s) -->
+      <section data-hf-id="hf-hyio" id="benefits" class="clip scene" data-start="38" data-duration="12">
+        <div data-hf-id="hf-vj9v" class="orb" style="width:700px;height:700px;background:#5CC8D7;opacity:0.05;top:-200px;left:50%;transform:translateX(-50%);"></div>
+        <div data-hf-id="hf-f69b" class="benefits-inner">
+          <div data-hf-id="hf-b5ku" class="benefits-title">Why Patients Choose MedLuna</div>
+          <div data-hf-id="hf-bxj1" class="benefits-grid">
+            <div data-hf-id="hf-wol1" class="benefit">
+              <div data-hf-id="hf-oc1g" class="benefit-icon">★</div>
+              <div data-hf-id="hf-q2ri" class="benefit-title">Coordinated</div>
+              <div data-hf-id="hf-hjg6" class="benefit-desc">One team managing every detail — so you don't have to.</div>
+            </div>
+            <div data-hf-id="hf-0nu1" class="benefit">
+              <div data-hf-id="hf-ortv" class="benefit-icon">◈</div>
+              <div data-hf-id="hf-q1vu" class="benefit-title">Transparent</div>
+              <div data-hf-id="hf-qckm" class="benefit-desc">Clear costs, honest guidance, no surprises.</div>
+            </div>
+            <div data-hf-id="hf-1ur4" class="benefit">
+              <div data-hf-id="hf-d7go" class="benefit-icon">♡</div>
+              <div data-hf-id="hf-ytew" class="benefit-title">Personal</div>
+              <div data-hf-id="hf-1w72" class="benefit-desc">Your care plan, built around you — not the other way around.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Scene 6: CTA (50-60s) -->
+      <section data-hf-id="hf-g8ka" id="cta" class="clip scene" data-start="50" data-duration="10">
+        <div data-hf-id="hf-9x8c" class="orb" style="width:900px;height:900px;background:#5CC8D7;opacity:0.06;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+        <div data-hf-id="hf-m3xe" class="orb" style="width:200px;height:200px;background:#5CC8D7;opacity:0.15;top:20%;left:15%;"></div>
+        <div data-hf-id="hf-ylxh" class="cta-inner">
+          <div data-hf-id="hf-ro4b" class="cta-url">medluna.net</div>
+          <div data-hf-id="hf-4ny9" class="cta-sub">Your care, coordinated from the first message.</div>
+        </div>
+      </section>
+
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+
+      // Scene 1: Hook — text fades in and drifts up
+      tl.fromTo("#hook .hook-text", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, 0.5);
+      tl.fromTo("#hook .line-accent", { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: "power2.out" }, 0.8);
+      tl.to("#hook .hook-text", { opacity: 0, y: -20, duration: 0.6, ease: "power2.in" }, 5);
+
+      // Scene 2: Problem — text appears with emphasis
+      tl.fromTo("#problem .problem-text", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 6.5);
+      tl.fromTo("#problem .problem-text strong", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 7.5);
+      tl.to("#problem .problem-text", { opacity: 0, duration: 0.5, ease: "power2.in" }, 13);
+
+      // Scene 3: MedLuna reveal — logo scales in with glow
+      tl.fromTo("#reveal .logo-text", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.8, ease: "back.out(1.4)" }, 14.5);
+      tl.fromTo("#reveal .tagline", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 15.2);
+      tl.to("#reveal .logo-text", { opacity: 0, scale: 1.05, duration: 0.5, ease: "power2.in" }, 21);
+
+      // Scene 4: Steps — staggered entrance
+      tl.fromTo("#steps .steps-label", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 22.5);
+      tl.fromTo("#steps .step-num", { opacity: 0, y: 30 }, { opacity: 0.3, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.3 }, 23);
+      tl.fromTo("#steps .step-title", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out", stagger: 0.3 }, 23.3);
+      tl.fromTo("#steps .step-desc", { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out", stagger: 0.3 }, 23.6);
+      tl.to("#steps .step", { opacity: 0, y: -20, duration: 0.5, ease: "power2.in", stagger: 0.1 }, 37);
+
+      // Scene 5: Benefits — cards pop in
+      tl.fromTo("#benefits .benefits-title", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 38.5);
+      tl.fromTo("#benefits .benefit", { opacity: 0, y: 40, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.2)", stagger: 0.2 }, 39.2);
+      tl.to("#benefits .benefit", { opacity: 0, y: -20, duration: 0.4, ease: "power2.in", stagger: 0.1 }, 49);
+
+      // Scene 6: CTA — URL fades in large
+      tl.fromTo("#cta .cta-url", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.8, ease: "power3.out" }, 50.5);
+      tl.fromTo("#cta .cta-sub", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 51.2);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

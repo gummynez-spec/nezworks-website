@@ -34,16 +34,16 @@
       <span class="logo-word">NEZWORKS</span>
     </a>
     <nav class="nav-links">
-      <a href="index.html" data-cursor="link">Home</a>
-      <a href="services.html" class="nav-active" data-cursor="link">Services</a>
-      <a href="how.html" data-cursor="link">How we work</a>
-      <a href="relax.html" data-cursor="link">Relax</a>
-      <a href="contact.html" data-cursor="link">Contact</a>
-      <a href="faq.html" data-cursor="link">FAQ</a>
+      <a href="index.html" data-cursor="link" data-i18n="nav-home">Home</a>
+      <a href="services.html" class="nav-active" data-cursor="link" data-i18n="nav-services">Services</a>
+      <a href="how.html" data-cursor="link" data-i18n="nav-how">How we work</a>
+      <a href="relax.html" data-cursor="link" data-i18n="nav-relax">Relax</a>
+      <a href="contact.html" data-cursor="link" data-i18n="nav-contact">Contact</a>
+      <a href="faq.html" data-cursor="link" data-i18n="nav-faq">FAQ</a>
     </nav>
     <div class="nav-cta">
-      <a href="login.html" class="btn btn-ghost btn-sm" data-cursor="hover" id="loginLink">Log in</a>
-      <a href="project.html" class="btn btn-primary btn-sm" data-cursor="hover">Start a Project <span class="btn-arrow">→</span></a>
+      <a href="login.html" class="btn btn-ghost btn-sm" data-cursor="hover" id="loginLink" data-i18n="nav-login">Log in</a>
+      <a href="project.html" class="btn btn-primary btn-sm" data-cursor="hover" data-i18n="nav-project">Start a Project <span class="btn-arrow">→</span></a>
     </div>
   </div>
 </header>
@@ -59,32 +59,32 @@
             <path d="M18.9,16.776A10.539,10.539,0,1,0,16.776,18.9l5.1,5.1L24,21.88ZM10.5,18A7.5,7.5,0,1,1,18,10.5,7.507,7.507,0,0,1,10.5,18Z"/>
           </svg>
         </div>
-        <input type="text" class="svc-search-input" placeholder="Search…" aria-label="Search services">
+        <input type="text" class="svc-search-input" placeholder="Search…" aria-label="Search services" data-i18n-placeholder="svc-search">
       </div>
-      <p class="svc-sidebar-title">SERVICES</p>
+      <p class="svc-sidebar-title" data-i18n="svc-title">SERVICES</p>
     </div>
     <nav class="svc-sidebar-nav">
       <!-- Freelancer only: Create new project -->
-      <a href="freelancer.html" class="btn btn-primary btn-sm svc-create-btn" id="svcCreateBtn" data-cursor="hover" style="display:none;margin-bottom:12px;width:100%">
+      <a href="freelancer.html" class="btn btn-primary btn-sm svc-create-btn" id="svcCreateBtn" data-cursor="hover" style="display:none;margin-bottom:12px;width:100%" data-i18n="svc-create">
         ＋ Create new project <span class="btn-arrow">→</span>
       </a>
       <div class="radio-container" id="svcNav">
         <input type="radio" name="svc-cat" id="svc-all" value="all" checked>
-        <label for="svc-all"><span class="svc-label">ALL</span></label>
+        <label for="svc-all" data-i18n="svc-all"><span class="svc-label">ALL</span></label>
         <input type="radio" name="svc-cat" id="svc-logo" value="logo">
-        <label for="svc-logo"><span class="svc-label">LOGO</span></label>
+        <label for="svc-logo" data-i18n="svc-logo"><span class="svc-label">LOGO</span></label>
         <input type="radio" name="svc-cat" id="svc-banner" value="banner">
-        <label for="svc-banner"><span class="svc-label">BANNER</span></label>
+        <label for="svc-banner" data-i18n="svc-banner"><span class="svc-label">BANNER</span></label>
         <input type="radio" name="svc-cat" id="svc-poster" value="poster">
-        <label for="svc-poster"><span class="svc-label">POSTER</span></label>
+        <label for="svc-poster" data-i18n="svc-poster"><span class="svc-label">POSTER</span></label>
         <input type="radio" name="svc-cat" id="svc-video" value="video">
-        <label for="svc-video"><span class="svc-label">VIDEO</span></label>
+        <label for="svc-video" data-i18n="svc-video"><span class="svc-label">VIDEO</span></label>
         <input type="radio" name="svc-cat" id="svc-graphic" value="graphic">
-        <label for="svc-graphic"><span class="svc-label">GRAPHIC DESIGN</span></label>
+        <label for="svc-graphic" data-i18n="svc-graphic"><span class="svc-label">GRAPHIC DESIGN</span></label>
         <input type="radio" name="svc-cat" id="svc-content" value="content">
-        <label for="svc-content"><span class="svc-label">CONTENT</span></label>
+        <label for="svc-content" data-i18n="svc-content"><span class="svc-label">CONTENT</span></label>
         <input type="radio" name="svc-cat" id="svc-translator" value="translator">
-        <label for="svc-translator"><span class="svc-label">TRANSLATOR</span></label>
+        <label for="svc-translator" data-i18n="svc-translator"><span class="svc-label">TRANSLATOR</span></label>
         <div class="glider-container"><div class="glider"></div></div>
       </div>
     </nav>
@@ -98,35 +98,35 @@
 
       <div class="svc-cat-desc" data-cat="all">
         <h2 class="svc-cat-name">ALL</h2>
-        <p class="svc-cat-text">Explore the creative services available through NezWorks.</p>
+        <p class="svc-cat-text" data-i18n="svc-all-desc">Explore the creative services available through NezWorks.</p>
       </div>
       <div class="svc-cat-desc" data-cat="logo" style="display:none">
         <h2 class="svc-cat-name">LOGO</h2>
-        <p class="svc-cat-text">Logo design and visual identity for brands that want to stand out.</p>
+        <p class="svc-cat-text" data-i18n="svc-logo-desc">Logo design and visual identity for brands that want to stand out.</p>
       </div>
       <div class="svc-cat-desc" data-cat="banner" style="display:none">
         <h2 class="svc-cat-name">BANNER</h2>
-        <p class="svc-cat-text">Digital banners and promotional visuals for campaigns and platforms.</p>
+        <p class="svc-cat-text" data-i18n="svc-banner-desc">Digital banners and promotional visuals for campaigns and platforms.</p>
       </div>
       <div class="svc-cat-desc" data-cat="poster" style="display:none">
         <h2 class="svc-cat-name">POSTER</h2>
-        <p class="svc-cat-text">Posters and promotional artwork designed to capture attention.</p>
+        <p class="svc-cat-text" data-i18n="svc-poster-desc">Posters and promotional artwork designed to capture attention.</p>
       </div>
       <div class="svc-cat-desc" data-cat="video" style="display:none">
         <h2 class="svc-cat-name">VIDEO</h2>
-        <p class="svc-cat-text">Video editing and visual storytelling for digital content.</p>
+        <p class="svc-cat-text" data-i18n="svc-video-desc">Video editing and visual storytelling for digital content.</p>
       </div>
       <div class="svc-cat-desc" data-cat="graphic" style="display:none">
         <h2 class="svc-cat-name">GRAPHIC DESIGN</h2>
-        <p class="svc-cat-text">Creative graphics for brands, campaigns, social media, and digital platforms.</p>
+        <p class="svc-cat-text" data-i18n="svc-graphic-desc">Creative graphics for brands, campaigns, social media, and digital platforms.</p>
       </div>
       <div class="svc-cat-desc" data-cat="content" style="display:none">
         <h2 class="svc-cat-name">CONTENT</h2>
-        <p class="svc-cat-text">Strategic content creation — copy, social posts, blogs, and editorial visuals that tell your brand story.</p>
+        <p class="svc-cat-text" data-i18n="svc-content-desc">Strategic content creation — copy, social posts, blogs, and editorial visuals that tell your brand story.</p>
       </div>
       <div class="svc-cat-desc" data-cat="translator" style="display:none">
         <h2 class="svc-cat-name">TRANSLATOR</h2>
-        <p class="svc-cat-text">Professional translation across languages — documents, captions, subtitles, and localization that keeps your message clear everywhere.</p>
+        <p class="svc-cat-text" data-i18n="svc-translator-desc">Professional translation across languages — documents, captions, subtitles, and localization that keeps your message clear everywhere.</p>
       </div>
 
     </div>
@@ -143,6 +143,7 @@
 <script src="js/user-chip.js"></script></script>
 <script src="js/scroll.js"></script>
 <script src="js/services.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/radio.js"></script>
 </body>
 </html>
