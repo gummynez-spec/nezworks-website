@@ -44,4 +44,13 @@
     const cat = new URLSearchParams(location.search).get('cat') || 'all';
     switchCat(cat);
   });
+
+  /* show "Create new project" button for freelancers only */
+  const createBtn = document.getElementById('svcCreateBtn');
+  if (createBtn) {
+    try {
+      const f = JSON.parse(sessionStorage.getItem('nw-freelancer') || 'null');
+      if (f && f.name) createBtn.style.display = '';
+    } catch (e) {}
+  }
 })();
