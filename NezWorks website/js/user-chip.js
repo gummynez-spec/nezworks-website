@@ -9,9 +9,9 @@
   function sessionUser() {
     try {
       const f = JSON.parse(sessionStorage.getItem(FREE_KEY) || 'null');
-      if (f && f.name) return { ...f, role: 'Freelancer', key: FREE_KEY };
+      if (f && f.name) return { ...f, role: 'Freelancer', displayName: f.displayName || f.name.split(' ')[0] };
       const c = JSON.parse(sessionStorage.getItem(CLIENT_KEY) || 'null');
-      if (c && c.name) return { ...c, role: 'Client', key: CLIENT_KEY };
+      if (c && c.name) return { ...c, role: 'Client', displayName: c.displayName || c.name.split(' ')[0] };
     } catch (e) {}
     return null;
   }
@@ -29,9 +29,9 @@
   chip.className = 'user-chip';
   chip.innerHTML = `
     <button class="user-chip-btn" data-cursor="hover" aria-haspopup="true" aria-expanded="false">
-      <span class="user-avatar">${escapeHtml((user.name[0] || 'U').toUpperCase())}</span>
+      <span class="user-avatar">${escapeHtml((user.displayName[0] || 'U').toUpperCase())}</span>
       <span class="user-chip-text">
-        <span class="user-name">${escapeHtml(user.name)}</span>
+        <span class="user-name">${escapeHtml(user.displayName)}</span>
         <span class="user-role">${user.role}</span>
       </span>
     </button>

@@ -112,9 +112,11 @@
       e.preventDefault();
       const needs = [...clientForm.querySelectorAll('input[name="needs"]:checked')].map(c => c.value);
       const name = clientForm.querySelector('[name="name"]');
+      const displayName = clientForm.querySelector('[name="displayName"]');
       const contact = clientForm.querySelector('[name="contact"]');
-      if (!name.value.trim() || !contact.value.trim() || needs.length === 0) {
-        if (!name.value.trim()) name.reportValidity();
+      if (!name.value.trim() || !displayName.value.trim() || !contact.value.trim() || needs.length === 0) {
+        if (!displayName.value.trim()) displayName.reportValidity();
+        else if (!name.value.trim()) name.reportValidity();
         else if (!contact.value.trim()) contact.reportValidity();
         else clientForm.querySelector('#needChoices').animate(
           [{ transform: 'translateX(0)' }, { transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'translateX(0)' }],
@@ -124,6 +126,7 @@
       }
       const data = {
         name: name.value.trim(),
+        displayName: displayName.value.trim(),
         brand: clientForm.querySelector('[name="brand"]').value.trim(),
         needs,
         project: clientForm.querySelector('[name="project"]').value.trim(),
@@ -135,7 +138,7 @@
         const c = window.SB;
         if (c) {
           const { data: row, error } = await c.from('clients').insert([{
-            name: data.name, brand: data.brand, needs: data.needs, project: data.project, contact: data.contact, budget: data.budget,
+            name: data.name, display_name: data.displayName, brand: data.brand, needs: data.needs, project: data.project, contact: data.contact, budget: data.budget,
           }]).select().single();
           if (error) throw error;
           if (row?.id) sessionStorage.setItem('nw-client-id', row.id);
@@ -167,13 +170,14 @@
 
     function flValid() {
       const name = flForm.querySelector('[name="name"]');
+      const displayName = flForm.querySelector('[name="displayName"]');
       const skills = flForm.querySelectorAll('input[name="skills"]:checked');
       const exp = flForm.querySelector('input[name="exp"]:checked');
       const contact = flForm.querySelector('[name="contact"]');
       const upload = document.getElementById('workUpload')?.querySelector('input[type="file"]');
       const port = document.getElementById('portfolioUrl');
       const hasWork = (upload && upload.files.length > 0) || (port && port.value.trim().length > 3);
-      return name.value.trim() && skills.length && exp && contact.value.trim() && hasWork;
+      return name.value.trim() && displayName.value.trim() && skills.length && exp && contact.value.trim() && hasWork;
     }
 
     flNext.addEventListener('click', () => {
@@ -213,6 +217,7 @@
     confirmBtn.addEventListener('click', async () => {
       const data = {
         name: flForm.querySelector('[name="name"]').value.trim(),
+        displayName: flForm.querySelector('[name="displayName"]').value.trim(),
         skills: [...flForm.querySelectorAll('input[name="skills"]:checked')].map(c => c.value),
         exp: flForm.querySelector('input[name="exp"]:checked')?.value || null,
         contact: flForm.querySelector('[name="contact"]').value.trim(),
@@ -225,12 +230,12 @@
         if (c) {
           if (!freelancerId) {
             const { data: row, error } = await c.from('freelancers').insert([{
-              name: data.name, skills: data.skills, exp: data.exp, contact: data.contact, portfolio: data.portfolio,
+              name: data.name, display_name: data.displayName, skills: data.skills, exp: data.exp, contact: data.contact, portfolio: data.portfolio,
             }]).select().single();
             if (error) throw error;
             if (row?.id) { freelancerId = row.id; sessionStorage.setItem('nw-freelancer-id', row.id); }
           } else {
-            const { error } = await c.from('freelancers').update({ name: data.name, skills: data.skills, exp: data.exp, contact: data.contact, portfolio: data.portfolio }).eq('id', freelancerId);
+            const { error } = await c.from('freelancers').update({ name: data.name, display_name: data.displayName, skills: data.skills, exp: data.exp, contact: data.contact, portfolio: data.portfolio }).eq('id', freelancerId);
             if (error) console.warn('[NezWorks] freelancers update failed:', error.message);
           }
         }

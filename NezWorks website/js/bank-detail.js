@@ -9,9 +9,9 @@
   function loadUser() {
     try {
       const f = JSON.parse(sessionStorage.getItem(FREE_KEY) || 'null');
-      if (f && f.name) return { ...f, role: 'Freelancer' };
+      if (f && f.name) return { ...f, role: 'Freelancer', displayName: f.displayName || f.name.split(' ')[0] };
       const c = JSON.parse(sessionStorage.getItem(CLIENT_KEY) || 'null');
-      if (c && c.name) return { ...c, role: 'Client' };
+      if (c && c.name) return { ...c, role: 'Client', displayName: c.displayName || c.name.split(' ')[0] };
     } catch (e) {}
     return null;
   }
