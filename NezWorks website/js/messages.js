@@ -25,7 +25,7 @@
 
   const user = loadUser();
   if (!user) {
-    document.getElementById('msgEmpty').textContent = 'Please log in to access messages.';
+    document.getElementById('msgEmpty').innerHTML = 'Please log in to access messages.<br><br><a href="register-client.html" style="color:var(--accent-2)">Register as Client</a> or <a href="register-freelancer.html" style="color:var(--accent-2)">Register as Freelancer</a>';
     return;
   }
 
@@ -46,27 +46,123 @@
 
   let activeConvo = null;
   let conversations = [];
-  let myId = user.auth_user_id || sessionStorage.getItem(user.role === 'freelancer' ? 'nw-freelancer-id' : 'nw-client-id');
+  let myRowId = null; /* row ID in clients/freelancers table */
+
+  /* ---- Find my row ID in the table ---- */
+  async function findMyRowId() {
+    try {
+      const c = window.SB;
+      if (!c) return null;
+      const table = user.role === 'freelancer' ? 'freelancers' : 'clients';
+      /* try auth_user_id first */
+      if (user.auth_user_id) {
+        const { data } = await c.from(table).select('id').eq('auth_user_id', user.auth_user_id).single();
+        if (data) return data.id;
+      }
+      /* fallback: try email */
+      if (user.email) {
+        const { data } = await c.from(table).select('id').eq('email', user.email).single();
+        if (data) return data.id;
+      }
+      /* fallback: try sessionStorage ID */
+      const fallbackId = sessionStorage.getItem(user.role === 'freelancer' ? 'nw-freelancer-id' : 'nw-client-id');
+      if (fallbackId) {
+        const { data } = await c.from(table).select('id').eq('id', fallbackId).single();
+        if (data) return data.id;
+      }
+    } catch (e) { console.warn('[NezWorks] findMyRowId:', e?.message || e); }
+    return null;
+  }
 
   /* ---- Load conversations ---- */
   async function loadConversations() {
     try {
       const c = window.SB;
       if (!c) return;
-      const table = user.role === 'freelancer' ? 'freelancers' : 'clients';
-      const { data: me } = await c.from(table).select('id').eq('auth_user_id', myId).single();
-      if (!me) return;
 
-      const { data: convos } = await c.from('conversations')
+      myRowId = await findMyRowId();
+      if (!myRowId) {
+        console.warn('[NezWorks] Could not find user row');
+        return;
+      }
+
+      const { data: convos, error } = await c.from('conversations')
         .select('*')
-        .or(`client_id.eq.${me.id},freelancer_id.eq.${me.id}`)
+        .or(`client_id.eq.${myRowId},freelancer_id.eq.${myRowId}`)
         .order('updated_at', { ascending: false });
 
-      if (convos) {
-        conversations = convos;
-        renderConversationList();
+      if (error) throw error;
+      conversations = convos || [];
+      renderConversationList();
+
+      /* if no conversations, show create welcome chat button */
+      if (conversations.length === 0) {
+        empty.innerHTML = `
+          <div style="text-align:center">
+            <p style="margin-bottom:16px">No conversations yet</p>
+            <button class="btn btn-primary btn-sm" id="createWelcomeBtn" data-cursor="hover">
+              Start Welcome Chat <span class="btn-arrow">→</span>
+            </button>
+          </div>`;
+        document.getElementById('createWelcomeBtn')?.addEventListener('click', createWelcomeChat);
       }
     } catch (e) { console.warn('[NezWorks] loadConversations:', e?.message || e); }
+  }
+
+  /* ---- Create welcome chat ---- */
+  async function createWelcomeChat() {
+    try {
+      const c = window.SB;
+      if (!c) return;
+      if (!myRowId) return;
+
+      /* get welcome message */
+      let welcomeText = 'สวัสดีค่ะ ขอบคุณที่มาใช้บริการ NezWorks 🎉\n\nเราพร้อมช่วยเหลือคุณทุกขั้นตอน หากมีคำถามอะไร สามารถพิมพ์ถามในแชทนี้ได้เลยนะคะ\n\n- ทีม NezWorks';
+      const configKey = user.role === 'freelancer' ? 'welcome_freelancer' : 'welcome_client';
+      try {
+        const { data: cfg } = await c.from('system_config').select('value').eq('key', configKey).single();
+        if (cfg?.value?.message) welcomeText = cfg.value.message;
+      } catch (e) {}
+
+      /* check if welcome chat already exists */
+      const { data: existing } = await c.from('conversations')
+        .select('id')
+        .eq('freelancer_name', 'NezWorks')
+        .or(`client_id.eq.${myRowId},freelancer_id.eq.${myRowId}`)
+        .limit(1);
+
+      if (existing && existing.length > 0) {
+        /* just open existing */
+        await loadConversations();
+        return;
+      }
+
+      /* create conversation */
+      const convoData = user.role === 'freelancer'
+        ? { client_id: null, freelancer_id: myRowId, client_name: 'NezWorks', freelancer_name: user.displayName || user.name }
+        : { client_id: myRowId, freelancer_id: null, client_name: user.displayName || user.name, freelancer_name: 'NezWorks' };
+
+      const { data: convo, error } = await c.from('conversations').insert([{
+        ...convoData,
+        last_message: welcomeText.substring(0, 50) + '...',
+      }]).select().single();
+
+      if (error) throw error;
+
+      /* send welcome message */
+      if (convo?.id) {
+        await c.from('messages').insert([{
+          conversation_id: convo.id,
+          sender_id: 'system',
+          sender_role: 'system',
+          type: 'text',
+          content: welcomeText,
+        }]);
+      }
+
+      await loadConversations();
+      if (convo) openConversation(convo);
+    } catch (e) { console.warn('[NezWorks] createWelcomeChat:', e?.message || e); }
   }
 
   function renderConversationList() {
@@ -126,7 +222,8 @@
   }
 
   function renderMessage(msg) {
-    const isMine = msg.sender_id === myId;
+    const myAuthId = user.auth_user_id;
+    const isMine = msg.sender_id === myAuthId || msg.sender_id === myRowId;
     const isSystem = msg.sender_role === 'system';
     if (msg.type === 'invoice') {
       const inv = msg.invoice_data || {};
@@ -163,12 +260,11 @@
     if (!content.trim() || !activeConvo) return;
     const msg = {
       conversation_id: activeConvo.id,
-      sender_id: myId,
+      sender_id: user.auth_user_id || myRowId,
       sender_role: user.role,
       type: 'text',
       content: content.trim(),
     };
-    /* optimistic render */
     renderMessage({ ...msg, created_at: new Date().toISOString() });
     msgMessages.scrollTop = msgMessages.scrollHeight;
     msgInput.value = '';
@@ -242,7 +338,7 @@
     const invoiceData = { items, total, status: 'pending' };
     const msg = {
       conversation_id: activeConvo.id,
-      sender_id: myId,
+      sender_id: user.auth_user_id || myRowId,
       sender_role: user.role,
       type: 'invoice',
       content: `Invoice — ฿${total.toLocaleString()}`,
@@ -264,40 +360,6 @@
     } catch (e) { console.warn('[NezWorks] sendInvoice:', e?.message || e); }
   });
 
-  /* ---- Start conversation with someone (called from other pages) ---- */
-  window.NW = window.NW || {};
-  window.NW.startConversation = async function(targetUserId, targetRole, targetName) {
-    try {
-      const c = window.SB;
-      if (!c) return;
-      const table = user.role === 'freelancer' ? 'freelancers' : 'clients';
-      const { data: me } = await c.from(table).select('id').eq('auth_user_id', myId).single();
-      if (!me) return;
-
-      const targetTable = targetRole === 'freelancer' ? 'freelancers' : 'clients';
-      const { data: target } = await c.from(targetTable).select('id').eq('auth_user_id', targetUserId).single();
-      if (!target) return;
-
-      const isFreelancer = user.role === 'freelancer';
-      const { data: existing } = await c.from('conversations')
-        .select('*')
-        .eq('client_id', isFreelancer ? target.id : me.id)
-        .eq('freelancer_id', isFreelancer ? me.id : target.id)
-        .single();
-
-      if (existing) { openConversation(existing); return; }
-
-      const { data: newConvo } = await c.from('conversations').insert([{
-        client_id: isFreelancer ? target.id : me.id,
-        freelancer_id: isFreelancer ? me.id : target.id,
-        client_name: isFreelancer ? targetName : user.displayName,
-        freelancer_name: isFreelancer ? user.displayName : targetName,
-      }]).select().single();
-
-      if (newConvo) { await loadConversations(); openConversation(newConvo); }
-    } catch (e) { console.warn('[NezWorks] startConversation:', e?.message || e); }
-  };
-
   /* ---- Real-time subscription ---- */
   function subscribeToMessages() {
     try {
@@ -306,7 +368,7 @@
       c.channel('messages-room')
         .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, (payload) => {
           const msg = payload.new;
-          if (activeConvo && msg.conversation_id === activeConvo.id && msg.sender_id !== myId) {
+          if (activeConvo && msg.conversation_id === activeConvo.id && msg.sender_id !== (user.auth_user_id || myRowId)) {
             renderMessage(msg);
             msgMessages.scrollTop = msgMessages.scrollHeight;
           }
