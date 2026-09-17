@@ -243,5 +243,33 @@
   }
   window.addEventListener('relaxradio', syncMoodBtns);
   syncMoodBtns();
+
+  /* ---------------- fullscreen ---------------- */
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  const fullscreenLabel = document.getElementById('fullscreenLabel');
+
+  if (fullscreenBtn && document.fullscreenEnabled !== undefined) {
+    fullscreenBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.warn('[Relax] Fullscreen failed:', err.message);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      const isFull = !!document.fullscreenElement;
+      fullscreenLabel.textContent = isFull ? 'Exit Fullscreen' : 'Enter Fullscreen';
+      fullscreenBtn.classList.toggle('is-fullscreen', isFull);
+      /* hide/show nav when fullscreen */
+      const nav = document.getElementById('nav');
+      if (nav) nav.style.display = isFull ? 'none' : '';
+      /* also hide cursor */
+      const cursor = document.getElementById('cursor');
+      if (cursor) cursor.style.display = isFull ? 'none' : '';
+    });
+  }
 })();
 

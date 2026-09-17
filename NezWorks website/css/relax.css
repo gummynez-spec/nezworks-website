@@ -191,6 +191,18 @@ input[type="range"]::-moz-range-thumb{
   color: #7d7d7d;
 }
 
+/* Fullscreen button */
+.fullscreen-btn{
+  display:flex;align-items:center;gap:10px;width:100%;
+  padding:12px 16px;border-radius:12px;
+  background:rgba(255,255,255,.04);border:1px solid var(--stroke);
+  font:inherit;font-size:.85rem;color:var(--ink);
+  cursor:pointer;transition:background .15s,border-color .15s;
+}
+.fullscreen-btn:hover{background:rgba(139,124,246,.1);border-color:var(--accent-2)}
+.fullscreen-btn svg{flex:none;color:var(--accent-2)}
+.fullscreen-btn.is-fullscreen{background:rgba(139,124,246,.15);border-color:var(--accent-2)}
+
 @media(max-width:520px){
   .relax-drawer{padding-top:calc(var(--nav-h) + 14px)}
   .season-grid{grid-template-columns:repeat(5,1fr)}
