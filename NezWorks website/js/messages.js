@@ -127,6 +127,7 @@
 
   function renderMessage(msg) {
     const isMine = msg.sender_id === myId;
+    const isSystem = msg.sender_role === 'system';
     if (msg.type === 'invoice') {
       const inv = msg.invoice_data || {};
       const items = Array.isArray(inv.items) ? inv.items : [];
@@ -141,6 +142,13 @@
         <div class="msg-invoice-total">Total: ฿${(inv.total || 0).toLocaleString()}</div>
         <div class="msg-invoice-status pending">Pending</div>
         <div class="msg-bubble-time">${timeAgo(msg.created_at)}</div>`;
+      msgMessages.appendChild(el);
+    } else if (isSystem) {
+      const el = document.createElement('div');
+      el.className = 'msg-bubble received';
+      el.style.background = 'linear-gradient(135deg, rgba(139,124,246,.12), rgba(92,139,255,.08))';
+      el.style.border = '1px solid rgba(139,124,246,.2)';
+      el.innerHTML = `${esc(msg.content || '').replace(/\n/g, '<br>')}<div class="msg-bubble-time">${timeAgo(msg.created_at)}</div>`;
       msgMessages.appendChild(el);
     } else {
       const el = document.createElement('div');

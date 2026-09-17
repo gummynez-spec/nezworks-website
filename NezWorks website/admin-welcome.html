@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>NezWorks — Admin: Welcome Messages</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/radio.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/pages.css">
+<style>
+.admin-wrap{display:flex;flex-direction:column;align-items:center;padding:calc(var(--nav-h) + 40px) 20px 80px;min-height:100vh}
+.admin-card{width:min(600px,100%);padding:36px;border-radius:20px;background:var(--glass);border:1px solid var(--stroke);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.admin-header{text-align:center;margin-bottom:28px}
+.admin-header h1{font-family:var(--font-display);font-size:1.3rem;font-weight:600;margin-bottom:8px}
+.admin-header p{font-size:.82rem;color:var(--ink-2)}
+.admin-section{margin-bottom:28px}
+.admin-section h3{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px}
+.admin-field{margin-bottom:14px}
+.admin-field label{display:block;font-size:.78rem;font-weight:600;color:var(--ink-2);margin-bottom:6px}
+.admin-field input,.admin-field textarea{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--stroke);border-radius:10px;padding:12px 14px;font:inherit;font-size:.85rem;color:var(--ink);outline:none;resize:vertical;transition:border-color .2s}
+.admin-field input:focus,.admin-field textarea:focus{border-color:var(--accent-2)}
+.admin-field textarea{min-height:120px;line-height:1.6}
+.admin-preview{padding:16px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid var(--stroke-soft);margin-top:16px}
+.admin-preview h4{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px}
+.preview-bubble{max-width:80%;padding:12px 16px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid var(--stroke-soft);border-bottom-left-radius:4px;font-size:.85rem;line-height:1.5;white-space:pre-wrap}
+.admin-actions{display:flex;gap:10px;justify-content:center;margin-top:20px}
+.admin-status{text-align:center;font-size:.78rem;margin-top:12px;color:var(--ink-3)}
+.admin-status.success{color:#34d399}
+.admin-status.error{color:#ef4444}
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" aria-hidden="true"><span></span></div>
+<div class="nebula" aria-hidden="true">
+  <div class="nebula-light nebula-purple"></div>
+  <div class="nebula-light nebula-blue"></div>
+  <div class="nebula-light nebula-peach"></div>
+</div>
+<canvas id="cosmos" aria-hidden="true"></canvas>
+<div class="cursor" id="cursor" aria-hidden="true">
+  <div class="cursor-dot"></div>
+  <div class="cursor-label"></div>
+</div>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <img class="logo-mark" src="assets/nezworks-logo.svg" alt="NezWorks logo">
+      <span class="logo-word">NEZWORKS</span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" data-cursor="link">Home</a>
+      <a href="services.html" data-cursor="link">Services</a>
+      <a href="how.html" data-cursor="link">How we work</a>
+      <a href="relax.html" data-cursor="link">Relax</a>
+      <a href="contact.html" data-cursor="link">Contact</a>
+      <a href="faq.html" data-cursor="link">FAQ</a>
+    </nav>
+    <div class="nav-cta"></div>
+  </div>
+</header>
+
+<main class="admin-wrap" id="top">
+  <div class="admin-card">
+    <div class="admin-header">
+      <h1>Welcome Messages</h1>
+      <p>Edit the welcome message that new users receive when they sign up.</p>
+    </div>
+
+    <div class="admin-section">
+      <h3>Client Welcome Message</h3>
+      <div class="admin-field">
+        <label>Title</label>
+        <input type="text" id="clientTitle" placeholder="Welcome title...">
+      </div>
+      <div class="admin-field">
+        <label>Message</label>
+        <textarea id="clientMessage" placeholder="Welcome message..."></textarea>
+      </div>
+      <div class="admin-preview">
+        <h4>Preview</h4>
+        <div class="preview-bubble" id="clientPreview"></div>
+      </div>
+    </div>
+
+    <div class="admin-section">
+      <h3>Freelancer Welcome Message</h3>
+      <div class="admin-field">
+        <label>Title</label>
+        <input type="text" id="freelancerTitle" placeholder="Welcome title...">
+      </div>
+      <div class="admin-field">
+        <label>Message</label>
+        <textarea id="freelancerMessage" placeholder="Welcome message..."></textarea>
+      </div>
+      <div class="admin-preview">
+        <h4>Preview</h4>
+        <div class="preview-bubble" id="freelancerPreview"></div>
+      </div>
+    </div>
+
+    <div class="admin-actions">
+      <button class="btn btn-primary btn-sm" id="saveBtn" data-cursor="hover">Save Changes <span class="btn-arrow">→</span></button>
+    </div>
+    <div class="admin-status" id="statusMsg"></div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/cosmos.js"></script>
+<script src="js/nav-dropdown.js"></script>
+<script src="js/cursor.js"></script>
+<script src="js/user-chip.js"></script>
+<script src="js/scroll.js"></script>
+<script src="js/radio.js"></script>
+<script>
+(async () => {
+  const clientTitle = document.getElementById('clientTitle');
+  const clientMsg = document.getElementById('clientMessage');
+  const clientPreview = document.getElementById('clientPreview');
+  const freelancerTitle = document.getElementById('freelancerTitle');
+  const freelancerMsg = document.getElementById('freelancerMessage');
+  const freelancerPreview = document.getElementById('freelancerPreview');
+  const saveBtn = document.getElementById('saveBtn');
+  const statusMsg = document.getElementById('statusMsg');
+
+  function updatePreview(title, msg, previewEl) {
+    previewEl.textContent = (title ? title + '\n\n' : '') + (msg || '');
+  }
+
+  clientTitle.addEventListener('input', () => updatePreview(clientTitle.value, clientMsg.value, clientPreview));
+  clientMsg.addEventListener('input', () => updatePreview(clientTitle.value, clientMsg.value, clientPreview));
+  freelancerTitle.addEventListener('input', () => updatePreview(freelancerTitle.value, freelancerMsg.value, freelancerPreview));
+  freelancerMsg.addEventListener('input', () => updatePreview(freelancerTitle.value, freelancerMsg.value, freelancerPreview));
+
+  /* Load from Supabase */
+  try {
+    const c = window.SB;
+    if (c) {
+      const { data: clientConfig } = await c.from('system_config').select('value').eq('key', 'welcome_client').single();
+      const { data: freelancerConfig } = await c.from('system_config').select('value').eq('key', 'welcome_freelancer').single();
+      if (clientConfig?.value) {
+        clientTitle.value = clientConfig.value.title || '';
+        clientMsg.value = clientConfig.value.message || '';
+        updatePreview(clientTitle.value, clientMsg.value, clientPreview);
+      }
+      if (freelancerConfig?.value) {
+        freelancerTitle.value = freelancerConfig.value.title || '';
+        freelancerMsg.value = freelancerConfig.value.message || '';
+        updatePreview(freelancerTitle.value, freelancerMsg.value, freelancerPreview);
+      }
+    }
+  } catch (e) { console.warn('Load failed:', e); }
+
+  /* Save */
+  saveBtn.addEventListener('click', async () => {
+    statusMsg.textContent = 'Saving...';
+    statusMsg.className = 'admin-status';
+    try {
+      const c = window.SB;
+      if (!c) throw new Error('Supabase not connected');
+      await c.from('system_config').upsert({
+        key: 'welcome_client',
+        value: { title: clientTitle.value, message: clientMsg.value },
+        updated_at: new Date().toISOString(),
+      });
+      await c.from('system_config').upsert({
+        key: 'welcome_freelancer',
+        value: { title: freelancerTitle.value, message: freelancerMsg.value },
+        updated_at: new Date().toISOString(),
+      });
+      statusMsg.textContent = 'Saved successfully!';
+      statusMsg.className = 'admin-status success';
+    } catch (e) {
+      statusMsg.textContent = 'Save failed: ' + (e?.message || 'Unknown error');
+      statusMsg.className = 'admin-status error';
+    }
+  });
+})();
+</script>
+</body>
+</html>

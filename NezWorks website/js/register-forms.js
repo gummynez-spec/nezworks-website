@@ -335,6 +335,43 @@
           if (row?.id) sessionStorage.setItem('nw-client-id', row.id);
         }
       } catch (err) { console.warn('[NezWorks] clients insert failed (tables missing?):', err?.message || err); }
+
+      /* Auto-create NezWorks welcome chat */
+      try {
+        const c = window.SB;
+        if (c) {
+          const clientId = sessionStorage.getItem('nw-client-id');
+          if (clientId) {
+            /* get welcome message from system_config */
+            let welcomeText = 'สวัสดีค่ะ ขอบคุณที่มาใช้บริการ NezWorks 🎉\n\nเราพร้อมช่วยเหลือคุณทุกขั้นตอน หากมีคำถามอะไร สามารถพิมพ์ถามในแชทนี้ได้เลยนะคะ\n\n- ทีม NezWorks';
+            try {
+              const { data: cfg } = await c.from('system_config').select('value').eq('key', 'welcome_client').single();
+              if (cfg?.value?.message) welcomeText = cfg.value.message;
+            } catch (e) {}
+
+            /* create conversation with NezWorks system */
+            const { data: convo } = await c.from('conversations').insert([{
+              client_id: clientId,
+              freelancer_id: null,
+              client_name: data.displayName || data.name,
+              freelancer_name: 'NezWorks',
+              last_message: welcomeText.substring(0, 50) + '...',
+            }]).select().single();
+
+            /* send welcome message */
+            if (convo?.id) {
+              await c.from('messages').insert([{
+                conversation_id: convo.id,
+                sender_id: 'system',
+                sender_role: 'system',
+                type: 'text',
+                content: welcomeText,
+              }]);
+            }
+          }
+        }
+      } catch (e) { console.warn('[NezWorks] welcome chat creation failed:', e?.message || e); }
+
       clientForm.hidden = true;
       clientSuccess.hidden = false;
       clientSuccess.classList.add('play');
@@ -480,6 +517,40 @@
           }
         }
       } catch (err) { console.warn('[NezWorks] freelancers insert failed (tables missing?):', err?.message || err); }
+
+      /* Auto-create NezWorks welcome chat */
+      try {
+        const c = window.SB;
+        if (c) {
+          const freelancerId = sessionStorage.getItem('nw-freelancer-id');
+          if (freelancerId) {
+            let welcomeText = 'สวัสดีค่ะ ยินดีต้อนรับสู่ NezWorks 🎉\n\nคุณสามารถเริ่มรับงานได้ทันที หากมีคำถามหรือต้องการความช่วยเหลือ สามารถพิมพ์ถามในแชทนี้ได้เลยนะคะ\n\n- ทีม NezWorks';
+            try {
+              const { data: cfg } = await c.from('system_config').select('value').eq('key', 'welcome_freelancer').single();
+              if (cfg?.value?.message) welcomeText = cfg.value.message;
+            } catch (e) {}
+
+            const { data: convo } = await c.from('conversations').insert([{
+              client_id: null,
+              freelancer_id: freelancerId,
+              client_name: 'NezWorks',
+              freelancer_name: data.displayName || data.name,
+              last_message: welcomeText.substring(0, 50) + '...',
+            }]).select().single();
+
+            if (convo?.id) {
+              await c.from('messages').insert([{
+                conversation_id: convo.id,
+                sender_id: 'system',
+                sender_role: 'system',
+                type: 'text',
+                content: welcomeText,
+              }]);
+            }
+          }
+        }
+      } catch (e) { console.warn('[NezWorks] welcome chat creation failed:', e?.message || e); }
+
       sessionStorage.setItem('nw-freelancer', JSON.stringify(localPayload));
       sessionStorage.setItem('nw-freelancer-registered', '1');
       flTerms.hidden = true;
