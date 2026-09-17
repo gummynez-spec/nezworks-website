@@ -308,35 +308,12 @@
         })(),
       };
 
-      /* Supabase Auth signup */
-      let authUserId = null;
-      try {
-        const c = window.SB;
-        if (c) {
-          const { data: authData, error: authError } = await c.auth.signUp({
-            email: data.email,
-            password: password.value,
-            options: { data: { name: data.name, display_name: data.displayName, role: 'client' } }
-          });
-          if (authError) throw authError;
-          authUserId = authData?.user?.id || null;
-          /* if email confirmation required, session may be null */
-          if (!authData?.session && authData?.user?.identities?.length === 0) {
-            console.warn('[NezWorks] Email already registered');
-          }
-        }
-      } catch (err) {
-        console.warn('[NezWorks] Auth signup failed:', err?.message || err);
-        alert('Signup failed: ' + (err?.message || 'Unknown error'));
-        return;
-      }
-
-      sessionStorage.setItem('nw-client', JSON.stringify({ ...data, auth_user_id: authUserId }));
+      /* Save profile directly to DB (skip Supabase Auth signup) */
+      sessionStorage.setItem('nw-client', JSON.stringify(data));
       try {
         const c = window.SB;
         if (c) {
           const { data: row, error } = await c.from('clients').insert([{
-            auth_user_id: authUserId,
             email: data.email,
             name: data.name,
             display_name: data.displayName,
@@ -477,36 +454,14 @@
         portfolio: document.getElementById('portfolioUrl').value.trim(),
       };
 
-      /* Supabase Auth signup */
-      let authUserId = null;
-      try {
-        const c = window.SB;
-        if (c) {
-          const { data: authData, error: authError } = await c.auth.signUp({
-            email: data.email,
-            password,
-            options: { data: { name: data.name, display_name: data.displayName, role: 'freelancer' } }
-          });
-          if (authError) throw authError;
-          authUserId = authData?.user?.id || null;
-          if (!authData?.session && authData?.user?.identities?.length === 0) {
-            console.warn('[NezWorks] Email already registered');
-          }
-        }
-      } catch (err) {
-        console.warn('[NezWorks] Auth signup failed:', err?.message || err);
-        alert('Signup failed: ' + (err?.message || 'Unknown error'));
-        return;
-      }
-
-      const localPayload = { ...data, auth_user_id: authUserId };
+      /* Save profile directly to DB (skip Supabase Auth signup) */
+      const localPayload = data;
       let freelancerId = sessionStorage.getItem('nw-freelancer-id') || null;
       try {
         const c = window.SB;
         if (c) {
           if (!freelancerId) {
             const { data: row, error } = await c.from('freelancers').insert([{
-              auth_user_id: authUserId,
               email: data.email,
               name: data.name,
               display_name: data.displayName,
@@ -519,7 +474,6 @@
             if (row?.id) { freelancerId = row.id; sessionStorage.setItem('nw-freelancer-id', row.id); }
           } else {
             const { error } = await c.from('freelancers').update({
-              auth_user_id: authUserId,
               email: data.email,
               name: data.name,
               display_name: data.displayName,

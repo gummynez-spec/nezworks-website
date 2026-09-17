@@ -1,4 +1,4 @@
-/* ============ LOGIN PAGE — Supabase Auth sign in ============ */
+/* ============ LOGIN PAGE — email-based login ============ */
 (() => {
   const form = document.getElementById('loginForm');
   const errorEl = document.getElementById('loginError');
@@ -37,78 +37,61 @@
       const c = window.SB;
       if (!c) throw new Error('Supabase not connected');
 
-      /* sign in */
-      console.log('[NezWorks] Attempting sign in for:', email);
-      const { data: authData, error: authError } = await c.auth.signInWithPassword({
-        email,
-        password,
-      });
-      if (authError) {
-        console.error('[NezWorks] Auth error:', authError.message);
-        throw authError;
+      console.log('[NezWorks] Searching for email:', email);
+
+      /* try freelancer table first */
+      let profile = null;
+      let role = 'client';
+      let table = 'clients';
+
+      const flResult = await c.from('freelancers').select('*').eq('email', email).maybeSingle();
+      if (flResult.data) {
+        profile = flResult.data;
+        role = 'freelancer';
+        table = 'freelancers';
+        console.log('[NezWorks] Found in freelancers');
+      } else {
+        const clResult = await c.from('clients').select('*').eq('email', email).maybeSingle();
+        if (clResult.data) {
+          profile = clResult.data;
+          role = 'client';
+          table = 'clients';
+          console.log('[NezWorks] Found in clients');
+        }
       }
 
-      const authUser = authData?.user;
-      if (!authUser) throw new Error('No user returned');
-      console.log('[NezWorks] Auth success, user:', authUser.id, 'role:', authUser.user_metadata?.role);
-
-      const meta = authUser.user_metadata || {};
-      const role = meta.role || 'client';
-      const table = role === 'freelancer' ? 'freelancers' : 'clients';
-
-      /* fetch profile from DB — try auth_user_id first, fallback to email */
-      console.log('[NezWorks] Fetching profile from:', table, 'email:', email);
-      let profile = null;
-
-      const byAuth = await c.from(table).select('*').eq('auth_user_id', authUser.id).maybeSingle();
-      if (byAuth.data) {
-        profile = byAuth.data;
-        console.log('[NezWorks] Found by auth_user_id:', profile.id);
-      } else {
-        console.log('[NezWorks] auth_user_id not found, trying email...');
-        const byEmail = await c.from(table).select('*').eq('email', email).maybeSingle();
-        if (byEmail.data) {
-          profile = byEmail.data;
-          console.log('[NezWorks] Found by email:', profile.id);
-          /* backfill auth_user_id if column exists */
-          try {
-            await c.from(table).update({ auth_user_id: authUser.id }).eq('id', profile.id);
-          } catch (e) {}
-        } else {
-          console.warn('[NezWorks] No profile found by email either');
-        }
+      if (!profile) {
+        throw new Error('Email not found. Please register first.');
       }
 
       /* build session data */
       const sessionData = {
-        name: profile?.name || meta.name || email.split('@')[0],
-        displayName: profile?.display_name || meta.display_name || profile?.name || email.split('@')[0],
-        email: profile?.email || email,
+        name: profile.name || email.split('@')[0],
+        displayName: profile.display_name || profile.name || email.split('@')[0],
+        email: profile.email || email,
         role: role === 'freelancer' ? 'Freelancer' : 'Client',
-        auth_user_id: authUser.id,
       };
 
       if (role === 'freelancer') {
-        sessionData.skills = profile?.skills || [];
-        sessionData.exp = profile?.exp || '';
-        sessionData.contact = profile?.contact || {};
-        sessionData.portfolio = profile?.portfolio || '';
-        sessionStorage.setItem('nw-freelancer-id', profile?.id || '');
+        sessionData.skills = profile.skills || [];
+        sessionData.exp = profile.exp || '';
+        sessionData.contact = profile.contact || {};
+        sessionData.portfolio = profile.portfolio || '';
+        sessionStorage.setItem('nw-freelancer-id', profile.id || '');
+        sessionStorage.setItem('nw-freelancer-registered', '1');
       } else {
-        sessionData.brand = profile?.brand || '';
-        sessionData.needs = profile?.needs || [];
-        sessionData.project = profile?.project || '';
-        sessionData.contact = profile?.contact || {};
-        sessionData.budget = profile?.budget || [];
-        sessionStorage.setItem('nw-client-id', profile?.id || '');
+        sessionData.brand = profile.brand || '';
+        sessionData.needs = profile.needs || [];
+        sessionData.project = profile.project || '';
+        sessionData.contact = profile.contact || {};
+        sessionData.budget = profile.budget || [];
+        sessionStorage.setItem('nw-client-id', profile.id || '');
       }
 
       const sessionKey = role === 'freelancer' ? FREE_KEY : CLIENT_KEY;
       sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
-      if (role === 'freelancer') sessionStorage.setItem('nw-freelancer-registered', '1');
 
-      console.log('[NezWorks] Login complete, redirecting to:', role === 'freelancer' ? 'freelancer.html' : 'index.html');
-      /* redirect */
+      console.log('[NezWorks] Login OK →', role);
       window.location.href = role === 'freelancer' ? 'freelancer.html' : 'index.html';
 
     } catch (err) {
@@ -120,15 +103,11 @@
   });
 
   /* if already logged in, redirect */
-  (async () => {
-    try {
-      const c = window.SB;
-      if (!c) return;
-      const { data: { session } } = await c.auth.getSession();
-      if (session?.user) {
-        const role = session.user.user_metadata?.role || 'client';
-        window.location.href = role === 'freelancer' ? 'freelancer.html' : 'index.html';
-      }
-    } catch (e) {}
-  })();
+  try {
+    const fl = sessionStorage.getItem('nw-freelancer-id');
+    const cl = sessionStorage.getItem('nw-client');
+    const fl2 = sessionStorage.getItem('nw-freelancer');
+    if (fl || fl2) window.location.href = 'freelancer.html';
+    else if (cl) window.location.href = 'index.html';
+  } catch (e) {}
 })();
