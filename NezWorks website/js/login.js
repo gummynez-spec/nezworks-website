@@ -5,6 +5,17 @@
   const loginBtn = document.getElementById('loginBtn');
   if (!form) return;
 
+  /* password toggle */
+  form.querySelectorAll('.pw-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const input = btn.parentElement.querySelector('input');
+      const isPassword = input.type === 'password';
+      input.type = isPassword ? 'text' : 'password';
+      btn.querySelector('.pw-eye-open').style.display = isPassword ? 'none' : '';
+      btn.querySelector('.pw-eye-closed').style.display = isPassword ? '' : 'none';
+    });
+  });
+
   const CLIENT_KEY = 'nw-client';
   const FREE_KEY = 'nw-freelancer';
 

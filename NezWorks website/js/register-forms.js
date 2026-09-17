@@ -13,6 +13,21 @@
     });
   });
 
+  /* ---------- password toggle ---------- */
+  document.querySelectorAll('.pw-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const wrap = btn.closest('.pw-wrap');
+      const input = wrap ? wrap.querySelector('input') : btn.parentElement.querySelector('input');
+      if (!input) return;
+      const isPassword = input.type === 'password';
+      input.type = isPassword ? 'text' : 'password';
+      const eyeOpen = btn.querySelector('.pw-eye-open');
+      const eyeClosed = btn.querySelector('.pw-eye-closed');
+      if (eyeOpen) eyeOpen.style.display = isPassword ? 'none' : '';
+      if (eyeClosed) eyeClosed.style.display = isPassword ? '' : 'none';
+    });
+  });
+
   /* ---------- uploads: click box to pick files, show filled state ---------- */
   document.querySelectorAll('.reg-upload').forEach((box) => {
     const input = box.querySelector('input[type="file"]');

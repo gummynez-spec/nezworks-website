@@ -255,6 +255,19 @@ body{font-family:var(--font-body),'Noto Sans Thai',sans-serif}
 }
 textarea.reg-input{resize:vertical;min-height:110px}
 
+/* password wrapper + toggle */
+.pw-wrap{position:relative}
+.pw-wrap .reg-input{padding-right:48px}
+.pw-wrap input[type="password"]{padding-right:48px}
+.pw-wrap input[type="text"]{padding-right:48px}
+.pw-toggle{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  background:0;border:0;color:var(--ink-3);
+  cursor:pointer;padding:4px;display:grid;place-items:center;
+  transition:color .15s;line-height:0;
+}
+.pw-toggle:hover{color:var(--accent-2)}
+
 /* bullet choices */
 .reg-choices{display:grid;gap:10px}
 .reg-choice{
