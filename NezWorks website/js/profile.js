@@ -18,6 +18,27 @@
 
   function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
+  function renderContact(contact) {
+    if (!contact) return '—';
+    /* support both old string format and new {platform, value} format */
+    if (typeof contact === 'object' && contact.platform) {
+      const urlMap = {
+        email: `mailto:${contact.value}`,
+        phone: `tel:${contact.value}`,
+        line: `line://ti/p/${contact.value}`,
+        facebook: `https://facebook.com/${contact.value}`,
+        instagram: `https://instagram.com/${contact.value.replace('@','')}`,
+        twitter: `https://twitter.com/${contact.value.replace('@','')}`,
+        discord: `https://discord.com/users/${contact.value}`,
+      };
+      const href = urlMap[contact.platform] || '#';
+      const platformLabel = contact.platform.charAt(0).toUpperCase() + contact.platform.slice(1);
+      return `<a href="${esc(href)}" target="_blank" rel="noopener" class="contact-click-btn" data-cursor="hover">${esc(platformLabel)} — Click Here</a>`;
+    }
+    /* legacy: plain string */
+    return esc(contact);
+  }
+
   function saveSession(user) {
     sessionStorage.setItem(user.key, JSON.stringify(user));
   }
@@ -76,7 +97,7 @@
         <h3>Account</h3>
         <div class="profile-field"><span class="pf-label">Real name</span><span class="pf-value">${esc(user.name)}</span></div>
         <div class="profile-field"><span class="pf-label">Role</span><span class="pf-value">${user.role}</span></div>
-        <div class="profile-field"><span class="pf-label">Contact</span><span class="pf-value">${esc(user.contact || '—')}</span></div>
+        <div class="profile-field" style="flex-wrap:wrap;gap:8px"><span class="pf-label">Contact</span><span class="pf-value">${renderContact(user.contact)}</span></div>
       </div>
       <div class="profile-section">
         <h3>Details</h3>
@@ -99,7 +120,7 @@
         <h3>Account</h3>
         <div class="profile-field"><span class="pf-label">Real name</span><span class="pf-value">${esc(user.name)}</span></div>
         <div class="profile-field"><span class="pf-label">Role</span><span class="pf-value">${user.role}</span></div>
-        <div class="profile-field"><span class="pf-label">Contact</span><span class="pf-value">${esc(user.contact || '—')}</span></div>
+        <div class="profile-field" style="flex-wrap:wrap;gap:8px"><span class="pf-label">Contact</span><span class="pf-value">${renderContact(user.contact)}</span></div>
       </div>
       <div class="profile-section">
         <h3>Project info</h3>

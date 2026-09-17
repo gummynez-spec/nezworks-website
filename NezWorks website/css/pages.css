@@ -203,6 +203,48 @@ body{font-family:var(--font-body),'Noto Sans Thai',sans-serif}
   background:rgba(255,255,255,.035);
   border:1px solid var(--stroke);
   outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+.reg-input:focus{border-color:var(--accent-2);box-shadow:0 0 0 3px rgba(139,124,246,.15)}
+
+/* ---- Social media contact picker ---- */
+.social-contact{position:relative}
+.social-select-btn{
+  display:flex;align-items:center;gap:10px;width:100%;
+  padding:15px 18px;border-radius:14px;
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--stroke);
+  font:inherit;font-size:.95rem;color:var(--ink);
+  cursor:pointer;text-align:left;
+  transition:border-color .2s,box-shadow .2s;
+}
+.social-select-btn:hover,.social-select-btn.open{border-color:var(--accent-2);box-shadow:0 0 0 3px rgba(139,124,246,.15)}
+.social-icon{display:flex;align-items:center;color:var(--ink-3);flex:none}
+.social-icon svg{width:18px;height:18px}
+.social-label{flex:1;color:var(--ink-2)}
+.social-select-btn.has-value .social-label{color:var(--ink)}
+.social-chevron{flex:none;color:var(--ink-3);transition:transform .2s}
+.social-select-btn.open .social-chevron{transform:rotate(180deg)}
+.social-dropdown{
+  position:absolute;top:calc(100% + 6px);left:0;right:0;
+  background:rgba(22,22,30,.96);border:1px solid var(--stroke);
+  border-radius:14px;padding:6px;
+  box-shadow:0 12px 40px rgba(0,0,0,.5);
+  z-index:20;opacity:0;visibility:hidden;transform:translateY(-6px);
+  transition:opacity .18s,transform .18s,visibility .18s;
+}
+.social-dropdown.open{opacity:1;visibility:visible;transform:translateY(0)}
+.social-option{
+  display:flex;align-items:center;gap:10px;width:100%;
+  padding:10px 14px;border-radius:10px;border:none;
+  background:transparent;font:inherit;font-size:.85rem;color:var(--ink-2);
+  cursor:pointer;text-align:left;
+  transition:background .15s,color .15s;
+}
+.social-option:hover{background:rgba(255,255,255,.06);color:var(--ink)}
+.social-option svg{flex:none;color:var(--ink-3)}
+.social-option:hover svg{color:var(--accent-2)}
+.social-input{margin-top:10px}
   transition:border-color .3s,box-shadow .3s,background .3s;
 }
 .reg-input::placeholder{color:var(--ink-3)}
