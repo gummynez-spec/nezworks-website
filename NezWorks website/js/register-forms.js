@@ -94,6 +94,26 @@
     bindDrag(lowEl);
     bindDrag(highEl);
     render();
+
+    /* custom budget toggle */
+    const customToggle = document.getElementById('budgetCustomToggle');
+    const customBox = document.getElementById('budgetCustomBox');
+    const customInput = document.getElementById('budgetCustomInput');
+    const customClose = document.getElementById('budgetCustomClose');
+    if (customToggle && customBox && customInput) {
+      customToggle.addEventListener('click', () => {
+        slider.style.display = 'none';
+        customToggle.style.display = 'none';
+        customBox.style.display = 'flex';
+        customInput.focus();
+      });
+      customClose?.addEventListener('click', () => {
+        customBox.style.display = 'none';
+        customInput.value = '';
+        slider.style.display = '';
+        customToggle.style.display = '';
+      });
+    }
   }
 
   /* ================= SOCIAL MEDIA PICKER (shared) ================= */
@@ -255,7 +275,15 @@
         needs,
         project: clientForm.querySelector('[name="project"]').value.trim(),
         contact: contactObj,
-        budget: [document.getElementById('budgetLow')?.textContent, document.getElementById('budgetHigh')?.textContent],
+        budget: (() => {
+          const customInput = document.getElementById('budgetCustomInput');
+          const customVal = customInput?.value.trim();
+          if (customVal) {
+            const num = parseInt(customVal, 10);
+            return num >= 100000 ? [`฿${num.toLocaleString()}`, `฿${num.toLocaleString()}`] : null;
+          }
+          return [document.getElementById('budgetLow')?.textContent, document.getElementById('budgetHigh')?.textContent];
+        })(),
       };
       sessionStorage.setItem('nw-client', JSON.stringify(data));
       try {

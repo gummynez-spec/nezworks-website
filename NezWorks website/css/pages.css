@@ -358,6 +358,38 @@ textarea.reg-input{resize:vertical;min-height:110px}
 .bs-val.low b{color:var(--accent-2)}
 .bs-val.high b{color:var(--peach)}
 
+/* budget custom amount toggle + input */
+.budget-custom-toggle{
+  display:flex;align-items:center;gap:6px;margin-top:12px;
+  padding:8px 16px;border-radius:10px;border:1px dashed var(--stroke);
+  background:transparent;font:inherit;font-size:.78rem;color:var(--ink-3);
+  cursor:pointer;transition:color .2s,border-color .2s;
+}
+.budget-custom-toggle:hover{color:var(--accent-2);border-color:var(--accent-2)}
+.budget-custom-toggle span{text-decoration:underline}
+.budget-custom-input{
+  display:flex;align-items:center;gap:0;margin-top:10px;
+  border-radius:12px;border:1px solid var(--stroke);
+  background:rgba(255,255,255,.035);
+  transition:border-color .2s,box-shadow .2s;
+}
+.budget-custom-input:focus-within{border-color:var(--accent-2);box-shadow:0 0 0 3px rgba(139,124,246,.15)}
+.budget-custom-prefix{
+  padding:0 0 0 16px;font-size:.95rem;font-weight:600;color:var(--ink-3);
+}
+.budget-custom-field{
+  flex:1;background:transparent;border:0;outline:none;
+  font:inherit;font-size:.95rem;font-weight:600;color:var(--ink);
+  padding:14px 12px;
+}
+.budget-custom-field::placeholder{color:var(--ink-3);font-weight:400}
+.budget-custom-close{
+  padding:14px 16px;border:0;background:transparent;
+  color:var(--ink-3);font-size:1rem;cursor:pointer;
+  transition:color .2s;
+}
+.budget-custom-close:hover{color:var(--accent-2)}
+
 /* submit row */
 .reg-submit{
   display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:36px;
