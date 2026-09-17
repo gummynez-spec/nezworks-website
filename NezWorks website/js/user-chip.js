@@ -35,7 +35,7 @@
         <span class="user-role">${user.role}</span>
       </span>
     </button>
-    <div class="user-menu" hidden>
+    <div class="user-menu is-hidden">
       <ul class="user-menu-list">
         <li><a class="user-menu-item" href="profile.html" data-cursor="link">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -63,14 +63,13 @@
   const menu = chip.querySelector('.user-menu');
 
   function toggleMenu() {
-    const open = menu.hidden;
-    menu.hidden = !open;
-    btn.setAttribute('aria-expanded', String(open));
+    menu.classList.toggle('is-hidden');
+    btn.setAttribute('aria-expanded', String(!menu.classList.contains('is-hidden')));
   }
 
   function closeMenu() {
-    if (!menu.hidden) {
-      menu.hidden = true;
+    if (!menu.classList.contains('is-hidden')) {
+      menu.classList.add('is-hidden');
       btn.setAttribute('aria-expanded', 'false');
     }
   }

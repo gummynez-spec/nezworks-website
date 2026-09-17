@@ -264,6 +264,7 @@ body.modal-open{overflow:hidden}
   box-shadow:0 22px 54px rgba(0,0,0,.55);
   animation:float-in .28s var(--ease-out);
 }
+.user-menu.is-hidden{display:none}
 .user-menu-list{list-style:none;display:flex;flex-direction:column;gap:4px;padding:0 10px;margin:0}
 .user-menu-separator{border-top:1.5px solid #42434a;margin:0}
 .user-menu-item{
