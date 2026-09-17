@@ -14,7 +14,11 @@
   }
 
   window.SB = lib.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-    auth: { persistSession: false },
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: false,
+    },
   });
 
   window.SB_READY = true;

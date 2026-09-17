@@ -38,27 +38,38 @@
       if (!c) throw new Error('Supabase not connected');
 
       /* sign in */
+      console.log('[NezWorks] Attempting sign in for:', email);
       const { data: authData, error: authError } = await c.auth.signInWithPassword({
         email,
         password,
       });
-      if (authError) throw authError;
+      if (authError) {
+        console.error('[NezWorks] Auth error:', authError.message);
+        throw authError;
+      }
 
       const authUser = authData?.user;
       if (!authUser) throw new Error('No user returned');
+      console.log('[NezWorks] Auth success, user:', authUser.id, 'role:', authUser.user_metadata?.role);
 
       const meta = authUser.user_metadata || {};
       const role = meta.role || 'client';
       const table = role === 'freelancer' ? 'freelancers' : 'clients';
 
       /* fetch profile from DB */
+      console.log('[NezWorks] Fetching profile from:', table, 'auth_user_id:', authUser.id);
       const { data: profile, error: profileError } = await c.from(table)
         .select('*')
         .eq('auth_user_id', authUser.id)
         .single();
 
-      if (profileError || !profile) {
+      if (profileError) {
+        console.warn('[NezWorks] Profile query error:', profileError.message);
+      }
+      if (!profile) {
         console.warn('[NezWorks] Profile not found, using metadata');
+      } else {
+        console.log('[NezWorks] Profile found:', profile.id, profile.name);
       }
 
       /* build session data */
@@ -89,6 +100,7 @@
       sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
       if (role === 'freelancer') sessionStorage.setItem('nw-freelancer-registered', '1');
 
+      console.log('[NezWorks] Login complete, redirecting to:', role === 'freelancer' ? 'freelancer.html' : 'index.html');
       /* redirect */
       window.location.href = role === 'freelancer' ? 'freelancer.html' : 'index.html';
 
