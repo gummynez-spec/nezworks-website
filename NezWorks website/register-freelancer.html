@@ -69,6 +69,21 @@
     </div>
 
     <div class="reg-section">
+      <div class="reg-label"><span class="req">*</span> EMAIL <span class="opt">(for login)</span></div>
+      <input type="email" class="reg-input" name="email" required placeholder="e.g. john@example.com">
+    </div>
+
+    <div class="reg-section">
+      <div class="reg-label"><span class="req">*</span> PASSWORD</div>
+      <input type="password" class="reg-input" name="password" required minlength="6" placeholder="At least 6 characters">
+    </div>
+
+    <div class="reg-section">
+      <div class="reg-label"><span class="req">*</span> CONFIRM PASSWORD</div>
+      <input type="password" class="reg-input" name="confirmPassword" required minlength="6" placeholder="Type password again">
+    </div>
+
+    <div class="reg-section">
       <div class="reg-label"><span class="req">*</span> WHAT DO YOU DO? <span class="opt">(select all that apply)</span></div>
       <div class="reg-choices">
         <label class="reg-choice"><input type="checkbox" name="skills" value="Graphic Design"><i></i>Graphic Design</label>

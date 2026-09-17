@@ -252,25 +252,32 @@
         : needsValue ? [needsValue] : [];
       const name = clientForm.querySelector('[name="name"]');
       const displayName = clientForm.querySelector('[name="displayName"]');
+      const email = clientForm.querySelector('[name="email"]');
+      const password = clientForm.querySelector('[name="password"]');
+      const confirmPassword = clientForm.querySelector('[name="confirmPassword"]');
       const contact = clientForm.querySelector('[name="contact"]');
       const contactPlatform = clientForm.querySelector('[name="contactPlatform"]');
-      if (!name.value.trim() || !displayName.value.trim() || !contact.value.trim() || !contactPlatform.value || needs.length === 0) {
-        if (!displayName.value.trim()) displayName.reportValidity();
-        else if (!name.value.trim()) name.reportValidity();
-        else if (!needs.length) {
-          const pickerBtn = clientForm.querySelector('#needsSelectBtn');
-          pickerBtn?.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'translateX(0)' }], { duration: 300, iterations: 2 });
-        }
-        else if (!contactPlatform.value || !contact.value.trim()) {
-          const pickerBtn = clientForm.querySelector('#socialSelectBtn');
-          pickerBtn?.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'translateX(0)' }], { duration: 300, iterations: 2 });
-        }
+
+      /* validate all fields */
+      if (!displayName.value.trim()) { displayName.reportValidity(); return; }
+      if (!name.value.trim()) { name.reportValidity(); return; }
+      if (!email.value.trim()) { email.reportValidity(); return; }
+      if (!password.value || password.value.length < 6) { password.reportValidity(); return; }
+      if (password.value !== confirmPassword.value) { confirmPassword.setCustomValidity('Passwords do not match'); confirmPassword.reportValidity(); confirmPassword.setCustomValidity(''); return; }
+      if (!needs.length) {
+        clientForm.querySelector('#needsSelectBtn')?.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'translateX(0)' }], { duration: 300, iterations: 2 });
         return;
       }
+      if (!contactPlatform.value || !contact.value.trim()) {
+        clientForm.querySelector('#socialSelectBtn')?.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'translateX(0)' }], { duration: 300, iterations: 2 });
+        return;
+      }
+
       const contactObj = { platform: contactPlatform.value, value: contact.value.trim() };
       const data = {
         name: name.value.trim(),
         displayName: displayName.value.trim(),
+        email: email.value.trim(),
         brand: clientForm.querySelector('[name="brand"]').value.trim(),
         needs,
         project: clientForm.querySelector('[name="project"]').value.trim(),
@@ -285,12 +292,44 @@
           return [document.getElementById('budgetLow')?.textContent, document.getElementById('budgetHigh')?.textContent];
         })(),
       };
-      sessionStorage.setItem('nw-client', JSON.stringify(data));
+
+      /* Supabase Auth signup */
+      let authUserId = null;
+      try {
+        const c = window.SB;
+        if (c) {
+          const { data: authData, error: authError } = await c.auth.signUp({
+            email: data.email,
+            password: password.value,
+            options: { data: { name: data.name, display_name: data.displayName, role: 'client' } }
+          });
+          if (authError) throw authError;
+          authUserId = authData?.user?.id || null;
+          /* if email confirmation required, session may be null */
+          if (!authData?.session && authData?.user?.identities?.length === 0) {
+            console.warn('[NezWorks] Email already registered');
+          }
+        }
+      } catch (err) {
+        console.warn('[NezWorks] Auth signup failed:', err?.message || err);
+        alert('Signup failed: ' + (err?.message || 'Unknown error'));
+        return;
+      }
+
+      sessionStorage.setItem('nw-client', JSON.stringify({ ...data, auth_user_id: authUserId }));
       try {
         const c = window.SB;
         if (c) {
           const { data: row, error } = await c.from('clients').insert([{
-            name: data.name, display_name: data.displayName, brand: data.brand, needs: data.needs, project: data.project, contact: data.contact, budget: data.budget,
+            auth_user_id: authUserId,
+            email: data.email,
+            name: data.name,
+            display_name: data.displayName,
+            brand: data.brand,
+            needs: data.needs,
+            project: data.project,
+            contact: data.contact,
+            budget: data.budget,
           }]).select().single();
           if (error) throw error;
           if (row?.id) sessionStorage.setItem('nw-client-id', row.id);
@@ -323,6 +362,9 @@
     function flValid() {
       const name = flForm.querySelector('[name="name"]');
       const displayName = flForm.querySelector('[name="displayName"]');
+      const email = flForm.querySelector('[name="email"]');
+      const password = flForm.querySelector('[name="password"]');
+      const confirmPassword = flForm.querySelector('[name="confirmPassword"]');
       const skills = flForm.querySelectorAll('input[name="skills"]:checked');
       const exp = flForm.querySelector('input[name="exp"]:checked');
       const contact = flForm.querySelector('[name="contact"]');
@@ -330,7 +372,7 @@
       const upload = document.getElementById('workUpload')?.querySelector('input[type="file"]');
       const port = document.getElementById('portfolioUrl');
       const hasWork = (upload && upload.files.length > 0) || (port && port.value.trim().length > 3);
-      return name.value.trim() && displayName.value.trim() && skills.length && exp && contactPlatform.value && contact.value.trim() && hasWork;
+      return name.value.trim() && displayName.value.trim() && email.value.trim() && password.value.length >= 6 && password.value === confirmPassword.value && skills.length && exp && contactPlatform.value && contact.value.trim() && hasWork;
     }
 
     flNext.addEventListener('click', () => {
@@ -371,32 +413,74 @@
       const contactPlatform = flForm.querySelector('[name="contactPlatform"]').value;
       const contactValue = flForm.querySelector('[name="contact"]').value.trim();
       const contactObj = { platform: contactPlatform, value: contactValue };
+      const email = flForm.querySelector('[name="email"]').value.trim();
+      const password = flForm.querySelector('[name="password"]').value;
       const data = {
         name: flForm.querySelector('[name="name"]').value.trim(),
         displayName: flForm.querySelector('[name="displayName"]').value.trim(),
+        email,
         skills: [...flForm.querySelectorAll('input[name="skills"]:checked')].map(c => c.value),
         exp: flForm.querySelector('input[name="exp"]:checked')?.value || null,
         contact: contactObj,
         portfolio: document.getElementById('portfolioUrl').value.trim(),
       };
-      const localPayload = { ...data };
+
+      /* Supabase Auth signup */
+      let authUserId = null;
+      try {
+        const c = window.SB;
+        if (c) {
+          const { data: authData, error: authError } = await c.auth.signUp({
+            email: data.email,
+            password,
+            options: { data: { name: data.name, display_name: data.displayName, role: 'freelancer' } }
+          });
+          if (authError) throw authError;
+          authUserId = authData?.user?.id || null;
+          if (!authData?.session && authData?.user?.identities?.length === 0) {
+            console.warn('[NezWorks] Email already registered');
+          }
+        }
+      } catch (err) {
+        console.warn('[NezWorks] Auth signup failed:', err?.message || err);
+        alert('Signup failed: ' + (err?.message || 'Unknown error'));
+        return;
+      }
+
+      const localPayload = { ...data, auth_user_id: authUserId };
       let freelancerId = sessionStorage.getItem('nw-freelancer-id') || null;
       try {
         const c = window.SB;
         if (c) {
           if (!freelancerId) {
             const { data: row, error } = await c.from('freelancers').insert([{
-              name: data.name, display_name: data.displayName, skills: data.skills, exp: data.exp, contact: data.contact, portfolio: data.portfolio,
+              auth_user_id: authUserId,
+              email: data.email,
+              name: data.name,
+              display_name: data.displayName,
+              skills: data.skills,
+              exp: data.exp,
+              contact: data.contact,
+              portfolio: data.portfolio,
             }]).select().single();
             if (error) throw error;
             if (row?.id) { freelancerId = row.id; sessionStorage.setItem('nw-freelancer-id', row.id); }
           } else {
-            const { error } = await c.from('freelancers').update({ name: data.name, display_name: data.displayName, skills: data.skills, exp: data.exp, contact: data.contact, portfolio: data.portfolio }).eq('id', freelancerId);
+            const { error } = await c.from('freelancers').update({
+              auth_user_id: authUserId,
+              email: data.email,
+              name: data.name,
+              display_name: data.displayName,
+              skills: data.skills,
+              exp: data.exp,
+              contact: data.contact,
+              portfolio: data.portfolio,
+            }).eq('id', freelancerId);
             if (error) console.warn('[NezWorks] freelancers update failed:', error.message);
           }
         }
       } catch (err) { console.warn('[NezWorks] freelancers insert failed (tables missing?):', err?.message || err); }
-      sessionStorage.setItem('nw-freelancer', JSON.stringify({ ...localPayload, freelancer_id: freelancerId }));
+      sessionStorage.setItem('nw-freelancer', JSON.stringify(localPayload));
       sessionStorage.setItem('nw-freelancer-registered', '1');
       flTerms.hidden = true;
       flSuccess.hidden = false;

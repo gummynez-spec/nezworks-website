@@ -10,15 +10,20 @@ create extension if not exists "pgcrypto";
 -- ------------------------------------------------------------
 create table if not exists public.clients (
   id uuid primary key default gen_random_uuid(),
+  auth_user_id uuid references auth.users(id) on delete cascade,
   created_at timestamptz not null default now(),
+  email text not null,
   name text not null,
   display_name text,
   display_name_changes_remaining integer not null default 1,
   brand text,
   needs jsonb,
   project text,
-  contact text not null,
-  budget jsonb
+  contact jsonb not null,
+  budget jsonb,
+  bank_name text,
+  bank_account_name text,
+  bank_account_number text
 );
 
 -- ------------------------------------------------------------
@@ -26,14 +31,19 @@ create table if not exists public.clients (
 -- ------------------------------------------------------------
 create table if not exists public.freelancers (
   id uuid primary key default gen_random_uuid(),
+  auth_user_id uuid references auth.users(id) on delete cascade,
   created_at timestamptz not null default now(),
+  email text not null,
   name text not null,
   display_name text,
   display_name_changes_remaining integer not null default 1,
   skills jsonb,
   exp text,
-  contact text not null,
-  portfolio text
+  contact jsonb not null,
+  portfolio text,
+  bank_name text,
+  bank_account_name text,
+  bank_account_number text
 );
 
 -- ------------------------------------------------------------

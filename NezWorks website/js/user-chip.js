@@ -22,73 +22,134 @@
     return d.innerHTML;
   }
 
-  const user = sessionUser();
-  if (!user) return;
-
-  const chip = document.createElement('div');
-  chip.className = 'user-chip';
-  chip.innerHTML = `
-    <button class="user-chip-btn" data-cursor="hover" aria-haspopup="true" aria-expanded="false">
-      <span class="user-avatar">${escapeHtml((user.displayName[0] || 'U').toUpperCase())}</span>
-      <span class="user-chip-text">
-        <span class="user-name">${escapeHtml(user.displayName)}</span>
-        <span class="user-role">${user.role}</span>
-      </span>
-    </button>
-    <div class="user-menu is-hidden">
-      <ul class="user-menu-list">
-        <li><a class="user-menu-item" href="profile.html" data-cursor="link">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          <span class="label">Profile</span>
-        </a></li>
-        <li><a class="user-menu-item" href="${user.role === 'Freelancer' ? 'freelancer.html' : 'project.html'}" data-cursor="link">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-          <span class="label">${user.role === 'Freelancer' ? 'Workspace' : 'Start a project'}</span>
-        </a></li>
-        <li><a class="user-menu-item" href="bank-detail.html" data-cursor="link">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-          <span class="label">Bank Detail</span>
-        </a></li>
-      </ul>
-      <div class="user-menu-separator"></div>
-      <ul class="user-menu-list user-menu-list--danger">
-        <li><button class="user-menu-item user-menu-item--danger" data-user-logout data-cursor="hover">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-          <span class="label">Log out</span>
-        </button></li>
-      </ul>
-    </div>`;
-
-  const keepBtn = cta.querySelector('#newWorkBtn');
-  if (keepBtn) cta.prepend(chip);
-  else { cta.innerHTML = ''; cta.appendChild(chip); }
-
-  const btn = chip.querySelector('.user-chip-btn');
-  const menu = chip.querySelector('.user-menu');
-
-  function toggleMenu() {
-    menu.classList.toggle('is-hidden');
-    btn.setAttribute('aria-expanded', String(!menu.classList.contains('is-hidden')));
+  /* check Supabase auth session on load */
+  async function checkAuth() {
+    try {
+      const c = window.SB;
+      if (!c) return null;
+      const { data: { session } } = await c.auth.getSession();
+      return session?.user || null;
+    } catch (e) {}
+    return null;
   }
 
-  function closeMenu() {
-    if (!menu.classList.contains('is-hidden')) {
-      menu.classList.add('is-hidden');
-      btn.setAttribute('aria-expanded', 'false');
+  (async () => {
+    /* also try to restore session from Supabase if no sessionStorage */
+    let user = sessionUser();
+    if (!user) {
+      const authUser = await checkAuth();
+      if (authUser) {
+        /* try to find profile in clients or freelancers */
+        try {
+          const c = window.SB;
+          if (c) {
+            const meta = authUser.user_metadata || {};
+            const role = meta.role || 'client';
+            const table = role === 'freelancer' ? 'freelancers' : 'clients';
+            const { data: profile } = await c.from(table).select('*').eq('auth_user_id', authUser.id).single();
+            if (profile) {
+              const sessionKey = role === 'freelancer' ? FREE_KEY : CLIENT_KEY;
+              const sessionData = {
+                name: profile.name,
+                displayName: profile.display_name || profile.name?.split(' ')[0],
+                email: profile.email,
+                role: role === 'freelancer' ? 'Freelancer' : 'Client',
+                auth_user_id: authUser.id,
+              };
+              if (role === 'freelancer') {
+                sessionData.skills = profile.skills;
+                sessionData.exp = profile.exp;
+                sessionData.contact = profile.contact;
+                sessionData.portfolio = profile.portfolio;
+                sessionStorage.setItem('nw-freelancer-id', profile.id);
+              } else {
+                sessionData.brand = profile.brand;
+                sessionData.needs = profile.needs;
+                sessionData.project = profile.project;
+                sessionData.contact = profile.contact;
+                sessionData.budget = profile.budget;
+                sessionStorage.setItem('nw-client-id', profile.id);
+              }
+              sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+              user = sessionUser();
+            }
+          }
+        } catch (e) { console.warn('[NezWorks] auth profile restore failed:', e?.message || e); }
+      }
     }
-  }
 
-  btn.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(); });
-  document.addEventListener('click', (e) => { if (!chip.contains(e.target)) closeMenu(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+    if (!user) return;
 
-  chip.querySelector('[data-user-logout]')?.addEventListener('click', () => {
-    sessionStorage.removeItem(FREE_KEY);
-    sessionStorage.removeItem(CLIENT_KEY);
-    sessionStorage.removeItem('nw-freelancer-registered');
-    sessionStorage.removeItem('nw-works');
-    sessionStorage.removeItem('nw-client-id');
-    sessionStorage.removeItem('nw-freelancer-id');
-    location.reload();
-  });
+    const chip = document.createElement('div');
+    chip.className = 'user-chip';
+    chip.innerHTML = `
+      <button class="user-chip-btn" data-cursor="hover" aria-haspopup="true" aria-expanded="false">
+        <span class="user-avatar">${escapeHtml((user.displayName[0] || 'U').toUpperCase())}</span>
+        <span class="user-chip-text">
+          <span class="user-name">${escapeHtml(user.displayName)}</span>
+          <span class="user-role">${user.role}</span>
+        </span>
+      </button>
+      <div class="user-menu is-hidden">
+        <ul class="user-menu-list">
+          <li><a class="user-menu-item" href="profile.html" data-cursor="link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span class="label">Profile</span>
+          </a></li>
+          <li><a class="user-menu-item" href="${user.role === 'Freelancer' ? 'freelancer.html' : 'project.html'}" data-cursor="link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+            <span class="label">${user.role === 'Freelancer' ? 'Workspace' : 'Start a project'}</span>
+          </a></li>
+          <li><a class="user-menu-item" href="bank-detail.html" data-cursor="link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            <span class="label">Bank Detail</span>
+          </a></li>
+        </ul>
+        <div class="user-menu-separator"></div>
+        <ul class="user-menu-list user-menu-list--danger">
+          <li><button class="user-menu-item user-menu-item--danger" data-user-logout data-cursor="hover">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span class="label">Log out</span>
+          </button></li>
+        </ul>
+      </div>`;
+
+    const keepBtn = cta.querySelector('#newWorkBtn');
+    if (keepBtn) cta.prepend(chip);
+    else { cta.innerHTML = ''; cta.appendChild(chip); }
+
+    const btn = chip.querySelector('.user-chip-btn');
+    const menu = chip.querySelector('.user-menu');
+
+    function toggleMenu() {
+      menu.classList.toggle('is-hidden');
+      btn.setAttribute('aria-expanded', String(!menu.classList.contains('is-hidden')));
+    }
+
+    function closeMenu() {
+      if (!menu.classList.contains('is-hidden')) {
+        menu.classList.add('is-hidden');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    btn.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(); });
+    document.addEventListener('click', (e) => { if (!chip.contains(e.target)) closeMenu(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+
+    chip.querySelector('[data-user-logout]')?.addEventListener('click', async () => {
+      /* sign out from Supabase Auth */
+      try {
+        const c = window.SB;
+        if (c) await c.auth.signOut();
+      } catch (e) {}
+      sessionStorage.removeItem(FREE_KEY);
+      sessionStorage.removeItem(CLIENT_KEY);
+      sessionStorage.removeItem('nw-freelancer-registered');
+      sessionStorage.removeItem('nw-works');
+      sessionStorage.removeItem('nw-client-id');
+      sessionStorage.removeItem('nw-freelancer-id');
+      location.reload();
+    });
+  })();
 })();
