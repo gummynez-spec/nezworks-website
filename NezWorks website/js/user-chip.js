@@ -36,10 +36,23 @@
       </span>
     </button>
     <div class="user-menu" hidden>
-      ${user.role === 'Freelancer'
-        ? '<a href="freelancer.html" data-cursor="link">My workspace</a>'
-        : '<a href="project.html" data-cursor="link">Start a project</a>'}
-      <button class="user-logout" data-user-logout data-cursor="hover">Log out</button>
+      <ul class="user-menu-list">
+        <li><a class="user-menu-item" href="profile.html" data-cursor="link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="label">Profile</span>
+        </a></li>
+        <li><a class="user-menu-item" href="${user.role === 'Freelancer' ? 'freelancer.html' : 'project.html'}" data-cursor="link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          <span class="label">${user.role === 'Freelancer' ? 'Workspace' : 'Start a project'}</span>
+        </a></li>
+      </ul>
+      <div class="user-menu-separator"></div>
+      <ul class="user-menu-list user-menu-list--danger">
+        <li><button class="user-menu-item user-menu-item--danger" data-user-logout data-cursor="hover">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span class="label">Log out</span>
+        </button></li>
+      </ul>
     </div>`;
 
   const keepBtn = cta.querySelector('#newWorkBtn');
@@ -49,19 +62,22 @@
   const btn = chip.querySelector('.user-chip-btn');
   const menu = chip.querySelector('.user-menu');
 
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
+  function toggleMenu() {
     const open = menu.hidden;
     menu.hidden = !open;
     btn.setAttribute('aria-expanded', String(open));
-  });
+  }
 
-  document.addEventListener('click', (e) => {
-    if (!chip.contains(e.target)) {
+  function closeMenu() {
+    if (!menu.hidden) {
       menu.hidden = true;
       btn.setAttribute('aria-expanded', 'false');
     }
-  });
+  }
+
+  btn.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(); });
+  document.addEventListener('click', (e) => { if (!chip.contains(e.target)) closeMenu(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
 
   chip.querySelector('[data-user-logout]')?.addEventListener('click', () => {
     sessionStorage.removeItem(FREE_KEY);

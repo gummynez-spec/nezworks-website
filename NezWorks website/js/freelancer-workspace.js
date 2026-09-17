@@ -84,7 +84,7 @@
   /* ---------- rendering ---------- */
   function renderStats() {
     document.getElementById('stWorks').textContent = works.length;
-    document.getElementById('stViews').textContent = works.reduce((s, w) => s + (w.views || 0), 0) + works.length * 37;
+    document.getElementById('stViews').textContent = works.reduce((s, w) => s + (w.views || 0), 0);
     document.getElementById('stOrders').textContent = works.reduce((s, w) => s + (w.orders || 0), 0);
   }
 
@@ -156,7 +156,7 @@
   function showForm(editIdx = null) {
     home.hidden = true; success.hidden = true; form.hidden = false;
     form.dataset.editing = editIdx ?? '';
-    document.getElementById('workFormTitle').textContent = editIdx !== null ? 'Edit work' : 'Create new work';
+    document.getElementById('workFormTitle').textContent = editIdx !== null ? 'Edit project' : 'Create new project';
     if (editIdx !== null) {
       const w = works[editIdx];
       document.getElementById('wTitle').value = w.title;

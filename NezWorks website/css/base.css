@@ -254,26 +254,33 @@ body.modal-open{overflow:hidden}
 }
 .user-chip-text{display:flex;flex-direction:column;align-items:flex-start;line-height:1.2;min-width:0}
 .user-name{font-size:.78rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px}
-.user-role{
-  font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-2);
-}
+.user-role{font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-2)}
 .user-menu{
-  position:absolute;top:calc(100% + 10px);right:0;min-width:190px;
-  padding:8px;border-radius:14px;
-  background:rgba(13,16,32,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border:1px solid var(--stroke);
-  display:grid;gap:2px;
+  position:absolute;top:calc(100% + 10px);right:0;width:200px;
+  padding:15px 0;border-radius:10px;
+  background-color:rgba(36,40,50,1);
+  background-image:linear-gradient(139deg,rgba(36,40,50,1) 0%,rgba(36,40,50,1) 0%,rgba(37,28,40,1) 100%);
+  display:flex;flex-direction:column;gap:10px;
   box-shadow:0 22px 54px rgba(0,0,0,.55);
   animation:float-in .28s var(--ease-out);
 }
-.user-menu a,.user-menu .user-logout{
-  width:100%;padding:10px 14px;border-radius:10px;text-align:left;
-  border:0;background:transparent;cursor:pointer;
-  font-size:.82rem;color:var(--ink-2);font-family:inherit;
-  transition:background .2s,color .2s;
+.user-menu-list{list-style:none;display:flex;flex-direction:column;gap:4px;padding:0 10px;margin:0}
+.user-menu-separator{border-top:1.5px solid #42434a;margin:0}
+.user-menu-item{
+  display:flex;align-items:center;gap:10px;
+  padding:4px 7px;border-radius:6px;cursor:pointer;
+  border:0;background:transparent;width:100%;text-align:left;
+  font-family:inherit;font-size:.82rem;color:#7e8590;
+  transition:all .3s ease-out;text-decoration:none;
 }
-.user-menu a:hover,.user-menu .user-logout:hover{background:rgba(139,124,246,.14);color:var(--ink)}
-.user-logout{color:var(--peach)}
+.user-menu-item svg{width:19px;height:19px;flex:none;transition:all .3s ease-out}
+.user-menu-item .label{font-weight:600}
+.user-menu-item:hover{background-color:#5353ff;color:#fff;transform:translate(1px,-1px)}
+.user-menu-item:active{transform:scale(.99)}
+.user-menu-list:not(.user-menu-list--danger) .user-menu-item:hover svg{stroke:#fff}
+.user-menu-list--danger .user-menu-item svg{stroke:#bd89ff}
+.user-menu-list--danger .user-menu-item{color:#bd89ff}
+.user-menu-list--danger .user-menu-item:hover{background-color:rgba(56,45,71,.836)}
 @keyframes float-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){.user-menu{animation:none}}
 
