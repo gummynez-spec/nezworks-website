@@ -158,6 +158,59 @@
   /* init both pickers if present */
   document.querySelectorAll('.social-contact').forEach(initSocialPicker);
 
+  /* ================= NEEDS PICKER (client form) ================= */
+  function initNeedsPicker(container) {
+    const btn = container.querySelector('#needsSelectBtn');
+    const dropdown = container.querySelector('#needsDropdown');
+    const otherInput = container.querySelector('#otherNeedInput');
+    const hiddenInput = container.querySelector('#needsValue');
+    const iconEl = container.querySelector('#needsIcon');
+    const labelEl = container.querySelector('#needsLabel');
+    if (!btn || !dropdown || !hiddenInput) return;
+
+    const labels = {
+      graphic: 'Graphic Design',
+      logo: 'Logo and Branding',
+      social: 'Social Media Design',
+      video: 'Video Editing',
+      content: 'Content Creation',
+      translate: 'Translation',
+      other: 'Others',
+    };
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = dropdown.classList.contains('open');
+      dropdown.classList.toggle('open', !isOpen);
+      btn.classList.toggle('open', !isOpen);
+    });
+
+    container.querySelectorAll('.social-option').forEach((opt) => {
+      opt.addEventListener('click', () => {
+        const platform = opt.dataset.platform;
+        hiddenInput.value = platform;
+        labelEl.textContent = labels[platform] || platform;
+        btn.classList.add('has-value');
+        dropdown.classList.remove('open');
+        btn.classList.remove('open');
+        if (platform === 'other') {
+          otherInput.style.display = 'block';
+          otherInput.focus();
+        } else {
+          otherInput.style.display = 'none';
+          otherInput.value = '';
+        }
+      });
+    });
+
+    document.addEventListener('click', () => {
+      dropdown.classList.remove('open');
+      btn.classList.remove('open');
+    });
+  }
+
+  document.querySelectorAll('#needsPicker').forEach(initNeedsPicker);
+
   /* ================= CLIENT FORM ================= */
   const clientForm = document.getElementById('clientForm');
   const clientSuccess = document.getElementById('clientSuccess');
@@ -172,7 +225,11 @@
 
     clientForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const needs = [...clientForm.querySelectorAll('input[name="needs"]:checked')].map(c => c.value);
+      const needsValue = clientForm.querySelector('#needsValue')?.value;
+      const otherInput = clientForm.querySelector('#otherNeedInput');
+      const needs = needsValue === 'other' && otherInput?.value.trim()
+        ? [otherInput.value.trim()]
+        : needsValue ? [needsValue] : [];
       const name = clientForm.querySelector('[name="name"]');
       const displayName = clientForm.querySelector('[name="displayName"]');
       const contact = clientForm.querySelector('[name="contact"]');
@@ -180,14 +237,14 @@
       if (!name.value.trim() || !displayName.value.trim() || !contact.value.trim() || !contactPlatform.value || needs.length === 0) {
         if (!displayName.value.trim()) displayName.reportValidity();
         else if (!name.value.trim()) name.reportValidity();
+        else if (!needs.length) {
+          const pickerBtn = clientForm.querySelector('#needsSelectBtn');
+          pickerBtn?.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'translateX(0)' }], { duration: 300, iterations: 2 });
+        }
         else if (!contactPlatform.value || !contact.value.trim()) {
           const pickerBtn = clientForm.querySelector('#socialSelectBtn');
           pickerBtn?.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'translateX(0)' }], { duration: 300, iterations: 2 });
         }
-        else clientForm.querySelector('#needChoices').animate(
-          [{ transform: 'translateX(0)' }, { transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'translateX(0)' }],
-          { duration: 300, iterations: 2 }
-        );
         return;
       }
       const contactObj = { platform: contactPlatform.value, value: contact.value.trim() };

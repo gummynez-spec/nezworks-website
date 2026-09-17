@@ -74,17 +74,39 @@
 
     <div class="reg-section">
       <div class="reg-label"><span class="req">*</span> WHAT DO YOU NEED HELP WITH?</div>
-      <div class="reg-choices" id="needChoices">
-        <label class="reg-choice"><input type="checkbox" name="needs" value="Graphic Design"><i></i>Graphic Design</label>
-        <label class="reg-choice"><input type="checkbox" name="needs" value="Logo and Branding"><i></i>Logo and Branding</label>
-        <label class="reg-choice"><input type="checkbox" name="needs" value="Social Media Design"><i></i>Social Media Design</label>
-        <label class="reg-choice"><input type="checkbox" name="needs" value="Video Editing"><i></i>Video Editing</label>
-        <label class="reg-choice"><input type="checkbox" name="needs" value="Content Creation"><i></i>Content Creation</label>
-        <label class="reg-choice"><input type="checkbox" name="needs" value="Translation"><i></i>Translation</label>
-        <label class="reg-choice" id="otherChoice">
-          <input type="checkbox" name="needs" value="Other" id="otherNeed"><i></i>Other :
-          <input type="text" class="other-input" id="otherNeedInput" placeholder="Type what you need..." disabled>
-        </label>
+      <div class="social-contact" id="needsPicker">
+        <button type="button" class="social-select-btn" id="needsSelectBtn" data-cursor="hover">
+          <span class="social-icon" id="needsIcon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+          </span>
+          <span class="social-label" id="needsLabel">Select a service</span>
+          <svg class="social-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="social-dropdown" id="needsDropdown">
+          <button type="button" class="social-option" data-platform="graphic" data-cursor="hover">
+            <span>Graphic Design</span>
+          </button>
+          <button type="button" class="social-option" data-platform="logo" data-cursor="hover">
+            <span>Logo and Branding</span>
+          </button>
+          <button type="button" class="social-option" data-platform="social" data-cursor="hover">
+            <span>Social Media Design</span>
+          </button>
+          <button type="button" class="social-option" data-platform="video" data-cursor="hover">
+            <span>Video Editing</span>
+          </button>
+          <button type="button" class="social-option" data-platform="content" data-cursor="hover">
+            <span>Content Creation</span>
+          </button>
+          <button type="button" class="social-option" data-platform="translate" data-cursor="hover">
+            <span>Translation</span>
+          </button>
+          <button type="button" class="social-option" data-platform="other" data-cursor="hover">
+            <span>Others</span>
+          </button>
+        </div>
+        <input type="text" class="reg-input social-input" id="otherNeedInput" placeholder="Describe what you need..." style="display:none">
+        <input type="hidden" name="needs" id="needsValue">
       </div>
     </div>
 
