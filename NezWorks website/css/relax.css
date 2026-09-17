@@ -35,10 +35,28 @@ body{
 .relax-dim{
   position:absolute;inset:0;z-index:5;
   background:#000;
-  opacity:.65;            /* 1 = darkest, 0 = brightest */
+  opacity:.65;
   transition:opacity .35s var(--ease-soft);
   pointer-events:none;
 }
+
+/* Fullscreen mode - cover entire screen */
+:fullscreen .relax-main{min-height:100vh}
+:fullscreen .relax-stage{height:100vh;margin-top:0;border-radius:0}
+:fullscreen .relax-bg{background-size:cover;background-position:center}
+
+/* Fullscreen exit button */
+.fs-exit-btn{
+  position:fixed;top:20px;right:20px;z-index:999;
+  width:48px;height:48px;border-radius:50%;
+  background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.2);
+  display:none;place-items:center;cursor:pointer;
+  transition:opacity .3s ease,background .15s;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.fs-exit-btn svg{color:#fff;width:20px;height:20px}
+.fs-exit-btn:hover{background:rgba(255,255,255,.15)}
+:fullscreen .fs-exit-btn{display:grid}
 
 /* ---------- DRAWER ---------- */
 .relax-drawer{

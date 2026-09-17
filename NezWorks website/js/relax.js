@@ -244,25 +244,35 @@
   window.addEventListener('relaxradio', syncMoodBtns);
   syncMoodBtns();
 
-  /* ---------------- fullscreen + auto-hide cursor ---------------- */
+  /* ---------------- fullscreen + auto-hide cursor + exit btn ---------------- */
   const fullscreenBtn = document.getElementById('fullscreenBtn');
   const fullscreenLabel = document.getElementById('fullscreenLabel');
   const cursor = document.getElementById('cursor');
+  const fsExitBtn = document.getElementById('fsExitBtn');
   let cursorTimer = null;
+  let fsExitTimer = null;
 
   function showCursor() {
     if (cursor) cursor.style.opacity = '1';
+    if (fsExitBtn) fsExitBtn.style.opacity = '1';
     clearTimeout(cursorTimer);
-    cursorTimer = setTimeout(hideCursor, 5000);
+    clearTimeout(fsExitTimer);
+    cursorTimer = setTimeout(() => { if (cursor) cursor.style.opacity = '0'; }, 5000);
+    fsExitTimer = setTimeout(() => { if (fsExitBtn) fsExitBtn.style.opacity = '0'; }, 5000);
   }
 
   function hideCursor() {
     if (cursor) cursor.style.opacity = '0';
+    if (fsExitBtn) fsExitBtn.style.opacity = '0';
   }
 
-  /* start auto-hide timer */
   document.addEventListener('mousemove', showCursor);
   showCursor();
+
+  /* exit fullscreen button */
+  fsExitBtn?.addEventListener('click', () => {
+    if (document.fullscreenElement) document.exitFullscreen();
+  });
 
   if (fullscreenBtn && document.fullscreenEnabled !== undefined) {
     fullscreenBtn.addEventListener('click', () => {
@@ -279,11 +289,9 @@
       const isFull = !!document.fullscreenElement;
       fullscreenLabel.textContent = isFull ? 'Exit Fullscreen' : 'Enter Fullscreen';
       fullscreenBtn.classList.toggle('is-fullscreen', isFull);
-      /* hide/show nav when fullscreen */
       const nav = document.getElementById('nav');
       if (nav) nav.style.display = isFull ? 'none' : '';
-      /* reset cursor timer on fullscreen change */
-      if (isFull) { showCursor(); }
+      if (isFull) { showCursor(); } else { clearTimeout(cursorTimer); clearTimeout(fsExitTimer); }
     });
   }
 })();
