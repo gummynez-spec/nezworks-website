@@ -855,6 +855,7 @@
   pointer-events:none;
   width:36px;height:36px;margin:-18px 0 0 -18px;
   display:none;
+  transition:opacity .3s ease;
 }
 @media (hover:hover) and (pointer:fine){
   .cursor{display:block}

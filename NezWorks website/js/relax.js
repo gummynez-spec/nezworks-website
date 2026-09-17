@@ -244,9 +244,25 @@
   window.addEventListener('relaxradio', syncMoodBtns);
   syncMoodBtns();
 
-  /* ---------------- fullscreen ---------------- */
+  /* ---------------- fullscreen + auto-hide cursor ---------------- */
   const fullscreenBtn = document.getElementById('fullscreenBtn');
   const fullscreenLabel = document.getElementById('fullscreenLabel');
+  const cursor = document.getElementById('cursor');
+  let cursorTimer = null;
+
+  function showCursor() {
+    if (cursor) cursor.style.opacity = '1';
+    clearTimeout(cursorTimer);
+    cursorTimer = setTimeout(hideCursor, 5000);
+  }
+
+  function hideCursor() {
+    if (cursor) cursor.style.opacity = '0';
+  }
+
+  /* start auto-hide timer */
+  document.addEventListener('mousemove', showCursor);
+  showCursor();
 
   if (fullscreenBtn && document.fullscreenEnabled !== undefined) {
     fullscreenBtn.addEventListener('click', () => {
@@ -266,9 +282,8 @@
       /* hide/show nav when fullscreen */
       const nav = document.getElementById('nav');
       if (nav) nav.style.display = isFull ? 'none' : '';
-      /* also hide cursor */
-      const cursor = document.getElementById('cursor');
-      if (cursor) cursor.style.display = isFull ? 'none' : '';
+      /* reset cursor timer on fullscreen change */
+      if (isFull) { showCursor(); }
     });
   }
 })();
