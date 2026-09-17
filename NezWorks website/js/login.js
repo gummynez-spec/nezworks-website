@@ -56,20 +56,27 @@
       const role = meta.role || 'client';
       const table = role === 'freelancer' ? 'freelancers' : 'clients';
 
-      /* fetch profile from DB */
-      console.log('[NezWorks] Fetching profile from:', table, 'auth_user_id:', authUser.id);
-      const { data: profile, error: profileError } = await c.from(table)
-        .select('*')
-        .eq('auth_user_id', authUser.id)
-        .single();
+      /* fetch profile from DB — try auth_user_id first, fallback to email */
+      console.log('[NezWorks] Fetching profile from:', table, 'email:', email);
+      let profile = null;
 
-      if (profileError) {
-        console.warn('[NezWorks] Profile query error:', profileError.message);
-      }
-      if (!profile) {
-        console.warn('[NezWorks] Profile not found, using metadata');
+      const byAuth = await c.from(table).select('*').eq('auth_user_id', authUser.id).maybeSingle();
+      if (byAuth.data) {
+        profile = byAuth.data;
+        console.log('[NezWorks] Found by auth_user_id:', profile.id);
       } else {
-        console.log('[NezWorks] Profile found:', profile.id, profile.name);
+        console.log('[NezWorks] auth_user_id not found, trying email...');
+        const byEmail = await c.from(table).select('*').eq('email', email).maybeSingle();
+        if (byEmail.data) {
+          profile = byEmail.data;
+          console.log('[NezWorks] Found by email:', profile.id);
+          /* backfill auth_user_id if column exists */
+          try {
+            await c.from(table).update({ auth_user_id: authUser.id }).eq('id', profile.id);
+          } catch (e) {}
+        } else {
+          console.warn('[NezWorks] No profile found by email either');
+        }
       }
 
       /* build session data */
