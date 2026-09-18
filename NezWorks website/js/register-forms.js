@@ -308,8 +308,29 @@
         })(),
       };
 
-      /* Save profile directly to DB (skip Supabase Auth signup) */
+      /* Create Supabase Auth user + save profile to DB */
       sessionStorage.setItem('nw-client', JSON.stringify(data));
+      let authUserId = null;
+      try {
+        const c = window.SB;
+        if (c) {
+          const { data: authData, error: authErr } = await c.auth.signUp({
+            email: data.email,
+            password: password.value,
+            options: { data: { role: 'client', name: data.name, display_name: data.displayName } }
+          });
+          if (authErr) {
+            if (authErr.message?.includes('already registered')) {
+              throw new Error('อีเมลนี้ถูกลงทะเบียนแล้ว กรุณาเข้าสู่ระบบหรือใช้อีเมลอื่น');
+            }
+            throw authErr;
+          }
+          authUserId = authData?.user?.id || null;
+        }
+      } catch (err) {
+        console.warn('[NezWorks] Auth signup failed:', err?.message || err);
+      }
+
       try {
         const c = window.SB;
         if (c) {
@@ -322,6 +343,7 @@
             project: data.project,
             contact: data.contact,
             budget: data.budget,
+            auth_user_id: authUserId,
           }]).select().single();
           if (error) throw error;
           if (row?.id) sessionStorage.setItem('nw-client-id', row.id);
@@ -363,6 +385,11 @@
           }
         }
       } catch (e) { console.warn('[NezWorks] welcome chat creation failed:', e?.message || e); }
+
+      /* Backup user data to localStorage */
+      if (window.NW_backupUser) {
+        window.NW_backupUser({ ...data, role: 'Client' });
+      }
 
       clientForm.hidden = true;
       clientSuccess.hidden = false;
@@ -444,6 +471,10 @@
       const contactObj = { platform: contactPlatform, value: contactValue };
       const email = flForm.querySelector('[name="email"]').value.trim();
       const password = flForm.querySelector('[name="password"]').value;
+      if (!password || password.length < 6) {
+        alert('Password must be at least 6 characters');
+        return;
+      }
       const data = {
         name: flForm.querySelector('[name="name"]').value.trim(),
         displayName: flForm.querySelector('[name="displayName"]').value.trim(),
@@ -454,9 +485,30 @@
         portfolio: document.getElementById('portfolioUrl').value.trim(),
       };
 
-      /* Save profile directly to DB (skip Supabase Auth signup) */
+      /* Create Supabase Auth user + save profile to DB */
       const localPayload = data;
       let freelancerId = sessionStorage.getItem('nw-freelancer-id') || null;
+      let authUserId = null;
+      try {
+        const c = window.SB;
+        if (c) {
+          const { data: authData, error: authErr } = await c.auth.signUp({
+            email: data.email,
+            password: password,
+            options: { data: { role: 'freelancer', name: data.name, display_name: data.displayName } }
+          });
+          if (authErr) {
+            if (authErr.message?.includes('already registered')) {
+              throw new Error('อีเมลนี้ถูกลงทะเบียนแล้ว กรุณาเข้าสู่ระบบหรือใช้อีเมลอื่น');
+            }
+            throw authErr;
+          }
+          authUserId = authData?.user?.id || null;
+        }
+      } catch (err) {
+        console.warn('[NezWorks] Auth signup failed:', err?.message || err);
+      }
+
       try {
         const c = window.SB;
         if (c) {
@@ -469,6 +521,7 @@
               exp: data.exp,
               contact: data.contact,
               portfolio: data.portfolio,
+              auth_user_id: authUserId,
             }]).select().single();
             if (error) throw error;
             if (row?.id) { freelancerId = row.id; sessionStorage.setItem('nw-freelancer-id', row.id); }
@@ -481,6 +534,7 @@
               exp: data.exp,
               contact: data.contact,
               portfolio: data.portfolio,
+              auth_user_id: authUserId,
             }).eq('id', freelancerId);
             if (error) console.warn('[NezWorks] freelancers update failed:', error.message);
           }
@@ -522,6 +576,12 @@
 
       sessionStorage.setItem('nw-freelancer', JSON.stringify(localPayload));
       sessionStorage.setItem('nw-freelancer-registered', '1');
+
+      /* Backup user data to localStorage */
+      if (window.NW_backupUser) {
+        window.NW_backupUser({ ...localPayload, role: 'Freelancer' });
+      }
+
       flTerms.hidden = true;
       flSuccess.hidden = false;
       flSuccess.classList.add('play');
