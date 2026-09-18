@@ -251,7 +251,7 @@
       last_message: 'Chat started',
     }]).select().single();
 
-    if (error) { console.warn('[NezWorks] create convo:', error.message); return; }
+    if (error) { console.warn('[NezWorks] create convo:', error.message, error); return; }
     activeConvo = convo;
 
     /* Send greeting */
@@ -308,6 +308,7 @@
       content: content.trim(),
     };
 
+    /* Show message immediately (optimistic) */
     renderChatBubble({ ...msg, created_at: new Date().toISOString() });
     const chatMessages = document.getElementById('wdChatMessages');
     chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -315,7 +316,8 @@
     chatSend.disabled = true;
 
     try {
-      await c.from('messages').insert([msg]);
+      const { error: msgErr } = await c.from('messages').insert([msg]);
+      if (msgErr) console.warn('[NezWorks] message insert error:', msgErr.message);
       await c.from('conversations').update({
         last_message: content.trim().substring(0, 50),
         updated_at: new Date().toISOString(),

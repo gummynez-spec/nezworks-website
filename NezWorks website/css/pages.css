@@ -983,6 +983,47 @@ textarea.reg-input{resize:vertical;min-height:110px}
   .svc-main-sub br{display:none}
 }
 
+/* ============ SERVICES WORK CARDS ============ */
+.svc-work-section{margin-top:32px}
+.svc-work-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--stroke-soft)}
+.svc-work-section-head h3{font-family:var(--font-display);font-weight:600;font-size:1.1rem;text-transform:capitalize}
+.svc-work-count{font-size:.7rem;color:var(--ink-3);letter-spacing:.1em}
+.svc-work-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+
+.svc-work-card{
+  display:flex;flex-direction:column;border-radius:14px;overflow:hidden;
+  background:var(--glass);border:1px solid var(--stroke);
+  transition:transform .25s var(--ease-out),border-color .25s;
+  text-decoration:none;color:inherit;
+}
+.svc-work-card:hover{transform:translateY(-4px);border-color:var(--accent)}
+
+.svc-work-img{position:relative;aspect-ratio:16/10;overflow:hidden;background:linear-gradient(135deg,#2a2f52,#141833)}
+.svc-work-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s var(--ease-out)}
+.svc-work-card:hover .svc-work-img img{transform:scale(1.04)}
+.svc-work-placeholder{width:100%;height:100%;display:grid;place-items:center;font-size:3rem}
+.svc-work-price{
+  position:absolute;bottom:8px;right:8px;
+  padding:4px 10px;border-radius:8px;font-size:.72rem;font-weight:700;
+  background:rgba(0,0,0,.65);backdrop-filter:blur(6px);color:var(--peach);
+}
+
+.svc-work-body{padding:14px 16px;flex:1;display:flex;flex-direction:column}
+.svc-work-title{font-weight:600;font-size:.88rem;line-height:1.3;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.svc-work-desc{font-size:.76rem;color:var(--ink-3);line-height:1.5;margin-bottom:10px;flex:1}
+.svc-work-meta{display:flex;flex-wrap:wrap;gap:8px;font-size:.68rem;color:var(--ink-2)}
+.svc-work-creator{font-weight:600;color:var(--ink)}
+.svc-work-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.svc-work-tag{font-size:.6rem;padding:2px 8px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid var(--stroke-soft);color:var(--ink-3)}
+
+.svc-work-empty{padding:40px 20px;text-align:center;color:var(--ink-3)}
+.svc-work-empty-hint{font-size:.8rem;margin-top:8px}
+.svc-work-empty-hint a{color:var(--accent-2);text-decoration:underline}
+
+@media(max-width:640px){
+  .svc-work-grid{grid-template-columns:1fr}
+}
+
 /* ============ GALLERY PREVIEW (workspace form) ============ */
 .gallery-preview{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 .gallery-preview .gp-thumb{
