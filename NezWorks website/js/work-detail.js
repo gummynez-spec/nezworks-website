@@ -39,6 +39,7 @@
   const user = loadUser();
   let myRowId = null;
   let activeConvo = null;
+  let chatReady = false;
 
   async function init() {
     const c = window.SB;
@@ -174,7 +175,14 @@
       chatEl.style.display = 'block';
       chatLogin.style.display = 'none';
       chatInputRow.style.display = 'flex';
-      if (!activeConvo) await findOrCreateConversation();
+      if (!activeConvo) {
+        chatSend.disabled = true;
+        chatInput.placeholder = 'Connecting...';
+        await findOrCreateConversation();
+        chatReady = true;
+        chatInput.placeholder = 'Type a message...';
+        chatInput.focus();
+      }
     });
 
     chatSend.addEventListener('click', () => sendChatMessage(chatInput.value));
@@ -213,28 +221,30 @@
     if (!myRowId) return;
 
     const freelancerId = work.freelancer_id;
+    const isClient = user.role === 'client';
 
-    /* Check for existing conversation */
-    const { data: existing } = await c.from('conversations')
-      .select('*')
-      .eq('client_id', user.role === 'client' ? myRowId : null)
-      .eq('freelancer_id', user.role === 'freelancer' ? myRowId : freelancerId)
-      .limit(1);
+    /* Check for existing conversation using OR query */
+    try {
+      const { data: existing } = await c.from('conversations')
+        .select('*')
+        .or(`and(client_id.eq.${myRowId},freelancer_id.eq.${freelancerId}),and(freelancer_id.eq.${myRowId},client_id.is.null)`)
+        .limit(1);
 
-    if (existing && existing.length) {
-      activeConvo = existing[0];
-      await loadChatMessages();
-      subscribeToChat();
-      return;
-    }
+      if (existing && existing.length) {
+        activeConvo = existing[0];
+        await loadChatMessages();
+        subscribeToChat();
+        return;
+      }
+    } catch (e) { console.warn('[NezWorks] convo search:', e?.message || e); }
 
     /* Create new conversation */
-    const clientName = user.role === 'client' ? (user.displayName || user.name) : (freelancer?.display_name || freelancer?.name || 'Freelancer');
-    const flName = user.role === 'freelancer' ? (user.displayName || user.name) : (freelancer?.display_name || freelancer?.name || 'Freelancer');
+    const flName = freelancer?.display_name || freelancer?.name || 'Freelancer';
+    const clientName = user.displayName || user.name || 'Client';
 
-    const convoData = user.role === 'client'
-      ? { client_id: myRowId, freelancer_id: freelancerId, client_name: user.displayName || user.name, freelancer_name: flName }
-      : { client_id: null, freelancer_id: myRowId, client_name: clientName, freelancer_name: user.displayName || user.name };
+    const convoData = isClient
+      ? { client_id: myRowId, freelancer_id: freelancerId, client_name: clientName, freelancer_name: flName }
+      : { client_id: null, freelancer_id: myRowId, client_name: flName, freelancer_name: clientName };
 
     const { data: convo, error } = await c.from('conversations').insert([{
       ...convoData,
@@ -284,7 +294,7 @@
   }
 
   async function sendChatMessage(content) {
-    if (!content.trim() || !activeConvo) return;
+    if (!content.trim() || !activeConvo || !chatReady) return;
     const c = window.SB;
     if (!c) return;
     const chatInput = document.getElementById('wdChatInput');
