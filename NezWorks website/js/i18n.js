@@ -6,12 +6,12 @@
     /* ===== NAV ===== */
     'nav-home':       { en: 'Home',              th: 'หน้าแรก' },
     'nav-services':   { en: 'Services',          th: 'บริการ' },
-    'nav-how':        { en: 'How we work',       th: 'วิธีทำงาน' },
+    'nav-how':        { en: 'Process',           th: 'ขั้นตอน' },
     'nav-relax':      { en: 'Relax',             th: 'พักผ่อน' },
     'nav-contact':    { en: 'Contact',           th: 'ติดต่อ' },
     'nav-faq':        { en: 'FAQ',               th: 'คำถาม' },
     'nav-login':      { en: 'Log in',            th: 'เข้าสู่ระบบ' },
-    'nav-project':    { en: 'Start a Project',   th: 'เริ่มโปรเจกต์' },
+    'nav-project':    { en: 'Create',             th: 'สร้าง' },
     'nav-messages':   { en: 'Messages',          th: 'ข้อความ' },
 
     /* ===== HOME — HERO ===== */
@@ -87,10 +87,10 @@
     'svc-translator-desc':{ en: 'Professional translation across languages \u2014 documents, captions, subtitles, and localization that keeps your message clear everywhere.', th: 'แปลภาษาแบบมืออาชีพ — เอกสาร คำบรรยาย ซับไทเทิล และโลคัลไลเซชัน ให้ข้อความของคุณชัดเจนทุกที่' },
 
     /* ===== HOW WE WORK ===== */
-    'how-breadcrumb':  { en: 'HOW WE WORK',      th: 'วิธีทำงาน' },
+    'how-breadcrumb':  { en: 'PROCESS',            th: 'ขั้นตอน' },
     'how-title':       { en: 'From first message<br><span class="accent">to final delivery.</span>', th: 'จากข้อความแรก<br><span class="accent">ถึงการส่งมอบสุดท้าย</span>' },
     'how-lead':        { en: 'One clear trajectory: contact a creator you like, agree on the work, review it at the checkout points \u2014 then pay safely by invoice. No guesswork anywhere.', th: 'เส้นทางชัดเจน: ติดต่อนักสร้างสรรค์ที่ชอบ ตกลงเรื่องงาน ตรวจสอบงานเป็นจุดๆ — แล้วจ่ายเงินผ่านใบแจ้งหนี้อย่างปลอดภัย ไม่มีอะไรต้องเดา' },
-    'how-start':       { en: 'Start a Project',   th: 'เริ่มโปรเจกต์' },
+    'how-start':       { en: 'Create',             th: 'สร้าง' },
     'how-steps':       { en: 'See the steps',     th: 'ดูขั้นตอน' },
     'how-stat-1':      { en: 'Clear steps',       th: 'ขั้นตอนชัดเจน' },
     'how-stat-2':      { en: 'First reply',       th: 'ตอบกลับครั้งแรก' },
@@ -184,6 +184,7 @@
     'login-footer':    { en: "Don't have an account?", th: 'ยังไม่มีบัญชี?' },
     'login-reg-client': { en: 'Register as Client', th: 'สมัครเป็นลูกค้า' },
     'login-reg-free':  { en: 'Freelancer',         th: 'ฟรีแลนซ์' },
+    'login-or':        { en: 'or',                  th: 'หรือ' },
 
     /* ===== RELAX ===== */
     'relax-kicker':    { en: 'RELAX CONTROL',     th: 'ตั้งค่าพักผ่อน' },

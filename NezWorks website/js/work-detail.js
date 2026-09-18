@@ -159,9 +159,16 @@
     const chatEl = document.getElementById('wdChat');
     const chatLogin = document.getElementById('wdChatLogin');
     const chatInputRow = document.getElementById('wdChatInputRow');
-    const chatInput = document.getElementById('wdChatInput');
-    const chatSend = document.getElementById('wdChatSend');
-    const chatMessages = document.getElementById('wdChatMessages');
+
+    /* Is this my own work? If so, hide chat entirely */
+    const isOwnWork = user && freelancer && (
+      user.auth_user_id === freelancer.auth_user_id
+    );
+
+    if (isOwnWork) {
+      chatBtn.style.display = 'none';
+      return;
+    }
 
     if (!user) {
       /* Not logged in — show login prompt */
@@ -255,7 +262,9 @@
     activeConvo = convo;
 
     /* Send greeting */
-    const greeting = `Hi! I'm interested in "${work.title}". Can we discuss the details?`;
+    const greeting = isClient
+      ? `Hi! I'm interested in "${work.title}". Can we discuss the details?`
+      : `Hi! Thanks for checking out "${work.title}". Let me know if you have any questions!`;
     await c.from('messages').insert([{
       conversation_id: convo.id,
       sender_id: user.auth_user_id || myRowId,
