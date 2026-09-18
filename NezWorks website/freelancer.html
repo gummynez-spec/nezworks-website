@@ -142,6 +142,44 @@
       </div>
     </div>
 
+    <div class="reg-section">
+      <div class="reg-label">REVISIONS INCLUDED</div>
+      <div class="reg-choices" id="wRevisions" role="radiogroup">
+        <label class="reg-choice"><input type="radio" name="wrev" value="1"><i></i>1 revision</label>
+        <label class="reg-choice"><input type="radio" name="wrev" value="2" checked><i></i>2 revisions</label>
+        <label class="reg-choice"><input type="radio" name="wrev" value="3"><i></i>3 revisions</label>
+        <label class="reg-choice"><input type="radio" name="wrev" value="5"><i></i>5 revisions</label>
+        <label class="reg-choice"><input type="radio" name="wrev" value="unlimited"><i></i>Unlimited</label>
+      </div>
+    </div>
+
+    <div class="reg-section">
+      <div class="reg-label">STYLE TAGS <span class="opt">(select all that apply)</span></div>
+      <div class="reg-choices" id="wTags">
+        <label class="reg-choice"><input type="checkbox" name="wtags" value="Minimal"><i></i>Minimal</label>
+        <label class="reg-choice"><input type="checkbox" name="wtags" value="Modern"><i></i>Modern</label>
+        <label class="reg-choice"><input type="checkbox" name="wtags" value="Bold"><i></i>Bold</label>
+        <label class="reg-choice"><input type="checkbox" name="wtags" value="Luxury"><i></i>Luxury</label>
+        <label class="reg-choice"><input type="checkbox" name="wtags" value="Playful"><i></i>Playful</label>
+        <label class="reg-choice"><input type="checkbox" name="wtags" value="Clean"><i></i>Clean</label>
+        <label class="reg-choice"><input type="checkbox" name="wtags" value="Retro"><i></i>Retro</label>
+        <label class="reg-choice"><input type="checkbox" name="wtags" value="Cinematic"><i></i>Cinematic</label>
+        <label class="reg-choice"><input type="checkbox" name="wtags" value="Handmade"><i></i>Handmade</label>
+        <label class="reg-choice"><input type="checkbox" name="wtags" value="Corporate"><i></i>Corporate</label>
+      </div>
+    </div>
+
+    <div class="reg-section">
+      <div class="reg-label">GALLERY IMAGES <span class="opt">(up to 5 extra images)</span></div>
+      <div class="reg-upload" id="workGalleryUpload">
+        <input type="file" accept="image/*" multiple hidden>
+        <span class="ru-icon">🖼</span>
+        <b>Upload sample work</b>
+        <small>Show different angles or variations — up to 5 images</small>
+      </div>
+      <div class="gallery-preview" id="galleryPreview"></div>
+    </div>
+
     <div class="reg-submit">
       <button type="submit" class="btn btn-primary btn-lg" data-cursor="hover">Publish project <span class="btn-arrow">→</span></button>
       <p class="reg-hint">Once published, it appears instantly in your category for clients</p>

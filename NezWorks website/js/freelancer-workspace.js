@@ -15,11 +15,19 @@
   const fmt = (n) => '฿' + (+n).toLocaleString('th-TH');
 
   let works = JSON.parse(sessionStorage.getItem(STORAGE) || '[]');
+  let galleryImages = []; /* base64 data URLs for new uploads */
 
   function save() { sessionStorage.setItem(STORAGE, JSON.stringify(works)); }
 
   function freelancerId() {
     return sessionStorage.getItem('nw-freelancer-id') || null;
+  }
+
+  function freelancerName() {
+    try {
+      const f = JSON.parse(sessionStorage.getItem('nw-freelancer') || 'null');
+      return f?.displayName || f?.name || '';
+    } catch (e) { return ''; }
   }
 
   const supabaseReady = () => window.SB && typeof window.SB.from === 'function';
@@ -36,6 +44,10 @@
       published: entry.published,
       views: entry.views || 0,
       orders: entry.orders || 0,
+      revisions: entry.revisions || 2,
+      tags: entry.tags || [],
+      gallery: entry.gallery || [],
+      freelancer_name: entry.freelancerName || freelancerName(),
     };
   }
 
@@ -52,6 +64,10 @@
       published: r.published !== false,
       views: r.views || 0,
       orders: r.orders || 0,
+      revisions: r.revisions ?? 2,
+      tags: Array.isArray(r.tags) ? r.tags : [],
+      gallery: Array.isArray(r.gallery) ? r.gallery : [],
+      freelancerName: r.freelancer_name || '',
     };
   }
 
@@ -95,6 +111,7 @@
     works.forEach((w, i) => {
       const card = document.createElement('article');
       card.className = 'fw-card sr in';
+      card.dataset.i = i;
       card.innerHTML = `
         <div class="fw-cover" style="background:${w.cover || 'linear-gradient(135deg,#2a2f52,#141833)'}">
           ${w.coverImg
@@ -108,6 +125,7 @@
           <div class="fw-meta">
             <span class="fw-price">${fmt(w.price)}</span>
             <span class="fw-deliver">⏱ ${w.deliver}</span>
+            <span class="fw-rev">✏️ ${w.revisions} rev</span>
           </div>
           <div class="fw-actions">
             <span class="fw-status ${w.published ? 'live' : ''}">${w.published ? '● LIVE' : '○ DRAFT'}</span>
@@ -138,6 +156,45 @@
     });
   }
 
+  /* ---------- gallery upload ---------- */
+  const galleryBox = document.getElementById('workGalleryUpload');
+  const galleryInput = galleryBox?.querySelector('input[type="file"]');
+  const galleryPreview = document.getElementById('galleryPreview');
+
+  function renderGalleryPreview() {
+    if (!galleryPreview) return;
+    galleryPreview.innerHTML = '';
+    galleryImages.forEach((img, idx) => {
+      const div = document.createElement('div');
+      div.className = 'gp-thumb';
+      div.innerHTML = `<img src="${img}" alt="Gallery ${idx + 1}"><button class="gp-remove" data-idx="${idx}">✕</button>`;
+      div.querySelector('.gp-remove').addEventListener('click', () => {
+        galleryImages.splice(idx, 1);
+        renderGalleryPreview();
+      });
+      galleryPreview.appendChild(div);
+    });
+  }
+
+  if (galleryInput) {
+    galleryInput.addEventListener('change', () => {
+      const files = Array.from(galleryInput.files);
+      const remaining = 5 - galleryImages.length;
+      const toAdd = files.slice(0, remaining);
+      toAdd.forEach(f => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          galleryImages.push(e.target.result);
+          renderGalleryPreview();
+        };
+        reader.readAsDataURL(f);
+      });
+      galleryInput.value = '';
+      galleryBox.classList.add('filled');
+      galleryBox.querySelector('small').textContent = `✓ ${galleryImages.length} image${galleryImages.length !== 1 ? 's' : ''} (max 5)`;
+    });
+  }
+
   /* ---------- price presets ---------- */
   const priceInput = document.getElementById('wPrice');
   document.querySelectorAll('#pricePresets .price-pill').forEach(btn => {
@@ -164,12 +221,45 @@
       document.getElementById('wDesc').value = w.desc;
       form.querySelector(`input[name="wcat"][value="${w.cat}"]`).checked = true;
       form.querySelector(`input[name="wdeliver"][value="${w.deliver}"]`).checked = true;
+
+      /* revisions */
+      const revInput = form.querySelector(`input[name="wrev"][value="${w.revisions}"]`);
+      if (revInput) revInput.checked = true;
+      else {
+        const defaultRev = form.querySelector('input[name="wrev"][value="2"]');
+        if (defaultRev) defaultRev.checked = true;
+      }
+
+      /* tags */
+      form.querySelectorAll('input[name="wtags"]').forEach(cb => {
+        cb.checked = (w.tags || []).includes(cb.value);
+        cb.closest('.reg-choice')?.classList.toggle('selected', cb.checked);
+      });
+
+      /* gallery */
+      galleryImages = [...(w.gallery || [])];
+      renderGalleryPreview();
+      if (galleryBox) {
+        if (galleryImages.length) {
+          galleryBox.classList.add('filled');
+          galleryBox.querySelector('small').textContent = `✓ ${galleryImages.length} image${galleryImages.length !== 1 ? 's' : ''} (max 5)`;
+        } else {
+          galleryBox.classList.remove('filled');
+          galleryBox.querySelector('small').textContent = 'Show different angles or variations — up to 5 images';
+        }
+      }
     } else {
       form.reset();
       coverImgData = null;
+      galleryImages = [];
+      renderGalleryPreview();
       if (coverBox) {
         coverBox.classList.remove('filled');
         coverBox.querySelector('small').textContent = 'The hero image for this piece — 1:1 or larger recommended';
+      }
+      if (galleryBox) {
+        galleryBox.classList.remove('filled');
+        galleryBox.querySelector('small').textContent = 'Show different angles or variations — up to 5 images';
       }
     }
     window.scrollTo({ top: 0, behavior: NW.reduced ? 'auto' : 'smooth' });
@@ -189,6 +279,9 @@
     const price = Math.max(0, +document.getElementById('wPrice').value || 0);
     if (!title || !desc) return;
 
+    const tags = [...form.querySelectorAll('input[name="wtags"]:checked')].map(cb => cb.value);
+    const revisions = form.querySelector('input[name="wrev"]:checked')?.value || '2';
+
     const entry = {
       title, desc, price,
       cat: form.querySelector('input[name="wcat"]:checked').value,
@@ -196,6 +289,10 @@
       coverImg: coverImgData,
       published: true,
       views: 0, orders: 0,
+      revisions,
+      tags,
+      gallery: [...galleryImages],
+      freelancerName: freelancerName(),
     };
 
     const editing = form.dataset.editing;
@@ -230,26 +327,47 @@
     success.classList.add('play');
   });
 
-  /* ---------- card actions (edit / publish / delete) ---------- */
+  /* ---------- card actions (click to detail, edit / publish / delete) ---------- */
   grid.addEventListener('click', async (e) => {
     const btn = e.target.closest('.fw-btn');
-    if (!btn) return;
-    const i = +btn.dataset.i;
-    if (btn.classList.contains('edit')) showForm(i);
-    else if (btn.classList.contains('pub')) {
-      works[i].published = !works[i].published;
-      if (works[i].id && supabaseReady()) {
-        try { await window.SB.from('works').update({ published: works[i].published }).eq('id', works[i].id); } catch (err) { console.warn('[NezWorks] works publish toggle failed:', err?.message || err); }
+    /* if clicked a button, handle button action */
+    if (btn) {
+      const i = +btn.dataset.i;
+      if (btn.classList.contains('edit')) showForm(i);
+      else if (btn.classList.contains('pub')) {
+        works[i].published = !works[i].published;
+        if (works[i].id && supabaseReady()) {
+          try { await window.SB.from('works').update({ published: works[i].published }).eq('id', works[i].id); } catch (err) { console.warn('[NezWorks] works publish toggle failed:', err?.message || err); }
+        }
+        save(); render();
       }
-      save(); render();
-    }
-    else if (btn.classList.contains('del')) {
-      const id = works[i].id;
-      works.splice(i, 1); save(); render();
-      if (id && supabaseReady()) {
-        try { await window.SB.from('works').delete().eq('id', id); } catch (err) { console.warn('[NezWorks] works delete failed:', err?.message || err); }
+      else if (btn.classList.contains('del')) {
+        const id = works[i].id;
+        works.splice(i, 1); save(); render();
+        if (id && supabaseReady()) {
+          try { await window.SB.from('works').delete().eq('id', id); } catch (err) { console.warn('[NezWorks] works delete failed:', err?.message || err); }
+        }
       }
+      return;
     }
+    /* otherwise click on card → navigate to detail page */
+    const card = e.target.closest('.fw-card');
+    if (!card) return;
+    const i = +card.dataset.i;
+    const w = works[i];
+    if (!w) return;
+    if (w.id) {
+      window.location.href = `work-detail.html?id=${w.id}`;
+    } else {
+      alert('Save this work first before viewing details.');
+    }
+  });
+
+  /* ---------- tag checkbox highlight ---------- */
+  form?.querySelectorAll('input[name="wtags"]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      cb.closest('.reg-choice')?.classList.toggle('selected', cb.checked);
+    });
   });
 
   render();
