@@ -10,7 +10,7 @@
 
   const CAT_EMOJI = {
     'Graphic Design': '🎨', 'Logo and Branding': '✒️', 'Social Media Design': '📱',
-    'Video Editing': '🎬', 'Content Creation': '✍️', 'Translation': '🌐',
+    'Video Editing': '🎬', 'Content Creation': '✍️', 'Translation': '🌐', 'Ads Buyer': '📢',
   };
   const fmt = (n) => '฿' + (+n).toLocaleString('th-TH');
 

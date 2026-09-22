@@ -108,7 +108,7 @@
         thumbs.appendChild(t);
       });
     } else {
-      const catEmoji = { 'Graphic Design': '🎨', 'Logo and Branding': '✒️', 'Social Media Design': '📱', 'Video Editing': '🎬', 'Content Creation': '✍️', 'Translation': '🌐' };
+      const catEmoji = { 'Graphic Design': '🎨', 'Logo and Branding': '✒️', 'Social Media Design': '📱', 'Video Editing': '🎬', 'Content Creation': '✍️', 'Translation': '🌐', 'Ads Buyer': '📢' };
       mainImg.src = '';
       mainImg.alt = work.title;
       mainImg.style.display = 'none';

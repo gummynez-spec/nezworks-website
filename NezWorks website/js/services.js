@@ -20,6 +20,7 @@
     graphic:    ['Graphic Design', 'Social Media Design'],
     content:    ['Content Creation'],
     translator: ['Translation'],
+    ads:        ['Ads Buyer'],
   };
 
   let allWorks = [];
@@ -74,7 +75,7 @@
   }
 
   function catEmoji(cat) {
-    const m = { 'Graphic Design': '🎨', 'Logo and Branding': '✒️', 'Social Media Design': '📱', 'Video Editing': '🎬', 'Content Creation': '✍️', 'Translation': '🌐' };
+    const m = { 'Graphic Design': '🎨', 'Logo and Branding': '✒️', 'Social Media Design': '📱', 'Video Editing': '🎬', 'Content Creation': '✍️', 'Translation': '🌐', 'Ads Buyer': '📢' };
     return m[cat] || '✨';
   }
 
@@ -88,7 +89,7 @@
 
     if (cat === 'all') {
       /* Show all categories with works */
-      const cats = ['logo', 'banner', 'poster', 'video', 'graphic', 'content', 'translator'];
+      const cats = ['logo', 'banner', 'poster', 'video', 'graphic', 'content', 'translator', 'ads'];
       cats.forEach(c => {
         const catWorks = worksForCat(c);
         if (catWorks.length === 0) return;

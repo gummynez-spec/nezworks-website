@@ -77,6 +77,7 @@
     'svc-graphic':    { en: 'GRAPHIC DESIGN',    th: 'กราฟิกดีไซน์' },
     'svc-content':    { en: 'CONTENT',           th: 'เนื้อหา' },
     'svc-translator': { en: 'TRANSLATOR',        th: 'แปลภาษา' },
+    'svc-ads':        { en: 'ADS BUYER',          th: 'ยิงแอด' },
     'svc-all-desc':   { en: 'Explore the creative services available through NezWorks.', th: 'ดูบริการสร้างสรรค์ทั้งหมดที่มีใน NezWorks' },
     'svc-logo-desc':  { en: 'Logo design and visual identity for brands that want to stand out.', th: 'ออกแบบโลโก้และตัวตนแบรนด์ สำหรับแบรนด์ที่ต้องการความโดดเด่น' },
     'svc-banner-desc':{ en: 'Digital banners and promotional visuals for campaigns and platforms.', th: 'แบนเนอร์ดิจิทัลและสื่อส่งเสริมการขาย สำหรับแคมเปญและแพลตฟอร์มต่างๆ' },
@@ -85,6 +86,7 @@
     'svc-graphic-desc':{ en: 'Creative graphics for brands, campaigns, social media, and digital platforms.', th: 'กราฟิกสร้างสรรค์ สำหรับแบรนด์ แคมเปญ โซเชียลมีเดีย และแพลตฟอร์มดิจิทัล' },
     'svc-content-desc':{ en: 'Strategic content creation \u2014 copy, social posts, blogs, and editorial visuals that tell your brand story.', th: 'สร้างเนื้อหาเชิงกลยุทธ์ — คัดลอก โพสต์โซเชียล บล็อก และภาพบรรณาธิการ เล่าเรื่องแบรนด์ของคุณ' },
     'svc-translator-desc':{ en: 'Professional translation across languages \u2014 documents, captions, subtitles, and localization that keeps your message clear everywhere.', th: 'แปลภาษาแบบมืออาชีพ — เอกสาร คำบรรยาย ซับไทเทิล และโลคัลไลเซชัน ให้ข้อความของคุณชัดเจนทุกที่' },
+    'svc-ads-desc':   { en: 'Run ads on Facebook, Instagram, TikTok, and Google \u2014 from strategy to execution, optimize every baht you spend.', th: 'ยิงแอดบน Facebook, Instagram, TikTok, และ Google — ตั้งแต่กลยุทธ์ไปจนถึงการดำเนินงาน ใช้ทุกบาทให้คุ้มค่าที่สุด' },
 
     /* ===== HOW WE WORK ===== */
     'how-breadcrumb':  { en: 'PROCESS',            th: 'ขั้นตอน' },
