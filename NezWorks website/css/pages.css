@@ -816,7 +816,7 @@ textarea.reg-input{resize:vertical;min-height:110px}
 .radio-container{
   --main-color:#d9adf6;
   --main-color-opacity:#f7e4791c;
-  --total-radio:8;
+  --total-radio:9;
 
   display:flex;flex-direction:column;position:relative;
   padding-left:0.5rem;
